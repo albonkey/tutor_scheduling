@@ -1,0 +1,14 @@
+.button1{
+  padding: 15px 20px;
+  margin: 5px;
+  box-shadow: 3px 3px 3px color(white, dark);
+  border-radius: 5px;
+
+  background-color: color(gunmetal, base);
+  color: color(white, base);
+  cursor: pointer;
+
+  &:hover{
+    opacity: .8;
+  }
+}
