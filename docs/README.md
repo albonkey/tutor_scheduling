@@ -1,7 +1,6 @@
 # Docs
 This is a place where we can keep useful links and documentations regarding the project.
 
----
 
 ## Frontend
 The frontend of our app.
@@ -17,7 +16,6 @@ Sass is a CSS framework that allows you to work with variables and functions in 
 
 [Read More](https://sass-lang.com/)
 
----
 
 ## Amazon Web Services
 We'll use the AWS cloud for hosting our project.
@@ -51,7 +49,6 @@ This can be used for authentication and user management.
 
 [Read More](https://aws.amazon.com/cognito/)
 
----
 
 ## Database
 For the database we can use AWS RDS which is a relational database host from Amazon where we can run mySQL.
