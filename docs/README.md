@@ -37,3 +37,4 @@ RESOURCES
 
 
 ### Database
+![](https://github.com/albonkey/tutor_scheduling/blob/updateDocs/docs/images/Database.png)
