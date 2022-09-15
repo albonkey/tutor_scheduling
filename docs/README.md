@@ -5,15 +5,15 @@
 ### Frontend
 
 #### Homepage
-![](https://github.com/albonkey/tutor_scheduling/blob/updateDocs/docs/images/Home.png)
+![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Home.png)
 #### Profile
-![](https://github.com/albonkey/tutor_scheduling/blob/updateDocs/docs/images/Profile.png)
+![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Profile.png)
 #### Sessions
-![](https://github.com/albonkey/tutor_scheduling/blob/updateDocs/docs/images/Sessions.png)
+![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Sessions.png)
 #### Discovery
-![](https://github.com/albonkey/tutor_scheduling/blob/updateDocs/docs/images/Discovery.png)
+![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Discovery.png)
 #### Settings
-![](https://github.com/albonkey/tutor_scheduling/blob/updateDocs/docs/images/Settings.png)
+![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Settings.png)
 ### REST API Endpoints
 
 RESOURCES
@@ -37,4 +37,4 @@ RESOURCES
 
 
 ### Database
-![](https://github.com/albonkey/tutor_scheduling/blob/updateDocs/docs/images/Database.png)
+![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Database.png)
