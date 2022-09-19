@@ -1,0 +1,39 @@
+
+@mixin header1{
+  font-size: 3rem;
+}
+@mixin text1{
+  line-height: 1.2;
+}
+@mixin smallText{
+  font-size: 0.8rem;
+}
+@mixin flexCenter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@mixin component{
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px grey;
+}
+
+@mixin breakpoint($point) {
+  @if $point == desktop {
+    @media (min-width: 70em) { @content ; }
+ }
+  @else if $point == laptop {
+    @media (min-width: 64em) { @content ; }
+ }
+   @else if $point == tablet {
+    @media (min-width: 50em) { @content ; }
+ }
+  @else if $point == phablet {
+    @media (min-width: 37.5em)  { @content ; }
+ }
+ @else if $point == mobileonly {
+    @media (max-width: 37.5em)  { @content ; }
+
+ }
+}
