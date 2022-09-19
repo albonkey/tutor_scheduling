@@ -1,24 +1,19 @@
 
 //Colors
-$palettes: (
-    white: (
-      base: white,
-      darker: #f2f2f2,
-      dark: darken(white, 20%)
-    ),
-    navy-blue: (
-        base:   #18121E,
-        lighter: #49375c
-    ),
-    rusty-red: (
-        base:    #DA2C43,
-    ),
-    gunmetal: (
-        base:    #984B43,
-    ),
-    warm-yellow: (
-        base:   #EAC67A,
 
+$font1: 'Arial';
+$font2: 'Impact';
+
+$palettes: (
+    primary: (
+      base: #318974,
+    ),
+    secondary: (
+        base:   #D2F7C9,
+        lighter: #F6FFF4
+    ),
+    accent: (
+        base:    #318974,
     ),
     success: (
       base: #43e86a,
