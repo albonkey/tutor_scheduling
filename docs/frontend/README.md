@@ -21,9 +21,9 @@ import style from './MyComponent.module.scss';
 const MyComponent = ({isTeaching, subject, name, time}) => {
 	const [isSelected, setIsSelected] = useState(false);
 
-	 return(
-		 <div
-       className={
+	return(
+    <div
+      className={
          [
            style.wrapper,
            isTeaching && style.teaching,
