@@ -24,7 +24,11 @@ const MyComponent = ({isTeaching, subject, name, time}) => {
 	 return(
 		 <div
 		 	className={
+<<<<<<< HEAD
         [
+=======
+				[
+>>>>>>> 5af355a599c38e583bcb581bfc6235a6ce959ef8
 					style.wrapper,
 					isTeaching && style.teaching,
 					isSelected && style.selected
@@ -67,10 +71,15 @@ Remember to import the `variables` and `mixins` in your `.scss` file. At the top
 ### Variables
 Variables allow us to reuse values without having to copy them over and over again. Most importantly, they make updating a value very easy.
 
+<<<<<<< HEAD
 | Variable | Function     |
 | -------- | ------------ |
 | $font1   | Primary Font |
 
+=======
+#### Fonts
+`$font1` Is our main font
+>>>>>>> 5af355a599c38e583bcb581bfc6235a6ce959ef8
 
 Example:
 ```scss
