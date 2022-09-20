@@ -13,7 +13,7 @@ function App() {
       />
       <MyComponent
         isTeaching={false}
-        subject={'Math'}
+        subject={'History'}
         name={'Alex'}
         time={'2:00 - 3:00pm'}
       />

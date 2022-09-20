@@ -6,7 +6,13 @@ const MyComponent = ({isTeaching, subject, name, time}) => {
 
 	 return(
 		 <div
-		 	className={[style.wrapper, (isTeaching ? style.teaching : ''), (isSelected ? style.selected : '')].join(' ')}
+		 	className={
+				[
+					style.wrapper,
+					isTeaching && style.teaching,
+					isSelected && style.selected
+				 ].join(' ')
+			 }
 			onClick={() => setIsSelected(!isSelected)}
 			>
 		 	<div className={style.info}>
@@ -17,9 +23,9 @@ const MyComponent = ({isTeaching, subject, name, time}) => {
 				</span>
 				<span>{`${subject} with ${name}`}</span>
 			</div>
-				<div className={style.info}>
+			<div className={style.info}>
 				<a className={style.link}>View Session</a>
-			<span>{time}</span>
+				<span>{time}</span>
 			</div>
 		 </div>
 	 )
