@@ -1,5 +1,6 @@
 # Frontend
 
+<<<<<<< HEAD
 ## Creating React Components
 Each component should have its own folder. The structure should be
 
@@ -147,3 +148,15 @@ Mixins are one of the most used features from the whole Sass language. They are 
 
 ### Settings
 ![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Settings.jpg)
+=======
+## Homepage
+![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Home.png)
+## Profile
+![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Profile.png)
+## Sessions
+![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Sessions.png)
+## Discovery
+![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Discovery.png)
+## Settings
+![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Settings.png)
+>>>>>>> master
