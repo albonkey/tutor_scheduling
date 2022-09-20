@@ -1,25 +1,22 @@
 .neutral{
   background-color: color(white, lighter);
+  border-left: 5px solid color(white, dark);
+  box-shadow: 3px 3px 3px color(white, darker);
   color: color(white, dark);
 
-  border-left: 5px solid color(white, dark);
-
-  box-shadow: 3px 3px 3px color(white, darker)
 }
 .success{
   background-color: color(success, lighter);
-  color: color(success, base);
-
   border-left: 5px solid color(success, base);
-  box-shadow: 3px 3px 3px color(white, darker)
+  box-shadow: 3px 3px 3px color(white, darker);
+  color: color(success, base);
 }
 
 .warning{
   background-color: color(warning, lighter);
-  color: color(warning, base);
-
   border-left: 5px solid color(warning, base);
-  box-shadow: 3px 3px 3px color(white, darker)
+  box-shadow: 3px 3px 3px color(white, darker);
+  color: color(warning, base);
 }
 
 .error{
