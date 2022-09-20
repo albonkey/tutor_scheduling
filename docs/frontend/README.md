@@ -19,9 +19,8 @@ import React, { useState } from 'react';
 import style from './MyComponent.module.scss';
 
 const MyComponent = ({isTeaching, subject, name, time}) => {
-	const [isSelected, setIsSelected] = useState(false);
-
-	return(
+  const [isSelected, setIsSelected] = useState(false);
+  return(
     <div
       className={
          [
