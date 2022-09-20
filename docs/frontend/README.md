@@ -122,7 +122,7 @@ Mixins are one of the most used features from the whole Sass language. They are 
 | Mixin              | Use Case                                                                                                               |
 |--------------------|------------------------------------------------------------------------------------------------------------------------|
 | headerBig          | Used for bigger headers                                                                                                |
-| text              | Used for normal text                                                                                                   |
+| text               | Used for normal text                                                                                                   |
 | smallText          | Used for small text                                                                                                    |
 | flexCenter         | Used for centering things in a element with flex                                                                       |
 | component          | Used to add rounded corners, padding and drop shadow to an element                                                     |
@@ -131,16 +131,19 @@ Mixins are one of the most used features from the whole Sass language. They are 
 ## Design
 
 ### Homepage
-![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Home.png)
+![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Home.jpg)
 
 ### Profile
-![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Profile.png)
+![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Profile.jpg)
 
 ### Sessions
-![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Sessions.png)
+![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Sessions.jpg)
+
+### Session
+![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Session.jpg)
 
 ### Discovery
-![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Discovery.png)
+![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Discovery.jpg)
 
 ### Settings
-![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Settings.png)
+![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Settings.jpg)
