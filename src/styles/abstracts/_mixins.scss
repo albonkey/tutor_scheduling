@@ -1,8 +1,7 @@
-
-@mixin header1{
+@mixin headerBig{
   font-size: 3rem;
 }
-@mixin text1{
+@mixin text{
   line-height: 1.2;
 }
 @mixin smallText{

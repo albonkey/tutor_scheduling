@@ -8,29 +8,38 @@
   justify-content: space-between;
   margin: 10px;
   background-color: color(secondary, lighter);
+  cursor: pointer;
 
+  /// When the screen is bigger than a tablet these rules will be applied
   @include breakpoint(tablet){
     margin: 10px 40px;
   }
-  cursor: pointer;
 }
+
 .teaching{
   background-color: color(secondary, base);
 }
+
 .selected{
   border-left: 5px solid color(accent, base);
 }
+
 .info{
   @include flexCenter;
+
   gap: 2rem;
 }
+
 .status{
   @include smallText;
 }
+
 .link{
   @include smallText;
   text-decoration: underline;
   cursor: pointer;
+
+  // When we hover the element these rules will be applied
   &:hover{
     opacity: 0.7;
   }
