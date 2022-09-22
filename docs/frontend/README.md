@@ -52,13 +52,13 @@ export default MyComponent;
 
 ## Routing
 We are using React Router to help us with the routing in our single page application.
-[React Router Documentation](https://v5.reactrouter.com/web/guides/quick-start)
 
-The router will help us switch between pages and decide on which pages to show based on our url.
+[React Router Documentation](https://v5.reactrouter.com/web/guides/quick-start)
 
 We'll set up the initial routing in our `App.js` file.
 
-First step is to import the parts we need:
+### Setting up project
+In `App.js` do the following:
 
 ```js
 import {BrowserRouter, Switch, Route, Link} from 'react-router-dom';
@@ -85,11 +85,18 @@ function App() {
 If the browser url is `www.mywebpage.com/settings` the `<SettingsPage>` will be displayed.  
 
 ### Adding a New Route
-In between the `<Switch></Switch>` add:
+In between the `<Switch></Switch>` you can add a route like this:
 ```js
 <Route path='/path'>
   <MyComponent/>
 </Route>
+```
+
+### Linking to Routes
+When linking to another route you should use the `<Link>` component.
+
+```js
+  <Link to="/settings">Settings</Link>
 ```
 
 ## Styling with Sass/ CSS
