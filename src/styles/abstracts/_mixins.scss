@@ -1,5 +1,9 @@
-@mixin headerBig{
+@mixin headingBig{
   font-size: 3rem;
+}
+@mixin headingMedium{
+  font-size: 1.5rem;
+  margin-top: 25px;
 }
 @mixin text{
   line-height: 1.2;

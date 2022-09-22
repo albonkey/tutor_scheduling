@@ -1,0 +1,37 @@
+@import "../../styles/abstracts/_mixins.scss";
+@import "../../styles/abstracts/_variables.scss";
+
+.wrapper{
+  display: flex;
+  flex-direction: column;
+  margin: 50px;
+  gap: 5vw;
+
+  @include breakpoint(tablet){
+    flex-direction: row;
+  }
+}
+.info{
+  display: flex;
+  flex-direction: column;
+}
+.image{
+  min-width: 50%;
+  height: 600px;
+  background-color: red;
+  @include breakpoint(tablet){
+    background-color: blue;
+  }
+}
+.nrOfSessions{
+  @include headingMedium;
+}
+.stars{
+  color: color(accent, base);
+}
+.heading{
+  @include headingBig;
+}
+.heading2{
+  @include headingMedium;
+}
