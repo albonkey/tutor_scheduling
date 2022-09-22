@@ -178,6 +178,34 @@ Mixins are one of the most used features from the whole Sass language. They are 
 | component          | Used to add rounded corners, padding and drop shadow to an element                                                     |
 | breakpoint($point) | Used to add breakpoints for different screen sizes. Parameters: `desktop`, `laptop`, `tablet`, `phablet`, `mobileonly` |
 
+## Font Awesome
+Font Awesome is a library for icons which allows us to import any icon into our application.
+
+[Font Awesome Documentation](https://fontawesome.com/v5/docs/web/use-with/react)
+
+### To use Font Awesome in your component
+```js
+// First import the FontAwesomeIcon component.
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+//Then import whatever component you want to use
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+
+//Now you can use it in your component
+const MyComponent = () => {
+  return(
+    <div>
+      <FontAwesomeIcon icon='faStar' />
+    </div>
+  )
+}
+```
+
+### Finding Icons
+Font Awesome provides a list over all icons on their website. Not all icons are available in the free version.
+
+[Find Icons Here](https://fontawesome.com/icons)
+
 ## Design
 
 ### Homepage
