@@ -10,6 +10,14 @@
       "StackName": "amplify-tutorscheduling-dev-191556",
       "StackId": "arn:aws:cloudformation:us-west-2:658631780016:stack/amplify-tutorscheduling-dev-191556/b40acad0-2352-11ed-9e0d-0ac61c92dc81",
       "AmplifyAppId": "da1roj8d244p9"
+    },
+    "categories": {
+      "function": {
+        "myFunction": {
+          "deploymentBucketName": "amplify-tutorscheduling-dev-191556-deployment",
+          "s3Key": "amplify-builds/myFunction-656d364238357553617a-build.zip"
+        }
+      }
     }
   }
 }

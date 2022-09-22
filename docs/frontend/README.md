@@ -49,6 +49,49 @@ const MyComponent = ({isTeaching, subject, name, time}) => {
 export default MyComponent;
 
 ```
+
+## Routing
+We are using React Router to help us with the routing in our single page application.
+[React Router Documentation](https://v5.reactrouter.com/web/guides/quick-start)
+
+The router will help us switch between pages and decide on which pages to show based on our url.
+
+We'll set up the initial routing in our `App.js` file.
+
+First step is to import the parts we need:
+
+```js
+import {BrowserRouter, Switch, Route, Link} from 'react-router-dom';
+
+```
+After that we wrap our application in the `<BrowserRouter>`. We use the `<Switch>` component and `<Route>` components to decide on which component we want to display on our website.
+
+```js
+function App() {
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route path='/settings'>
+          <SettingsPage/>
+        </Route>
+        <Route path='/'>
+          <HomePage/>
+        </Route>
+      </Switch>
+    </BrowserRouter>
+  );
+}
+```
+If the browser url is `www.mywebpage.com/settings` the `<SettingsPage>` will be displayed.  
+
+### Adding a New Route
+In between the `<Switch></Switch>` add:
+```js
+<Route path='/path'>
+  <MyComponent/>
+</Route>
+```
+
 ## Styling with Sass/ CSS
 Sass is an extension of CSS that adds power and elegance to the basic language. In this project we're using `variables` and `mixins` to create coherence across our project and making it easier to write responsive components.
 
