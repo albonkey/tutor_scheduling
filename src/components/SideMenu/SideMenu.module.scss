@@ -1,0 +1,48 @@
+@import "../../styles/abstracts/_mixins.scss";
+@import "../../styles/abstracts/_variables.scss";
+
+.sideMenu{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 95vh;
+  background-color: color(accent, base);
+  color: color(primary, base);
+  font-size: 1.2rem;
+}
+
+.list{
+  padding: 5px;
+}
+.listItem{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 25px;
+  padding: 10px;
+  margin: 3px 0;
+  border-radius: $border-radius;
+  cursor: pointer;
+
+  &:hover{
+    background-color: color(accent, lighter);
+  }
+}
+.hide{
+  .listItemText{
+    display: none;
+  }
+}
+.listItemText{
+  display: block;
+  width: 10vw;
+  overflow: hidden;
+}
+
+.toggleContainer{
+  display: flex;
+  justify-content: flex-end;
+  padding: 15px;
+
+  cursor: pointer;
+}

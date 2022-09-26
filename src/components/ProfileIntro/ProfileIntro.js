@@ -9,7 +9,7 @@ const ProfileIntro = ({name, rating, nrOfSessions, bio, image}) => {
 	 return(
 		 <div className={style.wrapper}>
 		 	<div className={style.info}>
-				<h3 className={style.heading}>Tutor Rating</h3>
+				<h3 className={style.heading}>{name}</h3>
 				<div className={style.stars}>
 					<FontAwesomeIcon icon={faStar} />
 					<FontAwesomeIcon icon={faStar} />
@@ -17,18 +17,12 @@ const ProfileIntro = ({name, rating, nrOfSessions, bio, image}) => {
 					<FontAwesomeIcon icon={faStar} />
 					<FontAwesomeIcon icon={faStar} />
 				</div>
-				<div className={style.nrOfSessions}>Nr of Sessions {nrOfSessions}</div>
+				<div className={style.nrOfSessions}>{nrOfSessions} Sessions</div>
 				<h4 className={style.heading2}>About me</h4>
 				<p>{bio}</p>
 			</div>
 			<div className={style.image}>
-				{
-					image ?
-						<img src={img} />
-						:
-						<img src={pathToPlaceholderImage}/>
-
-				}
+				Image
 			</div>
 		 </div>
 	 )

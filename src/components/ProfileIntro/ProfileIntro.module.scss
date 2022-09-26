@@ -17,11 +17,9 @@
 }
 .image{
   min-width: 50%;
-  height: 600px;
-  background-color: red;
-  @include breakpoint(tablet){
-    background-color: blue;
-  }
+  height: 500px;
+  background-color: color(accent, base);
+
 }
 .nrOfSessions{
   @include headingMedium;

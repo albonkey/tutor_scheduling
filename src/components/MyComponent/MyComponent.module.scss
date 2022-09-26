@@ -10,10 +10,6 @@
   background-color: color(secondary, lighter);
   cursor: pointer;
 
-  /// When the screen is bigger than a tablet these rules will be applied
-  @include breakpoint(tablet){
-    margin: 10px 40px;
-  }
 }
 
 .teaching{

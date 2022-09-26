@@ -1,0 +1,17 @@
+@import "../../styles/abstracts/_mixins.scss";
+@import "../../styles/abstracts/_variables.scss";
+
+.topMenu{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  height: 55px;
+  padding: 15px;
+  background-color: color(black, lighter);
+  color: color(primary, base);
+}
+
+.logo{
+  height: 100%;
+}
