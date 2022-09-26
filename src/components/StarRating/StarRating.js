@@ -5,11 +5,11 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStarHalfStroke } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faOpenStar} from '@fortawesome/free-regular-svg-icons';
 
-const Stars = (rating) => {    
+const StarRating = ({rating}) => {
     const stars = [];
     const whole = rating.toString().split('.')[0];
     const part = rating.toString().split('.')[1];
-    
+
     for(let i=0; i< whole; i++) {
         stars.push(<FontAwesomeIcon icon={faStar} />)
     }
@@ -29,8 +29,8 @@ const Stars = (rating) => {
         <div className={style.stars}>
             <h2> {stars}</h2>
         </div>
-       
+
     );
 }
 
-export default Stars;
+export default StarRating;
