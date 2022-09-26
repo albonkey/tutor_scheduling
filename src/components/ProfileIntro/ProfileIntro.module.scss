@@ -1,35 +1,26 @@
 @import "../../styles/abstracts/_mixins.scss";
 @import "../../styles/abstracts/_variables.scss";
 
-.wrapper{
-  display: flex;
-  flex-direction: column;
-  margin: 50px;
-  gap: 5vw;
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 50px;
+    gap: 5vw;
 
-  @include breakpoint(tablet){
-    flex-direction: row;
-  }
+    @include breakpoint(tablet) {
+        flex-direction: row;
+    }
 }
-.info{
-  display: flex;
-  flex-direction: column;
+.info {
+    display: flex;
+    flex-direction: column;
 }
-.image{
-  min-width: 50%;
-  height: 500px;
-  background-color: color(accent, base);
-
+.image {
+    min-width: 50%;
 }
-.nrOfSessions{
-  @include headingMedium;
+.heading {
+    @include headingBig;
 }
-.stars{
-  color: color(accent, base);
-}
-.heading{
-  @include headingBig;
-}
-.heading2{
-  @include headingMedium;
+.heading2 {
+    @include headingMedium;
 }
