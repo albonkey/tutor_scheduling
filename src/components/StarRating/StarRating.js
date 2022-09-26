@@ -1,23 +1,14 @@
 import React from 'react';
-import style from './Stars.module.scss';
+import style from './StarRating.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStarHalfStroke } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faOpenStar} from '@fortawesome/free-regular-svg-icons';
 
-const Stars = (rating) => {
-/*    return(
-        <div className={style.stars}>
-            <FontAwesomeIcon icon={faStar} />
-            <FontAwesomeIcon icon={faStarHalfStroke} />
-            <FontAwesomeIcon icon={faOpenStar} />
-        </div>
-    )
-*/
-    
-    let stars = [];
-    let whole = rating.toString().split('.')[0];
-    let part = rating.toString().split('.')[1];
+const Stars = (rating) => {    
+    const stars = [];
+    const whole = rating.toString().split('.')[0];
+    const part = rating.toString().split('.')[1];
     
     for(let i=0; i< whole; i++) {
         stars.push(<FontAwesomeIcon icon={faStar} />)

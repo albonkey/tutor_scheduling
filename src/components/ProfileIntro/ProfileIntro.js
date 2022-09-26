@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './ProfileIntro.module.scss';
 import placeholder from './placeholderImage.jpg';
-import stars from '../Stars/Stars.js'
+import stars from '../StarRating/StarRating.js'
 
 const ProfileIntro = ({name, rating, nrOfSessions, bio, image}) => {
     return(
