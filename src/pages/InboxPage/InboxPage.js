@@ -3,7 +3,7 @@ import style from './InboxPage.module.scss';
 
 const InboxPage = () => {
 	 return(
-		 <div>
+		 <div className={style.page}>
 		 	Inbox
 		 </div>
 	 )

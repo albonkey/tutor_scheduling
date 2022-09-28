@@ -4,7 +4,7 @@ import ProfileIntro from '../../components/ProfileIntro/ProfileIntro';
 
 const ProfilePage = () => {
 	 return(
-		 <div>
+		 <div className={style.page}>
 		 	<ProfileIntro
 				name={'A. Person'}
 				rating={2}

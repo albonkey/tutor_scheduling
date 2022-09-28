@@ -3,7 +3,7 @@ import style from './DiscoveryPage.module.scss';
 
 const DiscoveryPage = () => {
 	 return(
-		 <div>
+		 <div className={style.page}>
 		 	Discovery
 		 </div>
 	 )

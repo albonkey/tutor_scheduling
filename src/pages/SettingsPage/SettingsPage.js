@@ -3,7 +3,7 @@ import style from './SettingsPage.module.scss';
 
 const SettingsPage = () => {
 	 return(
-		 <div>
+		 <div className={style.page}>
 		 	Settings
 		 </div>
 	 )
