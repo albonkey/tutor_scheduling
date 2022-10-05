@@ -5,11 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faPerson, faEarth, faPersonChalkboard, faCreditCard, faGear, faFileLines, faAngleRight, faAngleLeft} from '@fortawesome/free-solid-svg-icons';
 
 const SideMenu = () => {
-	const [show, setShow] = useState(true);
 
 	 return(
 	 	<nav className={style.sideMenu}>
-			<ul className={`${style.list} ${!show && style.hide}`}>
+			<ul className={style.list}>
 				<li>
 					 <NavLink to="/" className={style.listItem}>
 						 <FontAwesomeIcon icon={faHome} fixedWidth/>
@@ -53,11 +52,6 @@ const SideMenu = () => {
 					</NavLink>
 				</li>
 			</ul>
-			<div className={style.toggleContainer}>
-				{
-						<FontAwesomeIcon icon={show ? faAngleLeft : faAngleRight} fixedWidth onClick={() => setShow(!show)}/>
-				}
-			</div>
 		</nav>
 	 )
 }
