@@ -3,7 +3,7 @@ import style from './SessionsPage.module.scss';
 
 const SessionsPage = () => {
 	 return(
-		 <div>
+		 <div className={style.page}>
 		 	Sessions
 		 </div>
 	 )

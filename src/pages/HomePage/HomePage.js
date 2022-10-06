@@ -4,7 +4,7 @@ import MyComponent from '../../components/MyComponent/MyComponent';
 
 const HomePage = () => {
 	 return(
-		 <div>
+		 <div className={style.page}>
 			 <MyComponent
 				 isTeaching={true}
 				 subject={'Math'}

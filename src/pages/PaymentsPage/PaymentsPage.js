@@ -3,7 +3,7 @@ import style from './PaymentsPage.module.scss';
 
 const PaymentsPage = () => {
 	 return(
-		 <div>
+		 <div className={style.page}>
 		 	Payments
 		 </div>
 	 )
