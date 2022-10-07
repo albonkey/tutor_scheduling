@@ -1,0 +1,51 @@
+@import "../../styles/abstracts/_mixins.scss";
+@import "../../styles/abstracts/_variables.scss";
+.wrapper{
+  @include component;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: color(secondary, lighter);
+  margin-bottom: 10px;
+
+}
+.intro{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+
+}
+.right{
+  display: flex;
+  align-items: center;
+}
+.ratingContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.icon{
+  padding: 0 15px 0 50px;
+  font-size: 1.5rem;
+  color: color(accent, base);
+}
+.extended{
+  overflow: hidden;
+  max-height: 1000px;
+  transition: 1s;
+}
+.hidden{
+  max-height: 0;
+  transition: 0.5s;
+}
+.heading{
+  margin-top: 25px;
+  padding-top: 25px;
+  border-top: 1px solid color(accent, base);
+}
+.info{
+  @include text;
+  color: color(accent, base);
+}

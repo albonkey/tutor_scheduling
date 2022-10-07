@@ -3,7 +3,7 @@ import style from './DocumentsPage.module.scss';
 
 const DocumentsPage = () => {
 	 return(
-		 <div>
+		 <div className={style.page}>
 		 	Documents
 		 </div>
 	 )

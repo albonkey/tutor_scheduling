@@ -1,0 +1,91 @@
+@import "../../styles/abstracts/_mixins.scss";
+@import "../../styles/abstracts/_variables.scss";
+
+.page{
+  @include page;
+}
+.pageHeading{
+  width: 100%;
+  padding: 15px 0;
+  margin-bottom: 15px;
+  border-bottom: 1px solid color(accent, base);
+}
+.searchWrapper{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 5px;
+  margin-bottom: 25px;
+
+  @include breakpoint(tablet){
+    flex-direction: row;
+  }
+}
+.searchMain{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-basis: 80%;
+  gap: 5px;
+}
+.searchButton{
+  display: flex;
+  align-items: flex-end;
+  flex-basis: 20%;
+  button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px 30px;
+    background-color: color(accent, base);
+    border-radius: 10px;
+    color: white;
+
+  }
+}
+.searchAttributes{
+  display: flex;
+  gap: 5px;
+}
+.searchAttribute{
+  display: flex;
+  justify-content: space-between;
+  flex: 1 1 33%;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: color(accent, base);
+
+  select{
+    display: flex;
+    width: 100%;
+    background-color: inherit;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    padding: 0 10px;
+
+    &:focus{
+      border: none;
+      background-color: inherit;
+      box-shadow: 0;
+      outline: none;
+    }
+  }
+}
+.search{
+  display: flex;
+  gap:5px;
+  input{
+    flex-grow: 1;
+    padding: 10px;
+    background-color: color(secondary, base);
+    border: 1px solid color(accent, base);
+    border-radius: 10px;
+    font-size: 1.2rem;
+  }
+}
+.heading{
+  width: 100%;
+}
