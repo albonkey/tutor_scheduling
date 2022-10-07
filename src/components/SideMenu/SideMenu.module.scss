@@ -6,6 +6,9 @@
   flex-direction: column;
   justify-content: space-between;
   height: 95vh;
+  position: sticky;
+  left: 0;
+  top: 5vh;
   background-color: color(accent, base);
   color: color(primary, base);
   font-size: 1.2rem;
@@ -28,15 +31,14 @@
     background-color: color(accent, lighter);
   }
 }
-.hide{
-  .listItemText{
-    display: none;
-  }
-}
+
 .listItemText{
-  display: block;
-  width: 10vw;
+  display: none;
+  width: 180px;
   overflow: hidden;
+  @include breakpoint(tablet){
+    display: block;
+  }
 }
 
 .toggleContainer{
@@ -45,4 +47,10 @@
   padding: 15px;
 
   cursor: pointer;
+}
+.toggleButton{
+  display: none;
+    @include breakpoint(tablet){
+      display: block;
+    }
 }

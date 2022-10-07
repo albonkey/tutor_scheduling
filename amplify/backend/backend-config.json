@@ -1,6 +1,6 @@
 {
   "function": {
-    "myFunction": {
+    "Practice": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
