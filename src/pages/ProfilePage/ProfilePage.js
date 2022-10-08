@@ -10,35 +10,33 @@ const ProfilePage = () => {
 
 	const courses = {name: 'A.Person', subject: 'History', nrOfSessions: 150, rating: 3.5, info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae eros egestas, sodales nunc eu, fermentum enim.'};
 
-	const reviews = { 
-		review: [
+	const reviews = [
 		{
-			id: 1, 
-			name: 'Jane', 
-			subject: 'History',  rating: 3.5, 
+			id: 1,
+			name: 'Jane',
+			subject: 'History',  rating: 3.5,
 			info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae eros egestas, sodales nunc eu, fermentum enim.',
 			image: ''
 		},{
 			id: 2,
-			name: 'Sal', 
-			subject: 'Math',  rating: 4, 
+			name: 'Sal',
+			subject: 'Math',  rating: 4,
 			info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae eros egestas, sodales nunc eu, fermentum enim.',
 			image: ''
 		},{
 			id: 3,
-			name: 'Mel', 
-			subject: 'Math',  rating: 4.5, 
+			name: 'Mel',
+			subject: 'Math',  rating: 4.5,
 			info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae eros egestas, sodales nunc eu, fermentum enim.',
 			image: ''
 		}, {
 			id: 4,
-			name: 'Test extra', 
-			subject: 'Math',  rating: 5, 
+			name: 'Test extra',
+			subject: 'Math',  rating: 5,
 			info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae eros egestas, sodales nunc eu, fermentum enim.',
 			image: ''
 		}
-
-	]}
+	]
 
 	 return(
 		<div className={style.page}>
@@ -55,7 +53,7 @@ const ProfilePage = () => {
 				courses = {courses}
 			/>
 
-			<ProfileReviews 
+			<ProfileReviews
 				reviews ={reviews} />
 		</div>
 	 )

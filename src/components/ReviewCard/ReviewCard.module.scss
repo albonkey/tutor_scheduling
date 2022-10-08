@@ -2,31 +2,36 @@
 @import "../../styles/abstracts/_variables.scss";
 
 .wrapper{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: color(secondary, lighter);
-    border-radius: 20px;
-    @include component;
-
-    @include breakpoint(tablet) {
-        align-items: flex-start;
-    }
+  @include component;
+  flex-basis: 32%;
+  flex-grow: 1;
+  box-sizing: border-box;
+  min-width: 300px;
+  max-width: 650px;
+  background-color: color(secondary, lighter);
+  margin: 50px 0;
 }
-.info {
-    text-align: center;
-    margin: 5px 0;
-    border-radius: 10px;
-    padding: 5px;
+.info{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: -70px;
+  padding: 10px;
 }
 .image {
   border-radius: 50%;
-  width: 100%;
+  width: 70%;
+  max-width: 300px;
 }
 .stars{
-  margin: 10px 0;
+  font-size: 1.2rem;
+  margin: 15px;
+}
+.quote{
+  line-height: 1.2rem;
+
 }
 .heading2 {
-    text-align: center;
-    @include headingMedium;
+  @include headingMedium;
 }

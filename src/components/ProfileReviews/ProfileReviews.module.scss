@@ -2,15 +2,15 @@
 @import "../../styles/abstracts/_variables.scss";
 
 .wrapper {
-    @include breakpoint(tablet) {
-        flex-direction: row;
-    }
+  display: flex;
+  flex-direction: column;
 }
 .cards{
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
-    gap: 5vw;
+    gap: 10px;
 
     @include breakpoint(tablet) {
         flex-direction: row;
@@ -21,7 +21,7 @@
     @include headingMedium;
 }
 .subheading{
-    text-align: center;
+    align-self: center;
     margin: 20px 0;
-    @include text;
+    text-align: center;
 }

@@ -6,19 +6,19 @@ import StarRating from '../StarRating/StarRating';
 const ReviewCard = ({review}) => {
     return(
         <div className = {style.wrapper}>
-            <div className = {style.info}>
-                <div>
-                {
-                    review.image ? <img img className = {style.image} src={review.image} alt='' /> : <img className = {style.image} src={placeholder} alt='' />
-                }
-                </div>
-                <div className = {style.stars}><StarRating 
-                    rating ={review.rating} />
-                </div>
-                <p>{review.info}</p>
-                <h2 className = {style.heading2}>{review.name}</h2>
+          <div className={style.info}>
+            {
+              review.image ?
+                <img img className = {style.image} src={review.image} alt='' />
+                :
+                <img className = {style.image} src={placeholder} alt='' />
+            }
+              <div className = {style.stars}>
+                <StarRating rating ={review.rating} />
+              </div>
+              <p className={style.quote}>{review.info}</p>
+              <div className = {style.heading2}>{review.name}</div>
             </div>
-            
         </div>
     )
 }

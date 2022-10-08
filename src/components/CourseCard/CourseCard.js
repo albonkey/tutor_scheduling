@@ -24,30 +24,28 @@ const CourseCard = ({name, courses}) => {
                     <div>
                         <StarRating rating={courses.rating} />
                     </div>
-                    <div 
-                        className={style.carets} 
+                    <div
+                        className={style.carets}
                         onClick = {() => setIsSelected(!isSelected)}
                     >
                         {
                             isSelected ?
                             <div>
                                 <FontAwesomeIcon icon = {upCaret} />
-                            </div> 
+                            </div>
                             :
                             <FontAwesomeIcon icon = {downCaret} />
                         }
                     </div>
                 </div>
             </div>
-            <div className={[style.extended, !isSelected && style.hidden].join(' ')}> 
-                    <p className={style.info}>
-                        {courses.info}
-                    </p>
-                    <div className={style.buttonWrapper}>
-					<button className={style.button}>Schedule a session with {name}</button>
-				</div>
+            <div className={[style.extended, !isSelected && style.hidden].join(' ')}>
+                <p className={style.info}>
+                    {courses.info}
+                </p>
+					      <button className={style.button}>Schedule a session with {name}</button>
             </div>
-          
+
         </div>
     )
 }
