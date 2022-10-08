@@ -2,18 +2,11 @@
 @import "../../styles/abstracts/_variables.scss";
 
 .wrapper {
-    margin: 50px;
-
     @include breakpoint(tablet) {
         flex-direction: row;
     }
 }
-.heading {
-    @include headingBig;
-}
+
 .heading2 {
     @include headingMedium;
-}
-.subheading {
-    @include smallText;
 }

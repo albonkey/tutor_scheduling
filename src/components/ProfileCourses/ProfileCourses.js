@@ -6,9 +6,10 @@ const ProfileCourses = ({name, courses}) => {
     return(
         <div className = {style.wrapper}>
             <div>
-                <h2 className= {style.heading2}>Tutoring</h2>
+                <div className= {style.heading2}>Tutoring</div>
                 <div>
                     <CourseCard
+                            name = {name}
                             courses = {courses}  
                  />
                 </div>
