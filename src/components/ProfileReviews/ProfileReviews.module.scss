@@ -1,0 +1,27 @@
+@import "../../styles/abstracts/_mixins.scss";
+@import "../../styles/abstracts/_variables.scss";
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.cards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    @include breakpoint(tablet) {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
+.heading2 {
+    @include headingMedium;
+}
+.subheading{
+    align-self: center;
+    margin: 20px 0;
+    text-align: center;
+}

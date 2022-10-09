@@ -1,0 +1,12 @@
+@import "../../styles/abstracts/_mixins.scss";
+@import "../../styles/abstracts/_variables.scss";
+
+.wrapper {
+    @include breakpoint(tablet) {
+        flex-direction: row;
+    }
+}
+
+.heading2 {
+    @include headingMedium;
+}

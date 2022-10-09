@@ -1,0 +1,76 @@
+@import "../../styles/abstracts/_mixins.scss";
+@import "../../styles/abstracts/_variables.scss";
+
+.wrapper{
+    @include component;
+    display: flex;
+    flex-direction: column;
+    background-color: color(secondary, lighter);
+  }
+  .intro{
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+  }
+  .course{
+    display: flex;
+    @include flexCenter;
+    gap: 2rem;
+  }
+  .selected{
+    border-top: 1px solid color(accent, base);
+  }
+  .icons{
+    @include flexCenter;
+    gap: 1rem;
+  }
+  .carets{
+    font-size: 35px;
+    color: color(accent, base);
+    cursor: pointer;
+    @include flexCenter;
+    @include breakpoint(tablet) {
+        text-align: justify;
+        margin-left: 50px;
+    }
+  }
+  .info {
+    border-top: 1px solid color(accent, base);
+    padding: 15px 0px;
+  }
+
+  .button{
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    margin-top: 50px;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: color(accent, base);
+    color: color(primary, base);
+
+    &:hover{
+      background-color: lighten(color(accent, base), 5%);
+    }
+  }
+.heading{
+    @include headingBig;
+}
+.heading3{
+    @include text;
+}
+.subheading{
+    @include smallText;
+    color: color(accent, base);
+}
+.extended{
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 1000px;
+  transition: 1s;
+}
+.hidden{
+  max-height: 0;
+  transition: 0.5s;
+}

@@ -1,24 +1,23 @@
-
 //Colors
-$palettes: (
-    white: (
-      base: white,
-      darker: #f2f2f2,
-      dark: darken(white, 20%)
-    ),
-    navy-blue: (
-        base:   #18121E,
-        lighter: #49375c
-    ),
-    rusty-red: (
-        base:    #DA2C43,
-    ),
-    gunmetal: (
-        base:    #984B43,
-    ),
-    warm-yellow: (
-        base:   #EAC67A,
 
+$font1: 'Arial';
+$border-radius: 5px;
+
+$palettes: (
+    primary: (
+      base: #FFFFFF,
+    ),
+    secondary: (
+        base:   #D2F7C9,
+        lighter: darken(#F6FFF4, 5%)
+    ),
+    accent: (
+        base:    #318974,
+        lighter: lighten(#318974, 5%)
+    ),
+    black: (
+      base: rgb(0,0,0),
+      lighter: rgb(42,42,42)
     ),
     success: (
       base: #43e86a,

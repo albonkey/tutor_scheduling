@@ -1,8 +1,7 @@
 @import 'abstracts/_variables.scss';
+@import 'abstracts/_mixins.scss';
 
 @import 'base/_base.scss';
-
-@import 'layout/_page.scss';
 
 @import 'components/headers.scss';
 @import 'components/notifications.scss';
