@@ -1,15 +1,23 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-tutorscheduling-dev-191556-authRole",
-      "UnauthRoleArn": "arn:aws:iam::658631780016:role/amplify-tutorscheduling-dev-191556-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::658631780016:role/amplify-tutorscheduling-dev-191556-authRole",
+      "AuthRoleName": "amplify-tutorscheduling-dev-191001-authRole",
+      "UnauthRoleArn": "arn:aws:iam::658631780016:role/amplify-tutorscheduling-dev-191001-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::658631780016:role/amplify-tutorscheduling-dev-191001-authRole",
       "Region": "us-west-2",
-      "DeploymentBucketName": "amplify-tutorscheduling-dev-191556-deployment",
-      "UnauthRoleName": "amplify-tutorscheduling-dev-191556-unauthRole",
-      "StackName": "amplify-tutorscheduling-dev-191556",
-      "StackId": "arn:aws:cloudformation:us-west-2:658631780016:stack/amplify-tutorscheduling-dev-191556/b40acad0-2352-11ed-9e0d-0ac61c92dc81",
-      "AmplifyAppId": "da1roj8d244p9"
+      "DeploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
+      "UnauthRoleName": "amplify-tutorscheduling-dev-191001-unauthRole",
+      "StackName": "amplify-tutorscheduling-dev-191001",
+      "StackId": "arn:aws:cloudformation:us-west-2:658631780016:stack/amplify-tutorscheduling-dev-191001/e07ec180-2351-11ed-9a31-0a81d334c1c7",
+      "AmplifyAppId": "d3np77odjdgfsy"
+    },
+    "categories": {
+      "function": {
+        "Practice": {
+          "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
+          "s3Key": "amplify-builds/Practice-57306e4d3962466f474c-build.zip"
+        }
+      }
     }
   }
 }
