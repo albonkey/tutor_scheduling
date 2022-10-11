@@ -13,7 +13,7 @@
     background-color: color(secondary, base);
   }
   .learn{
-    background-color: color(success, lighter);
+    background-color: lighten(color(secondary, base), 7%);
   }
   .info{
     @include flexCenter;
