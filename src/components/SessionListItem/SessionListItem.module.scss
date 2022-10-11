@@ -1,0 +1,35 @@
+@import "../../styles/abstracts/_mixins.scss";
+@import "../../styles/abstracts/_variables.scss";
+
+.wrapper{
+    @include component;
+  
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    
+  }
+  .teach{
+    background-color: color(secondary, base);
+  }
+  .learn{
+    background-color: color(success, lighter);
+  }
+  .info{
+    @include flexCenter;
+  
+    gap: 2rem;
+  }
+  .status{
+    @include smallText;
+  }
+  .link{
+    @include smallText;
+    text-decoration: underline;
+    cursor: pointer;
+  
+    // When we hover the element these rules will be applied
+    &:hover{
+        color: lighten(color(accent, base), 5%);
+    }
+  }
