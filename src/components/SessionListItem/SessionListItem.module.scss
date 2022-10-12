@@ -6,18 +6,19 @@
   
     display: flex;
     justify-content: space-between;
-    margin: 10px;
-    
+    gap: 10px;
   }
   .teach{
     background-color: color(secondary, base);
+    margin-top: 10px;
   }
   .learn{
     background-color: lighten(color(secondary, base), 7%);
+    margin-top: 10px;
   }
   .info{
     @include flexCenter;
-  
+
     gap: 2rem;
   }
   .status{
@@ -25,6 +26,7 @@
   }
   .link{
     @include smallText;
+
     text-decoration: underline;
     cursor: pointer;
   
