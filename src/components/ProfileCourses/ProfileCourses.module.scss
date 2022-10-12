@@ -2,9 +2,7 @@
 @import "../../styles/abstracts/_variables.scss";
 
 .wrapper {
-    @include breakpoint(tablet) {
-        flex-direction: row;
-    }
+  width: 100%;
 }
 
 .heading2 {

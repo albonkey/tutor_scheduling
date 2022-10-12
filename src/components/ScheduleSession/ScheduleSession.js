@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import style from './ScheduleSession.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
-
+import { monthsOfTheYear, daysOfTheWeek } from './weekDaysAndMonths.js';
 
 const ScheduleSession = ({ course }) => {
 	const today = new Date();
-	const monthsOfTheYear = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-									'August', 'September', 'October', 'November', 'Desember'];
 	const [month, setMonth] = useState(today.getMonth());
 	const [year, setYear] = useState(today.getYear());
 	const [daySelected, setDaySelected] = useState(new Date());
@@ -27,9 +25,6 @@ const ScheduleSession = ({ course }) => {
 	}
 
 	const createCalendar = (month, year) => {
-		const monthsOfTheYear = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-										'August', 'September', 'October', 'November', 'Desember'];
-		const daysOfTheWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 		const calendar = new Date();
 		calendar.setMonth(month);
 		calendar.setYear(year);

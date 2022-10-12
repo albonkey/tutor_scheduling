@@ -15,8 +15,19 @@
       "function": {
         "Practice": {
           "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
-          "s3Key": "amplify-builds/Practice-53397762587a70526370-build.zip"
+          "s3Key": "amplify-builds/Practice-792b3352643055522b43-build.zip"
+        },
+        "usersEndpoint": {
+          "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
+          "s3Key": "amplify-builds/usersEndpoint-766848356f41444a6530-build.zip"
+        },
+        "coursesEndpoint": {
+          "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
+          "s3Key": "amplify-builds/coursesEndpoint-737645786251644a4f6d-build.zip"
         }
+      },
+      "api": {
+        "tutorhubAPI": {}
       }
     }
   }

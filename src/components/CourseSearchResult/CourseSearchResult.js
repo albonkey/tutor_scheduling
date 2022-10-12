@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import StarRating from '../StarRating/StarRating';
 import ScheduleSession from '../ScheduleSession/ScheduleSession';
+
 const CourseSearchResult = ({course}) => {
 	const {name, subject, level, nrOfLessons, rating, info} = course;
 	const [toggle, setToggle] = useState(false);
