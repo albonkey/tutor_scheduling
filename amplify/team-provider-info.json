@@ -28,6 +28,9 @@
       },
       "api": {
         "tutorhubAPI": {}
+      },
+      "auth": {
+        "tutorscheduling64ccd870": {}
       }
     }
   }

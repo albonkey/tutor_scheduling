@@ -9,7 +9,7 @@ const ScheduleSession = ({ course }) => {
 	const [month, setMonth] = useState(today.getMonth());
 	const [year, setYear] = useState(today.getYear());
 	const [daySelected, setDaySelected] = useState(new Date());
-	const [appointmentSelected, setAppointmentSelected] = useState(5);
+	const [appointmentSelected, setAppointmentSelected] = useState('');
 
 	const selectDay = (day, month, year) => {
 		const date = new Date();
@@ -86,6 +86,7 @@ const ScheduleSession = ({ course }) => {
 			</div>
 			)
 	}
+
 	 return(
 		 <div className={style.wrapper}>
 		 	<div className={style.elementWrapper}>
@@ -103,7 +104,6 @@ const ScheduleSession = ({ course }) => {
 					{`${monthsOfTheYear[daySelected.getMonth()]} ${daySelected.getDate()}`}
 				</div>
 				{createAppointments(2, course)}
-
 			</div>
 		 </div>
 	 )

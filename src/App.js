@@ -1,9 +1,12 @@
 import React from 'react';
 import style from './App.module.scss';
 import {BrowserRouter, Switch, Route, Link} from 'react-router-dom';
+import { Amplify } from 'aws-amplify';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
+import awsExports from './aws-exports';
 import TopMenu from './components/TopMenu/TopMenu';
 import SideMenu from './components/SideMenu/SideMenu';
-
 import HomePage from './pages/HomePage/HomePage';
 import InboxPage from './pages/InboxPage/InboxPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
@@ -14,10 +17,12 @@ import DiscoveryPage from './pages/DiscoveryPage/DiscoveryPage';
 import DocumentsPage from './pages/DocumentsPage/DocumentsPage';
 import SettingsPage from './pages/SettingsPage/SettingsPage';
 
-function App() {
+Amplify.configure(awsExports);
+
+function App({signOut, user}) {
   return (
     <BrowserRouter>
-      <TopMenu />
+      <TopMenu signOut={signOut}/>
       <main className={style.mainView}>
         <SideMenu />
         <div className={style.content}>
@@ -57,4 +62,4 @@ function App() {
   );
 }
 
-export default App;
+export default withAuthenticator(App);
