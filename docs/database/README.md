@@ -43,7 +43,7 @@ Amazon DynamoDB is a fully managed NoSQL database service that provides fast and
 
 The database consists of 6 collections as shown below
 
-![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Database.jpg)
+![](https://github.com/albonkey/tutor_scheduling/blob/master/docs/images/Database_Updated.jpg)
 
 
 ## Calling DynamoDB from Lambda

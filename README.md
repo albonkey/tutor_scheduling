@@ -6,11 +6,11 @@ To get started working with the project you can download this repo to your deskt
 
 Once you have downloaded the repo, run the following command in the root of the project to download/update the project dependencies:
 
-```npm install```javascript
+```npm install```
 
 You can run the app by using the following command in the root of the project:
 
-```npm start```javascript
+```npm start```
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
