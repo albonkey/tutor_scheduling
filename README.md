@@ -4,9 +4,13 @@ This is the repo for our Advanced Software Engineering class project. We'll be b
 ## Getting Started
 To get started working with the project you can download this repo to your desktop.
 
-When you have downloaded the repo you can run the app by using the following command in the root of the project:
+Once you have downloaded the repo, run the following command in the root of the project to download/update the project dependencies:
 
-#### `npm start`
+```npm install```
+
+You can run the app by using the following command in the root of the project:
+
+```npm start```
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
