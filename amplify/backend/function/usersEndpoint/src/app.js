@@ -38,8 +38,17 @@ app.get('/users', function(req, res) {
 });
 
 app.get('/users/:id/reviews', async(req, res) => {
+  const {id} = req.params;
+
   const params = {
-    TableName : 'Reviews'
+    TableName : 'Reviews',
+    KeyConditionExpression: 'TutorID = :tutor',
+    ExpressionAttributeValues: {
+      ':tutor': id
+    },
+    ExpressionAttributeNames: {
+      '#TutorID': 'TutorID'
+    }
   }
   try {
     const data = await docClient.scan(params).promise();
