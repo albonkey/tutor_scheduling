@@ -4,6 +4,7 @@
 .wrapper {
     @include breakpoint(tablet) {
         flex-direction: row;
+        width: 100%;
     }
 }
 
