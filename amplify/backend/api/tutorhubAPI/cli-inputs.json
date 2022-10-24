@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "paths": {
+    "/users": {
+      "name": "/users",
+      "lambdaFunction": "usersEndpoint",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/courses": {
+      "name": "/courses",
+      "lambdaFunction": "coursesEndpoint",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

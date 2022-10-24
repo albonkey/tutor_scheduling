@@ -1,52 +1,28 @@
+const AWS = require('aws-sdk');
+const docClient = new AWS.DynamoDB.DocumentClient();
 
-
-//import { DynamoDBDClient } from "@aws-sdk/lib-dynamodb";
-const { DynamoDBClient,BatchExecuteStatementCommand  } = require("@aws-sdk/client-dynamodb");
-import { DynamoDBClient, BatchExecuteStatementCommand } from "@aws-sdk/client-dynamodb";
-const { DynamoDBDocumentClient } = require("@aws-sdk/lib-dynamodb");
-//import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
-// Set the AWS Region.
-const REGION = "us-west-2"; //e.g. "us-east-1"
-// Create an Amazon DynamoDB service client object.
-const ddbClient = new DynamoDBDClient({ region: REGION });
-
-const marshallOptions = {
-  // Whether to automatically convert empty strings, blobs, and sets to `null`.
-  convertEmptyValues: false, // false, by default.
-  // Whether to remove undefined values while marshalling.
-  removeUndefinedValues: false, // false, by default.
-  // Whether to convert typeof object to map attribute.
-  convertClassInstanceToMap: false, // false, by default.
-};
-
-const unmarshallOptions = {
-  // Whether to return numbers as a string instead of converting them to native JavaScript numbers.
-  wrapNumbers: false, // false, by default.
-};
-
-const translateConfig = { marshallOptions, unmarshallOptions };
-// const ddbDocClient = DynamoDBDocument.from(ddbClient, translateConfig);
-var ddbDocClient = new AWS.DynamoDB.DocumentClient(ddbClient,translateConfig);
 const params = {
   TableName : 'Users',
-  Item: {
-     UserId: '3'
+  /* Item properties will depend on your application concerns */
+  Key: {
+    UserId: 4
   }
 }
 
-async function createUsers(){
+async function getItem(){
   try {
-    await ddbDocClient.put(params).promise();
+    const data = await docClient.get(params).promise()
+    return data
   } catch (err) {
-    return err;
+    return err
   }
 }
 
-exports.handler = async (event) => {
+exports.handler = async (event, context) => {
   try {
-    await createUsers()
-    return { body: 'Successfully created item!' }
+    const data = await getItem()
+    return { body: JSON.stringify(data) }
   } catch (err) {
     return { error: err }
   }
-};
+}
