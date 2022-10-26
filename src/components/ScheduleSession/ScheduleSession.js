@@ -28,7 +28,7 @@ const ScheduleSession = ({ course }) => {
 
 	const createCalendar = (month, year) => {
 		const monthsOfTheYear = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-										'August', 'September', 'October', 'November', 'Desember'];
+										'August', 'September', 'October', 'November', 'December'];
 		const daysOfTheWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 		const calendar = new Date();
 		calendar.setMonth(month);

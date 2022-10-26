@@ -3,10 +3,12 @@
 
 .wrapper{
     @include component;
-  
     display: flex;
     justify-content: space-between;
     gap: 10px;
+    width: 90%;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px grey;
   }
   .teach{
     background-color: color(secondary, base);
