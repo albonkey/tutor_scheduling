@@ -23,7 +23,6 @@
       flex-basis: 22%;
     }
   }
-
   .header{
     display: flex;
     flex-direction: column;
@@ -52,7 +51,6 @@
     padding: 15px;
     padding-left: 10px;
   }
- 
   .heading2 {
     @include headingMedium;
   }
