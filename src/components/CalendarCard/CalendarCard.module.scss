@@ -1,0 +1,56 @@
+@import "../../styles/abstracts/_mixins.scss";
+@import "../../styles/abstracts/_variables.scss";
+
+.card{
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px grey;
+    min-width: 244px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @include breakpoint(tablet) {
+      flex-basis: 46.5%;
+    }
+    @include breakpoint(laptop) {
+      min-width: 190px;
+      flex-basis: 30%;
+    }
+    @include breakpoint(desktop) {
+      width: 100%;
+      flex-basis: 22%;
+    }
+  }
+  .header{
+    display: flex;
+    flex-direction: column;
+    background-color: color(accent, base);
+    color: lighten(color(secondary, base), 7%);
+    border-radius: 10px;
+    width:100%;
+  }
+  .date{
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: right;
+    margin-right: 10px;
+  }
+  .cardbody{
+    display: flex;
+    flex-direction: column;
+  }
+  .day{
+    width: 100%;
+    margin: 0;
+    background-color: lighten(color(secondary, base), 7%);
+    color: black;
+    box-sizing: border-box;
+    border-top: 2px solid color(accent, base);
+    padding: 15px;
+    padding-left: 10px;
+  }
+  .heading2 {
+    @include headingMedium;
+  }

@@ -1,0 +1,26 @@
+@import "../../styles/abstracts/_mixins.scss";
+@import "../../styles/abstracts/_variables.scss";
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    width: 100%;
+  }
+  .cards{
+      display: flex;
+      flex-direction: column;
+      justify-content: left;
+      flex-wrap: wrap;
+      gap: 20px;
+      width: 100%;
+      
+      @include breakpoint(tablet) {
+          flex-direction: row;
+          align-items: flex-start;
+      }
+  }
+  .heading2 {
+      @include headingMedium;
+  }
+  
