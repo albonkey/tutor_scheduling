@@ -1,22 +1,20 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import { API } from 'aws-amplify';
 import style from './HomePage.module.scss';
 import HomeCourses from '../../components/HomeCourses/HomeCourses';
 import HomeCalendar from '../../components/HomeCalendar/HomeCalendar';
 
 const HomePage = () => {
-	const sessions = [
-		{
-			isTeaching: true,
-			subject: 'Math',
-			name: 'Sara',
-			time: '12:00 - 1:00pm'
-		},{
-			isTeaching: false,
-			subject: 'History',
-			name: 'Alex',
-			time: '2:00 - 3:00pm'
-		}
-	]
+	const [sessions, setSessions] = useState([]);
+	const getSessions = async (userID) => {
+		const response = await API.get('tutorhubAPI', `/users/${userID}/sessions`);
+		setSessions([...response.data.Items]);
+		console.log(sessions);
+	}
+	useEffect(() => {
+		getSessions(1);
+	}, [])
+
 	const schedule = [
 		{
 			date: 'Feb 19',
@@ -100,17 +98,21 @@ const HomePage = () => {
 			]
 		}
 	]
-	
+
 		 return(
 			 <div className={style.page}>
+			 	{
+					sessions &&
 					<HomeCourses
-						name = {'A. Person'}
+						name = {'Welcome Carl Solli'}
 						title = {'Today'}
 						sessions = {sessions} />
-				
-					<HomeCalendar schedule = {schedule}/> 	 
+				}
+
+
+					<HomeCalendar schedule = {schedule}/>
 			 </div>
-			 
+
 		 )
 }
 export default HomePage;

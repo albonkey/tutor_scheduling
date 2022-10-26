@@ -4,7 +4,7 @@
 .wrapper {
     display: flex;
     flex-direction: column;
-    margin: 10px;
+    margin-top: 50px;
     width: 100%;
   }
   .cards{
@@ -12,9 +12,9 @@
       flex-direction: column;
       justify-content: left;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 10px;
       width: 100%;
-      
+
       @include breakpoint(tablet) {
           flex-direction: row;
           align-items: flex-start;
@@ -23,4 +23,3 @@
   .heading2 {
       @include headingMedium;
   }
-  

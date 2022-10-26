@@ -15,7 +15,12 @@ const HomeCourses = ({name, title, sessions}) => {
                 {
                 sessions.map(session => {
                   return <SessionListItem
-                      session = {session}
+                      isTeaching={session['GSI-1-SK'] === 'Tutor'}
+                      subject={session.Subject}
+                      name={session.StudentName ? session.StudentName : session.TutorName }
+                      time={session.StartOn}
+                      sessionID={session['SK (GSI-1-PK)']}
+
                   />
                     })
                 }

@@ -94,6 +94,26 @@ app.get('/users/:id/courses', async(req, res) => {
   }
 });
 
+app.get('/users/:id/sessions', async(req, res) => {
+  const {id} = req.params;
+
+  const params = {
+    TableName : 'Tutorhub',
+    KeyConditionExpression: '#PK = :user and begins_with(#SK, :session)',
+    ExpressionAttributeValues: {
+      ':user': `User-${id}`,
+      ':session': 'Session'
+    },
+    ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK' }
+  }
+
+  try {
+    const data = await docClient.query(params).promise();
+    res.json({success: 'get call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
 app.get('/users/:id/payments', async(req, res) => {
   // Add your code here
   res.json({success: 'get call succeed!', url: req.url});

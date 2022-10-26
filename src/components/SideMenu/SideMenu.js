@@ -16,7 +16,7 @@ const SideMenu = () => {
 					 </NavLink>
 				</li>
 				<li>
-					<NavLink to="/profile" className={style.listItem}>
+					<NavLink to="/profile/1" className={style.listItem}>
 						<FontAwesomeIcon icon={faPerson} fixedWidth />
 						<span className={style.listItemText}>{name}</span>
 					</NavLink>
@@ -24,7 +24,7 @@ const SideMenu = () => {
 				<li>
 					<NavLink to="/discover" className={style.listItem}>
 						<FontAwesomeIcon icon={faEarth} fixedWidth />
-						<span className={style.listItemText}>Discover </span>
+						<span className={style.listItemText}>Discover</span>
 					</NavLink>
 				</li>
 				<li>

@@ -7,7 +7,7 @@ const ProfileIntro = ({user}) => {
     return(
         <div className = {style.wrapper}>
             <div className = {style.info}>
-                <div className= {style.heading}>Tutor Rating</div>
+                <div className= {style.heading}>User Rating</div>
                 <div className={style.stars}>
                       <StarRating rating={user.Rating}/>
                 </div>

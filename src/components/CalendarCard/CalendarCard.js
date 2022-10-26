@@ -8,21 +8,21 @@ const CalendarCard = ({date, details}) => {
                 <div className={style.date}>
                     {date}
                 </div>
-                <div>
-                    <div className = {style.cardbody}>
-                    {
-                        details.map(detail=> {
-                            return(
-                                detail.isTeaching ?
-                                    <div className = {style.day}>{detail.time} Teaching {detail.subject} with {detail.name}</div>
-                                :
-                                    <div className = {style.day}>{detail.time} Session with {detail.name}</div>
-                            )
-                        })
-                    }
-                    </div>
+              </div>
+                  <div className = {style.info}>
+                  {
+                      details.map(detail=> {
+                          return(
+                              detail.isTeaching ?
+                                  <div className={style.day}>
+                                    <span className={style.time}> {detail.time} </span> Teaching {detail.subject} with {detail.name}
+                                  </div>
+                              :
+                                  <div className={style.day}><span className={style.time}> {detail.time} </span> {detail.subject} with {detail.name}</div>
+                          )
+                      })
+                  }
                 </div>
-            </div>
         </div>
     )
 }

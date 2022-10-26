@@ -8,6 +8,8 @@
     background-color: color(secondary, lighter);
     border-radius: 10px;
     box-shadow: 1px 1px 3px grey;
+
+    @include hoverComponent;
   }
   .intro{
     display: flex;

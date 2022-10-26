@@ -37,6 +37,14 @@
   }
 }
 
+@mixin hoverComponent{
+  transition: .3s;
+  &:hover{
+    transform: scale(1.005);
+    transition: .3s;
+  }
+}
+
 @mixin breakpoint($point) {
   @if $point == desktop {
     @media (min-width: 70em) { @content ; }

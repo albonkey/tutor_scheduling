@@ -6,9 +6,11 @@
     display: flex;
     justify-content: space-between;
     gap: 10px;
-    width: 90%;
+    width: 100%;
     border-radius: 10px;
     box-shadow: 1px 1px 3px grey;
+
+    @include hoverComponent;
   }
   .teach{
     background-color: color(secondary, base);
@@ -31,7 +33,7 @@
 
     text-decoration: underline;
     cursor: pointer;
-  
+
     // When we hover the element these rules will be applied
     &:hover{
         color: lighten(color(accent, base), 5%);

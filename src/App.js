@@ -30,13 +30,13 @@ function App({signOut, user}) {
             <Route path='/inbox'>
               <InboxPage/>
             </Route>
-            <Route path='/profile'>
+            <Route path='/profile/:id'>
               <ProfilePage/>
             </Route>
             <Route path='/sessions'>
               <SessionsPage/>
             </Route>
-            <Route path='/session'>
+            <Route path='/session/:id'>
               <SessionPage/>
             </Route>
             <Route path='/payments'>
