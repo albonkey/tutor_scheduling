@@ -6,7 +6,7 @@ import { faCaretDown as downCaret} from '@fortawesome/free-solid-svg-icons';
 import { faCaretUp as upCaret} from '@fortawesome/free-solid-svg-icons';
 
 
-const CourseCard = ({name, courses}) => {
+const CourseCard = ({course}) => {
     const [isSelected, setIsSelected] = useState(false);
 
     return(
@@ -14,15 +14,15 @@ const CourseCard = ({name, courses}) => {
             <div className={style.intro}>
                 <div className={style.course}>
                     <span className={style.heading3}>
-                        {courses.subject}
+                        {'Math'}
                         <div className={style.subheading}>
-                            {courses.nrOfSessions} Sessions
+                            {course.TotalSessions} Sessions
                         </div>
                     </span>
                 </div>
                 <div className={style.icons}>
                     <div>
-                        <StarRating rating={courses.rating} />
+                        <StarRating rating={course.Rating} />
                     </div>
                     <div
                         className={style.carets}
@@ -41,9 +41,9 @@ const CourseCard = ({name, courses}) => {
             </div>
             <div className={[style.extended, !isSelected && style.hidden].join(' ')}>
                 <p className={style.info}>
-                    {courses.info}
+                    {course.Description}
                 </p>
-					      <button className={style.button}>Schedule a session with {name}</button>
+					      <button className={style.button}>Schedule Session</button>
             </div>
 
         </div>

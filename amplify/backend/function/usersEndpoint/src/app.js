@@ -32,26 +32,40 @@ app.use(function(req, res, next) {
  * Example get method *
  **********************/
 
-app.get('/users', function(req, res) {
-  // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+app.get('/users/:id', async(req, res) => {
+  const {id} = req.params;
+
+  const params = {
+    TableName : 'Tutorhub',
+    KeyConditionExpression: '#PK = :user and #SK = :details',
+    ExpressionAttributeValues: {
+      ':user': `User-${id}`,
+      ':details': 'Details'
+    },
+    ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK' }
+  }
+  try {
+    const data = await docClient.query(params).promise();
+    res.json({success: 'get call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
 });
 
 app.get('/users/:id/reviews', async(req, res) => {
   const {id} = req.params;
 
   const params = {
-    TableName : 'Reviews',
-    KeyConditionExpression: 'TutorID = :tutor',
+    TableName : 'Tutorhub',
+    KeyConditionExpression: '#PK = :user and begins_with(#SK, :review)',
     ExpressionAttributeValues: {
-      ':tutor': id
+      ':user': `User-${id}`,
+      ':review': 'Review'
     },
-    ExpressionAttributeNames: {
-      '#TutorID': 'TutorID'
-    }
+    ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK' }
   }
   try {
-    const data = await docClient.scan(params).promise();
+    const data = await docClient.query(params).promise();
     res.json({success: 'get call succeed!', data: data});
   } catch (err) {
     res.status(500).json({err:err});
@@ -60,8 +74,24 @@ app.get('/users/:id/reviews', async(req, res) => {
 });
 
 app.get('/users/:id/courses', async(req, res) => {
-  // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+  const {id} = req.params;
+
+  const params = {
+    TableName : 'Tutorhub',
+    KeyConditionExpression: '#PK = :user and begins_with(#SK, :course)',
+    ExpressionAttributeValues: {
+      ':user': `User-${id}`,
+      ':course': 'Course'
+    },
+    ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK' }
+  }
+
+  try {
+    const data = await docClient.query(params).promise();
+    res.json({success: 'get call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
 });
 
 app.get('/users/:id/payments', async(req, res) => {

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faPerson, faEarth, faPersonChalkboard, faCreditCard, faGear, faFileLines, faAngleRight, faAngleLeft} from '@fortawesome/free-solid-svg-icons';
 
 const SideMenu = () => {
-
+	const [name, setName] = useState('Carl Solli');
 	 return(
 	 	<nav className={style.sideMenu}>
 			<ul className={style.list}>
@@ -18,7 +18,7 @@ const SideMenu = () => {
 				<li>
 					<NavLink to="/profile" className={style.listItem}>
 						<FontAwesomeIcon icon={faPerson} fixedWidth />
-						<span className={style.listItemText}>Shannon Leigh</span>
+						<span className={style.listItemText}>{name}</span>
 					</NavLink>
 				</li>
 				<li>

@@ -7,23 +7,19 @@ import { faStar as faOpenStar} from '@fortawesome/free-regular-svg-icons';
 
 const StarRating = ({rating}) => {
     const stars = [];
-    const whole = rating.toString().split('.')[0];
-    const part = rating.toString().split('.')[1];
+    let currentRating = rating;
 
-    for(let i=0; i< whole; i++) {
+    for(let i = 0; i < 5; i++){
+      if(currentRating > 0){
         stars.push(<FontAwesomeIcon icon={faStar} />)
-    }
-    if(part) {
+      } else if (currentRating > 0.3){
         stars.push(<FontAwesomeIcon icon={faStarHalfStroke} />)
-        for(let i=0; i < (4-whole); i++) {
-            stars.push(<FontAwesomeIcon icon={faOpenStar} />)
-        }
+      } else{
+        stars.push(<FontAwesomeIcon icon={faOpenStar} />)
+      }
+        currentRating--;
     }
-    else {
-        for(let i=0; i < (5-whole); i++) {
-            stars.push(<FontAwesomeIcon icon={faOpenStar} />)
-        }
-    }
+
 
     return(
         <div className={style.stars}>

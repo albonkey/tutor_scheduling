@@ -1,9 +1,9 @@
 @mixin headingBig{
-  font-size: 3rem;
+  font-size: 2.5rem;
 }
 @mixin headingMedium{
   font-size: 1.5rem;
-  margin-top: 25px;
+  margin-top: 5px;
 }
 @mixin text{
   line-height: 1.2;
@@ -26,9 +26,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   max-width: 1000px;
   padding: 10px;
   margin: 0 auto;
+
 
   @include breakpoint(tablet){
     padding: 25px;

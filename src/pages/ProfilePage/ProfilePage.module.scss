@@ -4,3 +4,10 @@
 .page{
   @include page;
 }
+.header{
+  width: 100%;
+  padding: 15px 0;
+  margin-bottom: 15px;
+  border-bottom: 2px solid color(accent, base);
+  font-size: 2rem;
+}
