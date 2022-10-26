@@ -3,21 +3,21 @@ import style from './ProfileIntro.module.scss';
 import placeholder from './placeholderImage.jpg';
 import StarRating from '../StarRating/StarRating.js'
 
-const ProfileIntro = ({name, rating, nrOfSessions, bio, image}) => {
+const ProfileIntro = ({user}) => {
     return(
         <div className = {style.wrapper}>
             <div className = {style.info}>
-                <h3 className= {style.heading}>{name}</h3>
-                <div className = {style.heading2}>
-                    <StarRating rating={rating} />
+                <div className= {style.heading}>User Rating</div>
+                <div className={style.stars}>
+                      <StarRating rating={user.Rating}/>
                 </div>
-                <div className = {style.heading2}>{nrOfSessions} sessions of tutoring</div>
-                <h4 className= {style.heading2}>About me</h4>
-                <p>{bio}</p>
+                <div className = {style.smallText}>{user.TotalSessions} Sessions of tutoring</div>
+                <div className= {style.heading2}>About me</div>
+                <p>{user.Bio}</p>
             </div>
-            <div className = {style.image}>
+            <div className = {style.imageContainer}>
                 {
-                    image ? <img src={image} alt='' /> : <img src={placeholder} alt='' />
+                    user.Picture ? <img src={user.Picture} alt='' className={style.image}/> : <img src={placeholder} alt='' className={style.image} />
                 }
             </div>
         </div>

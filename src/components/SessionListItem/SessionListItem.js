@@ -1,23 +1,24 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import style from './SessionListItem.module.scss';
 
-const SessionListItem = ({session}) => {
+const SessionListItem = ({isTeaching, subject, name, time, sessionID}) => {
 
-const background = session.isTeaching ? style.teach : style.learn;
+const background = isTeaching ? style.teach : style.learn;
 
     return(
         <div className = {style.wrapper + ' ' + background}>
             <div className={style.info}>
                 <span className={style.status}>
                     {
-                        session.isTeaching ? 'Teaching' : 'Learning'
+                        isTeaching ? 'Teaching' : 'Learning'
                     }
                 </span>
-                <span>{`${session.subject} with ${session.name}`}</span>
+                <span>{`${subject} with ${name}`}</span>
             </div>
             <div className={style.info}>
-                <a className={style.link}>View Session</a>
-                <span>{session.time}</span>
+                <Link className={style.link} to={`/session/${sessionID}`}>View Session</Link>
+                <span>{time}</span>
             </div>
         </div>
     )

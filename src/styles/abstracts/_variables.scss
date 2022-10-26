@@ -6,6 +6,7 @@ $border-radius: 5px;
 $palettes: (
     primary: (
       base: #FFFFFF,
+      darker: darken(#FFFFFF, 5%)
     ),
     secondary: (
         base:   #D2F7C9,

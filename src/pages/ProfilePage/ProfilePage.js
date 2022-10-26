@@ -1,60 +1,62 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
+import { API } from 'aws-amplify';
 import style from './ProfilePage.module.scss';
 import ProfileIntro from '../../components/ProfileIntro/ProfileIntro';
 import ProfileCourses from '../../components/ProfileCourses/ProfileCourses';
 import ProfileReviews from '../../components/ProfileReviews/ProfileReviews';
 
 const ProfilePage = () => {
+	let { id } = useParams();
+	const [reviews, setReviews] = useState([]);
+	const [courses, setCourses] = useState([]);
+	const [user, setUser] = useState({});
 
-	{/* TEST DATA */}
+	const getReviews = async(userID) =>  {
+		const response = await API.get('tutorhubAPI', `/users/${userID}/reviews`);
+		setReviews([...response.data.Items]);
+	}
 
-	const courses = {name: 'A.Person', subject: 'History', nrOfSessions: 150, rating: 3.5, info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae eros egestas, sodales nunc eu, fermentum enim.'};
+	const getCourses = async(userID) => {
+		const response = await API.get('tutorhubAPI', `/users/${userID}/courses`);
+		setCourses([...response.data.Items]);
+	}
 
-	const reviews = [
-		{
-			id: 1,
-			name: 'Jane',
-			subject: 'History',  rating: 3.5,
-			info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae eros egestas, sodales nunc eu, fermentum enim.',
-			image: ''
-		},{
-			id: 2,
-			name: 'Sal',
-			subject: 'Math',  rating: 4,
-			info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae eros egestas, sodales nunc eu, fermentum enim.',
-			image: ''
-		},{
-			id: 3,
-			name: 'Mel',
-			subject: 'Math',  rating: 4.5,
-			info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae eros egestas, sodales nunc eu, fermentum enim.',
-			image: ''
-		}, {
-			id: 4,
-			name: 'Test extra',
-			subject: 'Math',  rating: 5,
-			info: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae eros egestas, sodales nunc eu, fermentum enim.',
-			image: ''
-		}
-	]
+	const getUser = async(userID) => {
+		const response = await API.get('tutorhubAPI', `/users/${userID}`);
+		const userObject = {...response.data.Items[0]};
+		setUser(userObject)
+	}
+
+	useEffect(() => {
+		getCourses(id);
+		getReviews(id);
+		getUser(id);
+	}, [])
+
+
 
 	 return(
 		<div className={style.page}>
-			<ProfileIntro
-				name={'A. Person'}
-				rating={2}
-				nrOfSessions={200}
-				bio={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae eros egestas, sodales nunc eu, fermentum enim. Nunc a efficitur nibh. Integer cursus pulvinar erat, ut congue arcu ultrices a. Suspendisse pulvinar quam nisi, eget malesuada nulla porttitor ut. Nullam sit amet risus vitae eros lobortis tristique in quis nisi. '}
-				image={''}
+			<div className={style.header}>
+				{user['GSI-1-SK']}
+			</div>
+			{
+				user && <ProfileIntro user={user}/>
+			}
+
+			{
+				courses && <ProfileCourses
+					courses = {courses}
 				/>
+			}
 
-			<ProfileCourses
-				name = {'A. Person'}
-				courses = {courses}
-			/>
 
-			<ProfileReviews
-				reviews ={reviews} />
+			{
+				reviews &&
+				 <ProfileReviews reviews={reviews} />
+			}
+
 		</div>
 	 )
 }

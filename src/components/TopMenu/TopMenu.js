@@ -1,13 +1,13 @@
 import React from 'react';
 import style from './TopMenu.module.scss';
 import logo from '../../assets/logo_light.png';
-const TopMenu = () => {
+const TopMenu = ({signOut}) => {
 	 return(
 		 <header className={style.topMenu}>
 		 	<img src={logo} className={style.logo}/>
-			<div className={style.actions}>
+			<button className={style.actions} onClick={signOut}>
 				Sign out
-			</div>
+			</button>
 		 </header>
 	 )
 }

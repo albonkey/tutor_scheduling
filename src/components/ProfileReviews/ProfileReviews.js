@@ -3,7 +3,8 @@ import style from './ProfileReviews.module.scss';
 import ReviewCard from '../ReviewCard/ReviewCard';
 
 const ProfileReviews = ({reviews}) => {
-  const reviewsShort = reviews.slice(0,3);
+  const reviewsShort = reviews;
+
     return(
         <div className = {style.wrapper}>
             <div>

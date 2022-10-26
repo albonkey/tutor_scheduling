@@ -2,55 +2,40 @@
 @import "../../styles/abstracts/_variables.scss";
 
 .card{
-    display: flex;
-    flex-direction: row;
-    border-radius: 10px;
-    box-shadow: 1px 1px 3px grey;
-    min-width: 244px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  display: flex;
+  flex-direction: column;
+  background-color: color(secondary, lighter);
+  flex: 1 0 45%;
+  border-radius: 15px;
+  height: 250px;
+  overflow-y: scroll;
+  box-shadow: 1px 1px 3px grey;
+  @include breakpoint(desktop){
+    flex: 1 0 21%;
+  }
+  @include hoverComponent;
 
-    @include breakpoint(tablet) {
-      flex-basis: 46.5%;
-    }
-    @include breakpoint(laptop) {
-      min-width: 190px;
-      flex-basis: 30%;
-    }
-    @include breakpoint(desktop) {
-      width: 100%;
-      flex-basis: 22%;
-    }
-  }
-  .header{
-    display: flex;
-    flex-direction: column;
-    background-color: color(accent, base);
-    color: lighten(color(secondary, base), 7%);
-    border-radius: 10px;
-    width:100%;
-  }
-  .date{
-    box-sizing: border-box;
-    padding: 10px;
-    text-align: right;
-    margin-right: 10px;
-  }
-  .cardbody{
-    display: flex;
-    flex-direction: column;
-  }
-  .day{
-    width: 100%;
-    margin: 0;
-    background-color: lighten(color(secondary, base), 7%);
-    color: black;
-    box-sizing: border-box;
-    border-top: 2px solid color(accent, base);
-    padding: 15px;
-    padding-left: 10px;
-  }
-  .heading2 {
-    @include headingMedium;
-  }
+}
+.header{
+  padding: 15px;
+  background-color: color(accent, base);
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  color: white;
+}
+.info{
+  padding: 15px;
+}
+.day{
+  gap: 15px;
+  padding: 10px 0;
+  border-bottom: 1px solid color(accent, base);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.time{
+  @include smallText;
+  opacity: 0.8;
+  margin-right: 10px;
+}
