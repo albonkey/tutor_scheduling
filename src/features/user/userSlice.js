@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 import {API} from 'aws-amplify';
 export const userSlice = createSlice({
   name: 'user',
