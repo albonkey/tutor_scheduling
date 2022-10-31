@@ -10,22 +10,34 @@ export const userSlice = createSlice({
     updateUserId: (state, action) => {
       state.id = action.payload
     },
-    updateUserInfo: (state, action) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.userInfo = action.payload
+    userInfoRequest: (state) => {
+      state.loading = true;
+    },
+    userInfoSuccess: (state, action) => {
+      state.loading = false;
+      state.success = true;
+      state.userInfo = action.payload;
+    },
+    userInfoFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { updateUserId, updateUserInfo } = userSlice.actions
+export const { updateUserId, userInfoRequest, userInfoSuccess, userInfoFail } = userSlice.actions
 
 export const getUserInfo = (id) => async(dispatch) => {
-  const {data} = await API.get('tutorhubAPI', `/users/${id}`);
+  try{
+    dispatch(userInfoRequest());
+    const {data} = await API.get('tutorhubAPI', `/users/${id}`);
+    dispatch(userInfoSuccess(data.Items[0]));
+  } catch(error){
+    dispatch(userInfoFail(error.message));
+  }
 
-  dispatch(updateUserInfo(data.Items[0]))
+
+
 }
 export default userSlice.reducer

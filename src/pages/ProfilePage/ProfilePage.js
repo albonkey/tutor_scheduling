@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {getCourses} from '../../features/courses/coursesSlice';
-import {getReviews} from '../../features/reviews/reviewsSlice';
+import {listCourses} from '../../features/courses/coursesSlice';
+import {listReviews} from '../../features/reviews/reviewsSlice';
 import {useParams} from 'react-router-dom';
 import { API } from 'aws-amplify';
 import style from './ProfilePage.module.scss';
@@ -10,14 +10,15 @@ import ProfileCourses from '../../components/ProfileCourses/ProfileCourses';
 import ProfileReviews from '../../components/ProfileReviews/ProfileReviews';
 
 const ProfilePage = () => {
+	const { id } = useParams();
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
-	const courses = useSelector((state) => state.courses.courseList);
-	const reviews = useSelector((state) => state.reviews.reviewList);
+	const courses = useSelector((state) => state.courses.courses);
+	const reviews = useSelector((state) => state.reviews.reviews);
 
 	useEffect(() => {
-		dispatch(getCourses(user.id));
-		dispatch(getReviews(user.id));
+		dispatch(listCourses(id));
+		dispatch(listReviews(id));
 	}, [])
 
 

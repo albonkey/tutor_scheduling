@@ -6,23 +6,35 @@ export const coursesSlice = createSlice({
     courseList: [],
   },
   reducers: {
-    updateCourses: (state, action) => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.courseList = action.payload;
+    courseListRequest: (state) => {
+      state.loading = true;
+    },
+    courseListSuccess: (state, action) => {
+      state.loading = false;
+      state.success = true;
+      state.courses = action.payload
+    },
+    courseListFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { updateCourses } = coursesSlice.actions;
+export const { courseListRequest, courseListSuccess, courseListFail } = coursesSlice.actions;
 
-export const getCourses = (user) => async (dispatch) => {
- const {data} = await API.get('tutorhubAPI', `/users/${user}/courses`);
+export const listCourses = (user) => async (dispatch) => {
+  try{
+    dispatch(courseListRequest());
 
- dispatch(updateCourses([...data.Items]));
+    const {data} = await API.get('tutorhubAPI', `/users/${user}/courses`);
+
+    dispatch(courseListSuccess([...data.Items]));
+  } catch(error){
+    dispatch(courseListFail(error.message));
+  }
+
 }
 
 export default coursesSlice.reducer
