@@ -1,0 +1,32 @@
+@import "../../styles/abstracts/_mixins.scss";
+@import "../../styles/abstracts/_variables.scss";
+
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 15px;
+    border-top: 1px solid color(accent, base);
+    
+    
+    @include breakpoint(tablet) {
+        align-items: flex-start;
+        width: 100%;
+    }
+  }
+  .heading{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    @include headingMedium;
+    margin-top: 40px;
+  }
+  .plus {
+    color: color(accent, base);
+    margin-right: 30px;
+  }
+  .cards {
+    width: 100%;
+  }
+  

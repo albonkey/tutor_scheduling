@@ -12,7 +12,7 @@ const HomePage = () => {
 		console.log(sessions);
 	}
 	useEffect(() => {
-		getSessions(1);
+		getSessions(2);
 	}, [])
 
 	const schedule = [
