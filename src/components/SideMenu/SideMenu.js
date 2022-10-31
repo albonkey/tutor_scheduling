@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import style from './SideMenu.module.scss';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faPerson, faEarth, faPersonChalkboard, faCreditCard, faGear, faFileLines, faAngleRight, faAngleLeft} from '@fortawesome/free-solid-svg-icons';
 
 const SideMenu = () => {
-	const [name, setName] = useState('Carl Solli');
+	const user = useSelector((state) => state.user);
+
 	 return(
 	 	<nav className={style.sideMenu}>
 			<ul className={style.list}>
@@ -16,9 +18,9 @@ const SideMenu = () => {
 					 </NavLink>
 				</li>
 				<li>
-					<NavLink to="/profile/1" className={style.listItem}>
+					<NavLink to={`/profile/${user.id}`} className={style.listItem}>
 						<FontAwesomeIcon icon={faPerson} fixedWidth />
-						<span className={style.listItemText}>{name}</span>
+						<span className={style.listItemText}>{user.userInfo['GSI-1-SK']}</span>
 					</NavLink>
 				</li>
 				<li>

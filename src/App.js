@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { useSelector, useDispatch} from 'react-redux';
+import { getUserInfo, updateUserId } from './features/user/userSlice'
 import style from './App.module.scss';
 import {BrowserRouter, Switch, Route, Link} from 'react-router-dom';
 import { Amplify } from 'aws-amplify';
@@ -20,42 +22,52 @@ import SettingsPage from './pages/SettingsPage/SettingsPage';
 Amplify.configure(awsExports);
 
 function App({signOut, user}) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(updateUserId(user.username))
+    dispatch(getUserInfo(user.username))
+
+  }, [])
   return (
     <BrowserRouter>
       <TopMenu signOut={signOut}/>
       <main className={style.mainView}>
         <SideMenu />
-        <div className={style.content}>
-          <Switch>
-            <Route path='/inbox'>
-              <InboxPage/>
-            </Route>
-            <Route path='/profile/:id'>
-              <ProfilePage/>
-            </Route>
-            <Route path='/sessions'>
-              <SessionsPage/>
-            </Route>
-            <Route path='/session/:id'>
-              <SessionPage/>
-            </Route>
-            <Route path='/payments'>
-              <PaymentsPage/>
-            </Route>
-            <Route path='/discover'>
-              <DiscoveryPage/>
-            </Route>
-            <Route path='/documents'>
-              <DocumentsPage/>
-            </Route>
-            <Route path='/settings'>
-              <SettingsPage/>
-            </Route>
-            <Route path='/'>
-              <HomePage/>
-            </Route>
-          </Switch>
-        </div>
+        {
+          <div className={style.content}>
+            <Switch>
+              <Route path='/inbox'>
+                <InboxPage/>
+              </Route>
+              <Route path='/profile/:id'>
+                <ProfilePage/>
+              </Route>
+              <Route path='/sessions'>
+                <SessionsPage/>
+              </Route>
+              <Route path='/session/:id'>
+                <SessionPage/>
+              </Route>
+              <Route path='/payments'>
+                <PaymentsPage/>
+              </Route>
+              <Route path='/discover'>
+                <DiscoveryPage/>
+              </Route>
+              <Route path='/documents'>
+                <DocumentsPage/>
+              </Route>
+              <Route path='/settings'>
+                <SettingsPage/>
+              </Route>
+              <Route path='/'>
+                <HomePage/>
+              </Route>
+            </Switch>
+          </div>
+        }
+
       </main>
 
     </BrowserRouter>
