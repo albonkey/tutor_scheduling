@@ -24,6 +24,10 @@
         "coursesEndpoint": {
           "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
           "s3Key": "amplify-builds/coursesEndpoint-737645786251644a4f6d-build.zip"
+        },
+        "SessionsEndpoint": {
+          "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
+          "s3Key": "amplify-builds/SessionsEndpoint-43785175586f33416e2b-build.zip"
         }
       },
       "api": {

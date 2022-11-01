@@ -9,7 +9,7 @@
     "framework": "react",
     "config": {
       "SourceDir": "src",
-      "DistributionDir": "build",
+      "DistributionDir": "/Users/aylinmousavian/Documents/tutor_scheduling",
       "BuildCommand": "npm run-script build",
       "StartCommand": "npm run-script start"
     }
