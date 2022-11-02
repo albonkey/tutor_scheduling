@@ -11,7 +11,11 @@ See the License for the specific language governing permissions and limitations 
 
 const express = require('express')
 const bodyParser = require('body-parser')
+import { randomUUID } from 'crypto';
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
+const AWS = require('aws-sdk');
+import { UpdateCommand } from "@aws-sdk/lib-dynamodb";
+const docClient = new AWS.DynamoDB.DocumentClient();
 
 // declare a new express app
 const app = express()
@@ -26,19 +30,127 @@ app.use(function(req, res, next) {
 });
 
 
-/**********************
- * Example get method *
- **********************/
+// Get all course
+ app.get('/courses', async(req, res) => {
 
-app.get('/courses', function(req, res) {
-  // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+  const params = {
+    TableName : 'Tutorhub',
+    IndexName : 'GSI2',
+    KeyConditionExpression: 'begins_with(#PK, :course)',
+    ExpressionAttributeValues: {
+      ':course': 'Course'
+    },
+    ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)' }
+  }
+  try {
+    const data = await docClient.scan(params).promise();
+    res.json({success: 'get call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
 });
 
-app.get('/courses/:id', function(req, res) {
-  // Add your code here
 
-  res.json({success: 'get call succeed!', url: req.url});
+// Get a course by ID
+app.get('/courses/:id', async(req, res) => {
+  const {id} = req.params;
+
+  const params = {
+    TableName : 'Tutorhub',
+    IndexName : 'GSI2',
+    KeyConditionExpression: '#PK = :course',
+    ExpressionAttributeValues: {
+      ':course': `Course-${id}`
+    },
+    ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)' }
+  }
+
+  try {
+    const data = await docClient.query(params).promise();
+    res.json({success: 'get call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
+//THESE ALL NEED THE USER ID FIRST
+
+// Create a course
+app.get('/users/:id/courses/', async(req, res) => {
+  const {id} = req.params.id;
+  const cid = randomUUID();
+  const {subject, level, Description} = req.body;
+
+  const params = {
+    TableName : 'Tutorhub',
+    Item: {
+      'PK': `User-${id}`,
+      'SK (GSI-1-PK)': `Course-${cid}`,
+      'GSI-1-SK': subject,
+      'Level': level,
+      'Description': Description
+    }
+  }
+
+  try {
+    const data = await docClient.put(params).promise();
+    res.json({success: 'get call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+// Update a course
+app.get('/users/:id/courses/:cid', async(req, res) => {
+  const {id} = req.params.id;
+  const {cid} = req.params.cid;
+
+  const params = {
+    TableName : 'Tutorhub',
+    KeyConditionExpression: '#PK = :user and #SK, :course)',
+    ExpressionAttributeValues: {
+      ':user': `User-${id}`,
+      ':course': `Course-${cid}`
+    },
+    ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK' },
+    UpdateExpression: 'Set GSI-1-SK =  :subject, Level = :level, Description = :description',
+    ExpressionAttributeValues: {
+      ':subject': req.params.subject,
+      ':level': req.params.level,
+      ':description': req.params.Description
+    }
+  }
+
+  try {
+    const data = await docClient.send(new UpdateCommand(params)).promise();
+    res.json({success: 'post call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
+
+
+// Delete a course
+app.get('/users/:id/courses/:cid', async(req, res) => {
+  const {id} = req.params.id;
+  const {cid} = req.params.cid;
+
+  const params = {
+    TableName : 'Tutorhub',
+    KeyConditionExpression: '#PK = :user and #SK, :course)',
+    ExpressionAttributeValues: {
+      ':user': `User-${id}`,
+      ':course': `Course-${cid}`
+    },
+    ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK' }
+  }
+
+  try {
+    const data = await docClient.delete(params).promise();
+    res.json({success: 'delete call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
 });
 
 
