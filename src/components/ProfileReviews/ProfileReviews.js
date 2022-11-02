@@ -19,7 +19,6 @@ const ProfileReviews = ({reviews}) => {
                 })
               }
             </div>
-            <button className = {style.subheading}>Read more</button>
         </div>
     );
 }

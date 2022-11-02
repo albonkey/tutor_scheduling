@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { useSelector } from 'react-redux';
 import { API } from 'aws-amplify';
 import style from './HomePage.module.scss';
+import HomeGreeting from '../../components/HomeGreeting/HomeGreeting';
+import SessionList from '../../components/SessionList/SessionList';
 import HomeCourses from '../../components/HomeCourses/HomeCourses';
 import HomeCalendar from '../../components/HomeCalendar/HomeCalendar';
 
@@ -103,10 +105,10 @@ const HomePage = () => {
 
 		 return(
 			 <div className={style.page}>
+			 	<HomeGreeting />
 			 	{
 					sessions &&
-					<HomeCourses
-						name = {'Welcome Carl Solli'}
+					<SessionList
 						title = {'Today'}
 						sessions = {sessions} />
 				}

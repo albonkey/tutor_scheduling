@@ -1,0 +1,54 @@
+@import "../../styles/abstracts/_mixins.scss";
+@import "../../styles/abstracts/_variables.scss";
+
+.wrapper{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px 0;
+}
+.greeting{
+  position: relative;
+  flex-basis: 100%;
+
+  @include breakpoint(tablet){
+    flex-basis: 50%;
+  }
+}
+.image{
+  width: 100%;
+}
+.greetingText{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 15px 45px;
+  border-radius: 15px;
+  background-color: color(secondary, base);
+
+  @include headingMedium;
+}
+.info{
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  justify-content: center;
+  align-items: center;
+
+
+  @include breakpoint(tablet){
+    flex-basis: 50%;
+  }
+}
+.day{
+  font-size: 2rem;
+  font-weight: bold;
+  color: color(accent, base);
+}
+.date{
+  font-size: 1.2rem;
+}
+.link{
+  margin-top: 15px;
+  color: color(accent, base);
+  text-decoration: underline;
+}

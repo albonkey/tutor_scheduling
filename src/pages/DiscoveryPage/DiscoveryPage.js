@@ -63,11 +63,13 @@ const DiscoveryPage = () => {
 				</div>
 			</form>
 			<h3 className={style.heading}>Results</h3>
-				{
-					courses.map(course => {
-						return <CourseSearchResult course={course} />
-					})
-				}
+			<div className={style.results}>
+					{
+						courses.map(course => {
+							return <CourseSearchResult course={course} />
+						})
+					}
+			</div>
 		 </div>
 	 )
 }
