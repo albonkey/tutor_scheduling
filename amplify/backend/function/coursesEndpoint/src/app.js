@@ -14,7 +14,6 @@ const bodyParser = require('body-parser')
 import { randomUUID } from 'crypto';
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 const AWS = require('aws-sdk');
-import { UpdateCommand } from "@aws-sdk/lib-dynamodb";
 const docClient = new AWS.DynamoDB.DocumentClient();
 
 // declare a new express app
@@ -30,7 +29,7 @@ app.use(function(req, res, next) {
 });
 
 
-// Get all course
+// Get all courses
  app.get('/courses', async(req, res) => {
 
   const params = {
@@ -42,6 +41,7 @@ app.use(function(req, res, next) {
     },
     ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)' }
   }
+
   try {
     const data = await docClient.scan(params).promise();
     res.json({success: 'get call succeed!', data: data});
@@ -53,7 +53,7 @@ app.use(function(req, res, next) {
 
 // Get a course by ID
 app.get('/courses/:id', async(req, res) => {
-  const {id} = req.params;
+  const {id} = req.params.id;
 
   const params = {
     TableName : 'Tutorhub',
@@ -99,29 +99,29 @@ app.get('/users/:id/courses/', async(req, res) => {
     res.status(500).json({err:err});
   }
 });
+
 // Update a course
 app.get('/users/:id/courses/:cid', async(req, res) => {
   const {id} = req.params.id;
   const {cid} = req.params.cid;
+  const { subject, level, Description } = req.body
 
   const params = {
     TableName : 'Tutorhub',
-    KeyConditionExpression: '#PK = :user and #SK, :course)',
-    ExpressionAttributeValues: {
-      ':user': `User-${id}`,
-      ':course': `Course-${cid}`
+    Key: {
+        "PK": `User-${id}`,
+        "SK (GSI-1-PK)": `Course-${cid}`
     },
-    ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK' },
-    UpdateExpression: 'Set GSI-1-SK =  :subject, Level = :level, Description = :description',
+    UpdateExpression: 'Set GSI-1-SK = :subject, Level = :level, Description = :description',
     ExpressionAttributeValues: {
-      ':subject': req.params.subject,
-      ':level': req.params.level,
-      ':description': req.params.Description
+      ':subject': subject,
+      ':level': level,
+      ':description': Description
     }
   }
 
   try {
-    const data = await docClient.send(new UpdateCommand(params)).promise();
+    const data = await docClient.update(params).promise();
     res.json({success: 'post call succeed!', data: data});
   } catch (err) {
     res.status(500).json({err:err});
