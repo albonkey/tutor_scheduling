@@ -99,6 +99,13 @@ When linking to another route you should use the `<Link>` component.
   <Link to="/settings">Settings</Link>
 ```
 
+## Redux
+Redux is a predictable state container for JavaScript apps.
+
+It helps you write applications that behave consistently, run in different environments (client, server, and native), and are easy to test.
+
+[Guide for Redux](https://react-redux.js.org/tutorials/quick-start)
+
 ## Styling with Sass/ CSS
 Sass is an extension of CSS that adds power and elegance to the basic language. In this project we're using `variables` and `mixins` to create coherence across our project and making it easier to write responsive components.
 

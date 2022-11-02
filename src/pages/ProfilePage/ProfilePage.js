@@ -1,4 +1,7 @@
 import React, {useEffect, useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {listCourses} from '../../features/courses/coursesSlice';
+import {listReviews} from '../../features/reviews/reviewsSlice';
 import {useParams} from 'react-router-dom';
 import { API } from 'aws-amplify';
 import style from './ProfilePage.module.scss';
@@ -7,31 +10,15 @@ import ProfileCourses from '../../components/ProfileCourses/ProfileCourses';
 import ProfileReviews from '../../components/ProfileReviews/ProfileReviews';
 
 const ProfilePage = () => {
-	let { id } = useParams();
-	const [reviews, setReviews] = useState([]);
-	const [courses, setCourses] = useState([]);
-	const [user, setUser] = useState({});
-
-	const getReviews = async(userID) =>  {
-		const response = await API.get('tutorhubAPI', `/users/${userID}/reviews`);
-		setReviews([...response.data.Items]);
-	}
-
-	const getCourses = async(userID) => {
-		const response = await API.get('tutorhubAPI', `/users/${userID}/courses`);
-		setCourses([...response.data.Items]);
-	}
-
-	const getUser = async(userID) => {
-		const response = await API.get('tutorhubAPI', `/users/${userID}`);
-		const userObject = {...response.data.Items[0]};
-		setUser(userObject)
-	}
+	const { id } = useParams();
+	const dispatch = useDispatch();
+	const user = useSelector((state) => state.user);
+	const courses = useSelector((state) => state.courses.courses);
+	const reviews = useSelector((state) => state.reviews.reviews);
 
 	useEffect(() => {
-		getCourses(id);
-		getReviews(id);
-		getUser(id);
+		dispatch(listCourses(id));
+		dispatch(listReviews(id));
 	}, [])
 
 
@@ -39,10 +26,10 @@ const ProfilePage = () => {
 	 return(
 		<div className={style.page}>
 			<div className={style.header}>
-				{user['GSI-1-SK']}
+				{user.userInfo['GSI-1-SK']}
 			</div>
 			{
-				user && <ProfileIntro user={user}/>
+				user && <ProfileIntro user={user.userInfo}/>
 			}
 
 			{

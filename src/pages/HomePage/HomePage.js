@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
+import { useSelector } from 'react-redux';
 import { API } from 'aws-amplify';
 import style from './HomePage.module.scss';
 import HomeCourses from '../../components/HomeCourses/HomeCourses';
 import HomeCalendar from '../../components/HomeCalendar/HomeCalendar';
 
 const HomePage = () => {
+	const id = useSelector((state) => state.user.id)
 	const [sessions, setSessions] = useState([]);
 	const getSessions = async (userID) => {
 		const response = await API.get('tutorhubAPI', `/users/${userID}/sessions`);
@@ -12,7 +14,7 @@ const HomePage = () => {
 		console.log(sessions);
 	}
 	useEffect(() => {
-		getSessions(2);
+		getSessions(id);
 	}, [])
 
 	const schedule = [
