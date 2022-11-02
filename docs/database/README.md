@@ -1,5 +1,15 @@
 # Database
 
+1. [Introduction](#introduction)
+2. [Core Components](#core-components)
+3. [Creating a Table](#creating-a-table)
+4. [Creating an Item](#creating-an-item)
+5. [Design](#design)
+6. [Calling DynamoDB from Lambda](#calling-dynamodb-from-lambda)
+7. [Generating UUID](#generating-uuid)
+
+
+
 ## Introduction
 
 Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability. DynamoDB lets you offload the administrative burdens of operating and scaling a distributed database so that you don't have to worry about hardware provisioning, setup and configuration, replication, software patching, or cluster scaling. DynamoDB also offers encryption at rest, which eliminates the operational burden and complexity involved in protecting sensitive data.
@@ -177,4 +187,37 @@ exports.handler = async (event, context) => {
     return { error: err }
   }
 }
+```
+
+## Generating UUID
+
+DynamoDB does not support auto-increment primary keys due to scaling limitations and cannot be guaranteed across multiple servers. A Better option is to assemble the primary key from multiple indices. The primary key can be up to 2048 bytes. We will be using Universal Unique Identifiers or UUID to generate IDs.
+
+Crypto library in Node JS has a random UUID function that we can use:
+
+```javascript 
+Crypto.randomUUID([options])
+```
+By default, to improve performance, Node.js generates and caches enough random data to generate up to 128 random UUIDs. To generate a UUID without using the cache, set ```disableEntropyCache``` to ```true```. Default: ```false```.
+
+This generates a random [RFC 4122](https://www.rfc-editor.org/rfc/rfc4122.txt) version 4 UUID. The UUID is generated using a cryptographic pseudorandom number generator.
+
+### How to implement
+
+First import the function from the library
+```javascript 
+import { randomUUID } from 'crypto';
+```
+Note: You might need to add ```"type": "module"``` to the ```package.json```. 
+
+Simply call the function to create a UUID
+
+```javascript
+const newID = randomUUID();
+```
+
+As mentioned above you can set the ```disableEntropyCache``` to ```true``` like so:
+
+```javascript
+const newID = randomUUID({disableEntropyCache : true});
 ```
