@@ -11,7 +11,7 @@ See the License for the specific language governing permissions and limitations 
 
 const express = require('express')
 const bodyParser = require('body-parser')
-import { randomUUID } from 'crypto';
+const {randomUUID} = require('crypto');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
@@ -35,16 +35,15 @@ app.use(function(req, res, next) {
   const params = {
     TableName : 'Tutorhub',
     IndexName : 'GSI2',
-    KeyConditionExpression: 'begins_with(#PK, :course)',
-    ExpressionAttributeValues: {
-      ':course': 'Course'
-    },
+    FilterExpression: 'begins_with(#PK, :course)',
+    ExpressionAttributeValues: { ':course': 'Course' },
     ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)' }
   }
 
   try {
     const data = await docClient.scan(params).promise();
-    res.json({success: 'get call succeed!', data: data});
+    const courses = data.Items
+    res.json({success: 'get call succeed!', data: courses});
   } catch (err) {
     res.status(500).json({err:err});
   }
@@ -53,7 +52,7 @@ app.use(function(req, res, next) {
 
 // Get a course by ID
 app.get('/courses/:id', async(req, res) => {
-  const {id} = req.params.id;
+  const {id} = req.params;
 
   const params = {
     TableName : 'Tutorhub',
@@ -64,10 +63,12 @@ app.get('/courses/:id', async(req, res) => {
     },
     ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)' }
   }
+  console.log(params);
 
   try {
     const data = await docClient.query(params).promise();
-    res.json({success: 'get call succeed!', data: data});
+    const course = data.Items[0]
+    res.json({success: 'get call succeed!', data: course});
   } catch (err) {
     res.status(500).json({err:err});
   }
@@ -76,22 +77,26 @@ app.get('/courses/:id', async(req, res) => {
 //THESE ALL NEED THE USER ID FIRST
 
 // Create a course
-app.get('/users/:id/courses/', async(req, res) => {
-  const {id} = req.params.id;
+app.post('/courses/users/:id', async(req, res) => {
+  const {id} = req.params;
   const cid = randomUUID();
-  const {subject, level, Description} = req.body;
+  const {Subject, Level, Description, Rating, TotalSessions } = req.body;
 
   const params = {
     TableName : 'Tutorhub',
     Item: {
       'PK': `User-${id}`,
-      'SK (GSI-1-PK)': `Course-${cid}`,
-      'GSI-1-SK': subject,
-      'Level': level,
-      'Description': Description
+      'SK (GSI-1-PK)': `Course-${Subject}`,
+      'GSI-1-SK': Subject,
+      'Level': Level,
+      'Description': Description,
+      'Rating': Rating,
+      'TotalSessions': TotalSessions
     }
   }
 
+
+  
   try {
     const data = await docClient.put(params).promise();
     res.json({success: 'get call succeed!', data: data});
@@ -101,10 +106,9 @@ app.get('/users/:id/courses/', async(req, res) => {
 });
 
 // Update a course
-app.get('/users/:id/courses/:cid', async(req, res) => {
-  const {id} = req.params.id;
-  const {cid} = req.params.cid;
-  const { subject, level, Description } = req.body
+app.put('/courses/:cid/users/:id', async(req, res) => {
+  const { id, cid } = req.params;
+  const { Subject, Level, Description, Rating, TotalSessions } = req.body;
 
   const params = {
     TableName : 'Tutorhub',
@@ -112,11 +116,20 @@ app.get('/users/:id/courses/:cid', async(req, res) => {
         "PK": `User-${id}`,
         "SK (GSI-1-PK)": `Course-${cid}`
     },
-    UpdateExpression: 'Set GSI-1-SK = :subject, Level = :level, Description = :description',
+    UpdateExpression: 'Set #Subject = :Subject, #Level = :Level, #Description = :Description, #Rating = :Rating, #TotalSessions = :TotalSessions',
     ExpressionAttributeValues: {
-      ':subject': subject,
-      ':level': level,
-      ':description': Description
+      ':Subject': Subject,
+      ':Level': Level,
+      ':Description': Description,
+      ':Rating': Rating,
+      ':TotalSessions': TotalSessions
+    },
+    ExpressionAttributeNames: {
+      '#Subject' : 'GSI-1-SK',
+      '#Level' : 'Level',
+      '#Description' : 'Description',
+      '#Rating' : 'Rating',
+      '#TotalSessions' : 'TotalSessions'
     }
   }
 
@@ -131,18 +144,21 @@ app.get('/users/:id/courses/:cid', async(req, res) => {
 
 
 // Delete a course
-app.get('/users/:id/courses/:cid', async(req, res) => {
-  const {id} = req.params.id;
-  const {cid} = req.params.cid;
+app.delete('/courses/:cid/users/:id', async(req, res) => {
+  const { id, cid } = req.params;
 
   const params = {
     TableName : 'Tutorhub',
-    KeyConditionExpression: '#PK = :user and #SK, :course)',
-    ExpressionAttributeValues: {
-      ':user': `User-${id}`,
-      ':course': `Course-${cid}`
-    },
-    ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK' }
+    // KeyConditionExpression: '#PK = :user and #SK = :course)',
+    // ExpressionAttributeValues: {
+    //   ':user': `User-${id}`,
+    //   ':course': `Course-${cid}`
+    // },
+    // ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK' }
+    Key: {
+      "PK": `User-${id}`,
+      "SK (GSI-1-PK)": `Course-${cid}`
+    }
   }
 
   try {
