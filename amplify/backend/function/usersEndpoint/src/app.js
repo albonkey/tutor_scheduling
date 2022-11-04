@@ -29,9 +29,10 @@ app.use(function(req, res, next) {
 
 
 /**********************
- * Example get method *
+ *    GET methods     *
  **********************/
 
+// Get a user by ID
 app.get('/users/:id', async(req, res) => {
   const {id} = req.params;
 
@@ -52,6 +53,7 @@ app.get('/users/:id', async(req, res) => {
   }
 });
 
+// Get all reviews for a user by ID
 app.get('/users/:id/reviews', async(req, res) => {
   const {id} = req.params;
 
@@ -73,6 +75,7 @@ app.get('/users/:id/reviews', async(req, res) => {
 
 });
 
+// Get all courses for a user by ID
 app.get('/users/:id/courses', async(req, res) => {
   const {id} = req.params;
 
@@ -94,6 +97,7 @@ app.get('/users/:id/courses', async(req, res) => {
   }
 });
 
+// Get all sessions for a user by ID
 app.get('/users/:id/sessions', async(req, res) => {
   const {id} = req.params;
 
@@ -114,10 +118,289 @@ app.get('/users/:id/sessions', async(req, res) => {
     res.status(500).json({err:err});
   }
 });
+
+// Get all payments for a user by ID
 app.get('/users/:id/payments', async(req, res) => {
   // Add your code here
   res.json({success: 'get call succeed!', url: req.url});
 });
+
+/**********************
+ *   POST methods     *
+ **********************/
+
+// Create a user
+app.post('/users', async(req, res) => {
+  const {id} = req.params;
+
+  const params = {
+    TableName: 'Tutorhub',
+    Item: {
+      'PK': `User-${id}`
+    }
+  }
+  try {
+    const data = await docClient.put(params).promise();
+    res.json({success: 'post call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
+// Create a course for a user by ID
+app.post('/users/:id/courses', async(req, res) => {
+  const {id} = req.params;
+  const cid = randomUUID();
+  const {Subject, Level, Description, Rating, TotalSessions } = req.body;
+
+  const params = {
+    TableName : 'Tutorhub',
+    Item: {
+      'PK': `User-${id}`,
+      'SK (GSI-1-PK)': `Course-${cid}`,
+      'GSI-1-SK': Subject,
+      'Level': Level,
+      'Description': Description,
+      'Rating': Rating,
+      'TotalSessions': TotalSessions,
+    }
+  }
+
+  try {
+    const data = await docClient.put(params).promise();
+    res.json({success: 'post call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
+// Create a review for a user by ID
+app.post('/users/:id/reviews', async(req, res) => {
+  const {id} = req.params;
+  const rid = randomUUID();
+  const {Description, Rating, Name, tid} = req.body;
+  const CreatedOn = new Date();
+
+  const params = {
+    TransactItems: [
+      {
+        put: {
+          TableName: 'Tutorhub',
+          Item: {
+            'PK': `Review-${rid}`,
+            'SK (GSI-1-PK)': `Review-${rid}`,
+            'GSI-1-SK': 'Details',
+            'Description': Description,
+            'Rating': Rating,
+            'CreatedOn': CreatedOn,
+            'ReviewerID': `User-${id}`,
+            'ReviewedID': `User-${tid}`
+          }
+        }
+      },
+      {
+        put: {
+          TableName: 'Tutorhub',
+          Item: {
+            'PK': `User-${id}`,
+            'SK (GSI-1-PK)': `Review-${rid}`,
+            'GSI-1-SK': 'Reviewer',
+            'Description': Description,
+            'Rating': Rating,
+            'CreatedOn': CreatedOn
+          }
+        }, 
+      },
+      {
+        put: {
+          TableName: 'Tutorhub',
+          Item: {
+            'PK': `User-${tid}`,
+            'SK (GSI-1-PK)': `Review-${rid}`,
+            'GSI-1-SK': 'Reviewed',
+            'Description': Description,
+            'Rating': Rating,
+            'CreatedOn': CreatedOn,
+            'ReviewerName': Name
+          }
+        }
+      }
+    ]
+  };
+
+  try {
+    const data = await docClient.transactWriteItems(params).promise();
+    res.json({success: 'post call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
+/**********************
+ *    PUT methods     *
+ **********************/
+
+// Update a user by ID
+app.put('/users/:id', async(req, res) => {
+  const {id} = req.params;
+  const { Name, Bio } = req.body;
+
+  const params = {
+    TableName : 'Tutorhub',
+    Key: {
+        "PK": `User-${id}`
+    },
+    UpdateExpression: `Set #SK = :Details, #Name = :Name, #Bio = :Bio`,
+    ExpressionAttributeValues: {
+      ':Details': 'Details',
+      ':Name': Name,
+      ':Bio': Bio
+    },
+    ExpressionAttributeNames: {
+      '#SK' : 'SK (GSI-1-PK)',
+      '#Name' : 'GSI-1-SK',
+      '#Bio' : 'Bio'
+    }
+  }
+
+  try {
+    const data = await docClient.update(params).promise();
+    res.json({success: 'put call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
+// Update a course for a user by ID
+app.put('/users/:id/courses/:cid', async(req, res) => {
+  const { id, cid } = req.params;
+  const { Subject, Level, Description, Rating, TotalSessions } = req.body;
+
+  const params = {
+    TableName : 'Tutorhub',
+    Key: {
+        "PK": `User-${id}`,
+        "SK (GSI-1-PK)": `Course-${cid}`
+    },
+    UpdateExpression: `Set #Subject = :Subject, #Level = :Level, #Description = :Description, 
+                       #Rating = :Rating, #TotalSessions = :TotalSessions`,
+    ExpressionAttributeValues: {
+      ':Subject': Subject,
+      ':Level': Level,
+      ':Description': Description,
+      ':Rating': Rating,
+      ':TotalSessions': TotalSessions
+    },
+    ExpressionAttributeNames: {
+      '#Subject' : 'GSI-1-SK',
+      '#Level' : 'Level',
+      '#Description' : 'Description',
+      '#Rating' : 'Rating',
+      '#TotalSessions' : 'TotalSessions'
+    }
+  }
+
+  try {
+    const data = await docClient.update(params).promise();
+    res.json({success: 'put call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
+// Update a review for a user by ID
+app.put('/users/:id/reviews/:rid', async(req, res) => {
+  const { id, rid } = req.params;
+  const { Description, Rating } = req.body;
+
+  const params = {
+    TableName : 'Tutorhub',
+    Key: {
+        "PK": `User-${id}`,
+        "SK (GSI-1-PK)": `Review-${rid}`
+    },
+    UpdateExpression: `Set #Description = :Description, #Rating = :Rating`,
+    ExpressionAttributeValues: {
+      ':Description': Description,
+      ':Rating': Rating
+    },
+    ExpressionAttributeNames: {
+      '#Description' : 'Description',
+      '#Rating' : 'Rating'
+    }
+  }
+
+  try {
+    const data = await docClient.update(params).promise();
+    res.json({success: 'put call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
+/**********************
+ *   DELETE methods   *
+ **********************/
+
+// Delete a user by ID
+app.delete('/users/:id', async(req, res) => {
+  const {id} = req.params;
+
+  const params = {
+    TableName : 'Tutorhub',
+    Key: {
+      "PK": `User-${id}`,
+    }
+  }
+
+  try {
+    const data = await docClient.delete(params).promise();
+    res.json({success: 'delete call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
+// Delete a course for a user by ID
+app.delete('/users/:id/courses/:cid', async(req, res) => {
+  const { id, cid } = req.params;
+
+  const params = {
+    TableName : 'Tutorhub',
+    Key: {
+      "PK": `User-${id}`,
+      "SK (GSI-1-PK)": `Course-${cid}`
+    }
+  }
+
+  try {
+    const data = await docClient.delete(params).promise();
+    res.json({success: 'delete call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
+// Delete a review for a user by ID
+app.delete('/users/:id/reviews/:cid', async(req, res) => {
+  const { id, rid } = req.params;
+
+  const params = {
+    TableName : 'Tutorhub',
+    Key: {
+      "PK": `User-${id}`,
+      "SK (GSI-1-PK)": `Review-${rid}`
+    }
+  }
+
+  try {
+    const data = await docClient.delete(params).promise();
+    res.json({success: 'delete call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
 
 app.listen(3000, function() {
     console.log("App started")
