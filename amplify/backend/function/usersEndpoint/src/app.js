@@ -122,8 +122,24 @@ app.get('/users/:id/sessions', async(req, res) => {
 
 // Get all payments for a user by ID
 app.get('/users/:id/payments', async(req, res) => {
-  // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+  const {id} = req.params;
+
+  const params = {
+    TableName : 'Tutorhub',
+    KeyConditionExpression: '#PK = :user and begins_with(#SK, :payment)',
+    ExpressionAttributeValues: {
+      ':user': `User-${id}`,
+      ':payment': 'Payment'
+    },
+    ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK' }
+  }
+
+  try {
+    const data = await docClient.query(params).promise();
+    res.json({success: 'get call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
 });
 
 /**********************
@@ -185,7 +201,7 @@ app.post('/users/:id/reviews', async(req, res) => {
   const params = {
     TransactItems: [
       {
-        put: {
+        Put: {
           TableName: 'Tutorhub',
           Item: {
             'PK': `Review-${rid}`,
@@ -200,7 +216,7 @@ app.post('/users/:id/reviews', async(req, res) => {
         }
       },
       {
-        put: {
+        Put: {
           TableName: 'Tutorhub',
           Item: {
             'PK': `User-${id}`,
@@ -210,10 +226,10 @@ app.post('/users/:id/reviews', async(req, res) => {
             'Rating': Rating,
             'CreatedOn': CreatedOn
           }
-        }, 
+        }
       },
       {
-        put: {
+        Put: {
           TableName: 'Tutorhub',
           Item: {
             'PK': `User-${tid}`,
@@ -223,6 +239,127 @@ app.post('/users/:id/reviews', async(req, res) => {
             'Rating': Rating,
             'CreatedOn': CreatedOn,
             'ReviewerName': Name
+          }
+        }
+      }
+    ]
+  };
+
+  try {
+    const data = await docClient.transactWriteItems(params).promise();
+    res.json({success: 'post call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
+// Create a session for a user by ID
+app.post('/users/:id/sessions', async(req, res) => {
+  const {id} = req.params;
+  const sid = randomUUID();
+  const {Subject, Level, Description, StartOn, Amount, tid, Status, StudentName, TutorName} = req.body;
+
+  const params = {
+    TransactItems: [
+      {
+        Put: {
+          TableName: 'Tutorhub',
+          Item: {
+            'PK': `Session-${sid}`,
+            'SK (GSI-1-PK)': `Session-${sid}`,
+            'GSI-1-SK': 'Details',
+            'GSI-2-PK': Subject,
+            'Level': Level,
+            'Description': Description,
+            'StartOn': StartOn,
+            'Amount': Amount,
+            'TutorID': `User-${tid}`,
+            'StudentID': `User-${id}`,
+            'Status': Status
+          }
+        }
+      },
+      {
+        Put: {
+          TableName: 'Tutorhub',
+          Item: {
+            'PK': `User-${tid}`,
+            'SK (GSI-1-PK)': `Session-${sid}`,
+            'GSI-1-SK': 'Tutor',
+            'Subject': Subject,
+            'StartOn': StartOn,
+            'StudentName': StudentName
+          }
+        }
+      },
+      {
+        Put: {
+          TableName: 'Tutorhub',
+          Item: {
+            'PK': `User-${id}`,
+            'SK (GSI-1-PK)': `Session-${sid}`,
+            'GSI-1-SK': 'Student',
+            'Subject': Subject,
+            'StartOn': StartOn,
+            'TutorName': TutorName
+          }
+        }
+      }
+    ]
+  };
+
+  try {
+    const data = await docClient.transactWriteItems(params).promise();
+    res.json({success: 'post call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
+// Create a payment for a user by ID
+app.post('/users/:id/payments', async(req, res) => {
+  const {id} = req.params;
+  const pid = randomUUID();
+  const {tid, Amount, SenderName, ReceiverName} = req.body;
+  const CreatedOn = new Date();
+
+  const params = {
+    TransactItems: [
+      {
+        Put: {
+          TableName: 'Tutorhub',
+          Item: {
+            'PK': `Payment-${pid}`,
+            'SK (GSI-1-PK)': `Payment-${pid}`,
+            'GSI-1-SK': 'Details',
+            'CreatedOn': CreatedOn,
+            'Amount': Amount,
+            'SenderID': `User-${id}`,
+            'ReceiverID': `User-${id}`
+          }
+        }
+      },
+      {
+        Put: {
+          TableName: 'Tutorhub',
+          Item: {
+            'PK': `User-${tid}`,
+            'SK (GSI-1-PK)': `Payment-${pid}`,
+            'GSI-1-SK': 'Receiver',
+            'Amount': Amount,
+            'SenderName': SenderName
+          }
+        }
+      },
+      {
+        Put: {
+          TableName: 'Tutorhub',
+          Item: {
+            'PK': `User-${id}`,
+            'SK (GSI-1-PK)': `Payment-${pid}`,
+            'GSI-1-SK': 'Sender',
+            'Amount': Amount,
+            'ReceiverName': ReceiverName
           }
         }
       }
@@ -312,27 +449,135 @@ app.put('/users/:id/courses/:cid', async(req, res) => {
 // Update a review for a user by ID
 app.put('/users/:id/reviews/:rid', async(req, res) => {
   const { id, rid } = req.params;
-  const { Description, Rating } = req.body;
+  const { Description, Rating, tid } = req.body;
 
   const params = {
-    TableName : 'Tutorhub',
-    Key: {
-        "PK": `User-${id}`,
-        "SK (GSI-1-PK)": `Review-${rid}`
-    },
-    UpdateExpression: `Set #Description = :Description, #Rating = :Rating`,
-    ExpressionAttributeValues: {
-      ':Description': Description,
-      ':Rating': Rating
-    },
-    ExpressionAttributeNames: {
-      '#Description' : 'Description',
-      '#Rating' : 'Rating'
-    }
-  }
+    TransactItems: [
+      {
+        Update: {
+          TableName: 'Tutorhub',
+          Key: {
+            "PK": `User-${id}`,
+            "SK (GSI-1-PK)": `Review-${rid}`
+          },
+          UpdateExpression: 'Set #Description = :Description, #Rating = :Rating',
+          ExpressionAttributeValues: {
+            ':Description': Description,
+            ':Rating': Rating
+          },
+          ExpressionAttributeNames: {
+            '#Description' : 'Description',
+            '#Rating' : 'Rating'
+          }
+        }
+      },
+      {
+        Update: {
+          TableName: 'Tutorhub',
+          Key: {
+            "PK": `User-${tid}`,
+            "SK (GSI-1-PK)": `Review-${rid}`
+          },
+          UpdateExpression: 'Set #Description = :Description, #Rating = :Rating',
+          ExpressionAttributeValues: {
+            ':Description': Description,
+            ':Rating': Rating
+          },
+          ExpressionAttributeNames: {
+            '#Description' : 'Description',
+            '#Rating' : 'Rating'
+          }
+        }
+      },
+      {
+        Update: {
+          TableName: 'Tutorhub',
+          Key: {
+            "PK": `Review-${rid}`,
+            "SK (GSI-1-PK)": `Review-${rid}`
+          },
+          UpdateExpression: 'Set #Description = :Description, #Rating = :Rating',
+          ExpressionAttributeValues: {
+            ':Description': Description,
+            ':Rating': Rating
+          },
+          ExpressionAttributeNames: {
+            '#Description' : 'Description',
+            '#Rating' : 'Rating'
+          }
+        }
+      }
+    ]
+  };
 
   try {
-    const data = await docClient.update(params).promise();
+    const data = await docClient.transactWriteItems(params).promise();
+    res.json({success: 'put call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
+// Update a session for a user by ID
+app.put('/users/:id/sessions/:sid', async(req, res) => {
+  const { id, sid } = req.params;
+  const { tid, Status } = req.body;
+
+  const params = {
+    TransactItems: [
+      {
+        Update: {
+          TableName: 'Tutorhub',
+          Key: {
+            "PK": `User-${id}`,
+            "SK (GSI-1-PK)": `Session-${sid}`
+          },
+          UpdateExpression: 'Set #Status = :Status',
+          ExpressionAttributeValues: {
+            ':Status': Status
+          },
+          ExpressionAttributeNames: {
+            '#Status' : 'Status'
+          }
+        }
+      },
+      {
+        Update: {
+          TableName: 'Tutorhub',
+          Key: {
+            "PK": `User-${tid}`,
+            "SK (GSI-1-PK)": `Session-${sid}`
+          },
+          UpdateExpression: 'Set #Status = :Status',
+          ExpressionAttributeValues: {
+            ':Status': Status
+          },
+          ExpressionAttributeNames: {
+            '#Status' : 'Status'
+          }
+        }
+      },
+      {
+        Update: {
+          TableName: 'Tutorhub',
+          Key: {
+            "PK": `Session-${sid}`,
+            "SK (GSI-1-PK)": `Session-${sid}`
+          },
+          UpdateExpression: 'Set #Status = :Status',
+          ExpressionAttributeValues: {
+            ':Status': Status
+          },
+          ExpressionAttributeNames: {
+            '#Status' : 'Status'
+          }
+        }
+      }
+    ]
+  };
+
+  try {
+    const data = await docClient.transactWriteItems(params).promise();
     res.json({success: 'put call succeed!', data: data});
   } catch (err) {
     res.status(500).json({err:err});
@@ -383,19 +628,89 @@ app.delete('/users/:id/courses/:cid', async(req, res) => {
 });
 
 // Delete a review for a user by ID
-app.delete('/users/:id/reviews/:cid', async(req, res) => {
-  const { id, rid } = req.params;
+app.delete('/users/:id/reviews/:rid', async(req, res) => {
+  const {id, rid} = req.params;
+  const {tid} = body.params;
 
   const params = {
-    TableName : 'Tutorhub',
-    Key: {
-      "PK": `User-${id}`,
-      "SK (GSI-1-PK)": `Review-${rid}`
-    }
-  }
+    TransactItems: [
+      {
+        Delete: {
+          TableName: 'Tutorhub',
+          Key: {
+            "PK": `User-${id}`,
+            "SK (GSI-1-PK)": `Review-${rid}`
+          }
+        }
+      },
+      {
+        Delete: {
+          TableName: 'Tutorhub',
+          Key: {
+            "PK": `User-${tid}`,
+            "SK (GSI-1-PK)": `Review-${rid}`
+          }
+        }
+      },
+      {
+        Delete: {
+          TableName: 'Tutorhub',
+          Key: {
+            "PK": `Review-${rid}`,
+            "SK (GSI-1-PK)": `Review-${rid}`
+          }
+        }
+      }
+    ]
+  };
 
   try {
-    const data = await docClient.delete(params).promise();
+    const data = await docClient.transactWriteItems(params).promise();
+    res.json({success: 'delete call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
+// Delete a session for a user by ID
+app.delete('/users/:id/sessions/:sid', async(req, res) => {
+  const {id, sid} = req.params;
+  const {tid} = body.params;
+
+  const params = {
+    TransactItems: [
+      {
+        Delete: {
+          TableName: 'Tutorhub',
+          Key: {
+            "PK": `User-${id}`,
+            "SK (GSI-1-PK)": `Session-${sid}`
+          }
+        }
+      },
+      {
+        Delete: {
+          TableName: 'Tutorhub',
+          Key: {
+            "PK": `User-${tid}`,
+            "SK (GSI-1-PK)": `Session-${sid}`
+          }
+        }
+      },
+      {
+        Delete: {
+          TableName: 'Tutorhub',
+          Key: {
+            "PK": `Session-${sid}`,
+            "SK (GSI-1-PK)": `Session-${sid}`
+          }
+        }
+      }
+    ]
+  };
+
+  try {
+    const data = await docClient.transactWriteItems(params).promise();
     res.json({success: 'delete call succeed!', data: data});
   } catch (err) {
     res.status(500).json({err:err});
