@@ -11,6 +11,7 @@ See the License for the specific language governing permissions and limitations 
 
 const express = require('express')
 const bodyParser = require('body-parser')
+const {randomUUID} = require('crypto');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
