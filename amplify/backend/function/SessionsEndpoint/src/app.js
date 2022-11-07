@@ -111,14 +111,26 @@ app.post('/users/:id/sessions', async(req, res) => {
 * Get session by subject *
 ****************************/
 
-app.put('/sessions', function(req, res) {
-  // Add your code here
-  res.json({success: 'put call succeed!', url: req.url, body: req.body})
-});
+app.put('/sessions/:subject', async(req, res)=>{
+  const{subject}=req.params;
+  const params = {
+    TableName : 'GSI: SessionGSI',
+    IndexName : 'PK: GSI-2-PK',
+    KeyConditionExpression: '#PK = :subject',
+    ExpressionAttributeValues: {
+      ':subject': subject
+    },
+    ExpressionAttributeNames: { '#PK': 'GSI-2-PK' }
+  }
+  console.log(params);
 
-app.put('/sessions/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'put call succeed!', url: req.url, body: req.body})
+  try {
+    const data = await docClient.query(params).promise();
+    const course = data.Items[0]
+    res.json({success: 'get call succeed!', data: course});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
 });
 
 /****************************
