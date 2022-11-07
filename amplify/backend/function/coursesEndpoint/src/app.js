@@ -11,7 +11,10 @@ See the License for the specific language governing permissions and limitations 
 
 const express = require('express')
 const bodyParser = require('body-parser')
+const {randomUUID} = require('crypto');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
+const AWS = require('aws-sdk');
+const docClient = new AWS.DynamoDB.DocumentClient();
 
 // declare a new express app
 const app = express()
@@ -25,22 +28,48 @@ app.use(function(req, res, next) {
   next()
 });
 
+// Get all courses
+ app.get('/courses', async(req, res) => {
 
-/**********************
- * Example get method *
- **********************/
+  const params = {
+    TableName : 'Tutorhub',
+    IndexName : 'GSI2',
+    FilterExpression: 'begins_with(#PK, :course)',
+    ExpressionAttributeValues: { ':course': 'Course' },
+    ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)' }
+  }
 
-app.get('/courses', function(req, res) {
-  // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+  try {
+    const data = await docClient.scan(params).promise();
+    const courses = data.Items
+    res.json({success: 'get call succeed!', data: courses});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
 });
 
-app.get('/courses/:id', function(req, res) {
-  // Add your code here
+// Get a course by ID
+app.get('/courses/:id', async(req, res) => {
+  const {id} = req.params;
 
-  res.json({success: 'get call succeed!', url: req.url});
+  const params = {
+    TableName : 'Tutorhub',
+    IndexName : 'GSI2',
+    KeyConditionExpression: '#PK = :course',
+    ExpressionAttributeValues: {
+      ':course': `Course-${id}`
+    },
+    ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)' }
+  }
+
+  try {
+    const data = await docClient.query(params).promise();
+    const course = data.Items[0]
+    res.json({success: 'get call succeed!', data: course});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
 });
-
 
 app.listen(3000, function() {
     console.log("App started")
