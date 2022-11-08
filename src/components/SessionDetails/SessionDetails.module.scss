@@ -1,0 +1,91 @@
+@import "../../styles/abstracts/_mixins.scss";
+@import "../../styles/abstracts/_variables.scss";
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    @include breakpoint(tablet) {
+        flex-basis: auto;
+        width: 100%;
+    }
+}
+.link{
+    color: color(accent, base);
+}
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    width: 100%;
+    color: color(accent, base);
+}
+.classLevel {
+    color: color(accent, base);
+    margin-left: 20px; 
+    font-size: 1.2rem;
+}
+.info {
+    color: color(accent, base);
+}
+.id {
+    @include headingMedium;
+    margin-top: 15px;
+}
+.tutor {
+    border-top: 1px solid color(accent, base);
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    margin-top: 10px;
+    @include breakpoint(tablet) {
+        flex-direction: row;
+        width: 100%;
+        gap: 10vw;
+    }
+}
+.about {
+    margin-bottom: 20px;
+}
+.student {
+    border-top: 1px solid color(accent, base);
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    margin: 40px 0;
+    @include breakpoint(tablet) {
+        flex-direction: row;
+        width: 100%;
+    }
+}
+.sub1 {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+.sub2 {
+    display: flex;
+    flex-direction: row;
+}
+.stars1{
+  font-size: 1.3rem;
+  margin-top: -5px;
+  margin-bottom: 10px;
+}
+.stars2 {
+    font-size: 1.2rem;
+    margin: 10px 30px;
+}
+.imageContainer {
+    display: flex;
+    justify-content: center;
+    max-height: 400px;
+}
+.heading {
+    color:black;
+    @include headingMedium;
+    margin-top: 15px;
+}
+.heading2 {
+    font-size: 1.3rem;
+}
