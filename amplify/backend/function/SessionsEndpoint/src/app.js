@@ -111,7 +111,7 @@ app.post('/users/:id/sessions', async(req, res) => {
 * Get session by subject *
 ****************************/
 
-app.put('/sessions/:subject', async(req, res)=>{
+app.get('/sessions/:subject', async(req, res)=>{
   const{subject}=req.params;
   const params = {
     TableName : 'GSI: SessionGSI',
