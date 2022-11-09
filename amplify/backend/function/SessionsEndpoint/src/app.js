@@ -66,8 +66,8 @@ app.get('sessions/:id', async(req, res) => {
 
   try {
     const data = await docClient.query(params).promise();
-    const course = data.Items[0]
-    res.json({success: 'get call succeed!', data: course});
+    const session = data.Items[0]
+    res.json({success: 'get call succeed!', data: session});
   } catch (err) {
     res.status(500).json({err:err});
   }
@@ -93,8 +93,8 @@ app.get('/sessions/:subject', async(req, res)=>{
 
   try {
     const data = await docClient.query(params).promise();
-    const course = data.Items[0]
-    res.json({success: 'get call succeed!', data: course});
+    const session = data.Items[0]
+    res.json({success: 'get call succeed!', data: session});
   } catch (err) {
     res.status(500).json({err:err});
   }
