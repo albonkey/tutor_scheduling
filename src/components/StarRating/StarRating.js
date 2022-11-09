@@ -9,8 +9,10 @@ const StarRating = ({rating}) => {
     const stars = [];
     let currentRating = rating;
 
+    console.log(rating)
+
     for(let i = 0; i < 5; i++){
-      if(currentRating > 0){
+      if(currentRating >= 1){
         stars.push(<FontAwesomeIcon icon={faStar} />)
       } else if (currentRating > 0.3){
         stars.push(<FontAwesomeIcon icon={faStarHalfStroke} />)
