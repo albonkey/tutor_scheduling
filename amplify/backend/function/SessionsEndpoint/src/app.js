@@ -73,40 +73,7 @@ app.get('sessions/:id', async(req, res) => {
   }
 });
 
-/**********************************
-*  Create a Session for user by ID
-**********************************/
 
-app.post('/users/:id/sessions', async(req, res) => {
-  const {id} = req.params;
-  
-  const {Subject, Level, Description, Amount, TutorID, Status } = req.body;
-  const StartOn = new Date();
-
-  const params = {
-    TableName : 'Tutorhub',
-    Item: {
-      'PK': `Session-${id}`,
-      'SK (GSI-1-PK)': `Session-${id}`,
-      'GSI-1-SK': Details,
-      'GSI-2-PK': Subject,
-      'Level': Level,
-      'Description': Description,
-      'StartOn': StartOn,
-      'Amount': Amount,
-      'TutorID': TutorID,
-      'StudentID':`User-${id}`,
-      'Status':Status
-    }
-  }
-
-  try {
-    const data = await docClient.put(params).promise();
-    res.json({success: 'post call succeed!', data: data});
-  } catch (err) {
-    res.status(500).json({err:err});
-  }
-});
 /****************************
 * Get session by subject *
 ****************************/
@@ -114,8 +81,8 @@ app.post('/users/:id/sessions', async(req, res) => {
 app.get('/sessions/:subject', async(req, res)=>{
   const{subject}=req.params;
   const params = {
-    TableName : 'GSI: SessionGSI',
-    IndexName : 'PK: GSI-2-PK',
+    TableName : 'TutorHub',
+    IndexName : 'SessionGSI',
     KeyConditionExpression: '#PK = :subject',
     ExpressionAttributeValues: {
       ':subject': subject
@@ -128,75 +95,6 @@ app.get('/sessions/:subject', async(req, res)=>{
     const data = await docClient.query(params).promise();
     const course = data.Items[0]
     res.json({success: 'get call succeed!', data: course});
-  } catch (err) {
-    res.status(500).json({err:err});
-  }
-});
-
-/****************************
-* Update a session *
-****************************/
-
-ap.put('/sessions/:id', async(req, res) => {
-  const { id} = req.params;
-  const { tid, Status } = req.body;
-
-  const params = {
-    TransactItems: [
-      {
-        Update: {
-          TableName: 'Tutorhub',
-          Key: {
-            "PK": `Session-${id}`,
-            "SK (GSI-1-PK)": `Session-${sid}`
-          },
-          UpdateExpression: 'Set #Status = :Status',
-          ExpressionAttributeValues: {
-            ':Status': Status
-          },
-          ExpressionAttributeNames: {
-            '#Status' : 'Status'
-          }
-        }
-      },
-      {
-        Update: {
-          TableName: 'Tutorhub',
-          Key: {
-            "PK": `User-${tid}`,
-            "SK (GSI-1-PK)": `Session-${sid}`
-          },
-          UpdateExpression: 'Set #Status = :Status',
-          ExpressionAttributeValues: {
-            ':Status': Status
-          },
-          ExpressionAttributeNames: {
-            '#Status' : 'Status'
-          }
-        }
-      },
-      {
-        Update: {
-          TableName: 'Tutorhub',
-          Key: {
-            "PK": `Session-${sid}`,
-            "SK (GSI-1-PK)": `Session-${sid}`
-          },
-          UpdateExpression: 'Set #Status = :Status',
-          ExpressionAttributeValues: {
-            ':Status': Status
-          },
-          ExpressionAttributeNames: {
-            '#Status' : 'Status'
-          }
-        }
-      }
-    ]
-  };
-
-  try {
-    const data = await docClient.transactWriteItems(params).promise();
-    res.json({success: 'put call succeed!', data: data});
   } catch (err) {
     res.status(500).json({err:err});
   }
