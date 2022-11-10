@@ -5,7 +5,7 @@ import style from './HomePage.module.scss';
 import HomeGreeting from '../../components/HomeGreeting/HomeGreeting';
 import SessionList from '../../components/SessionList/SessionList';
 import HomeCourses from '../../components/HomeCourses/HomeCourses';
-import HomeCalendar from '../../components/HomeCalendar/HomeCalendar';
+import ScheduleComponent from '../../components/ScheduleComponent/ScheduleComponent';
 
 const HomePage = () => {
 	const id = useSelector((state) => state.user.id)
@@ -19,90 +19,6 @@ const HomePage = () => {
 		getSessions(id);
 	}, [])
 
-	const schedule = [
-		{
-			date: 'Feb 19',
-			appointment: [
-				{
-					isTeaching: false,
-					time: '3 pm',
-					name: 'Rob',
-					subject: 'Guitar'
-				},{
-					isTeaching: true,
-					time: '4 pm',
-					name: 'Haley',
-					subject: 'English'
-				},{
-					isTeaching: false,
-					time: '6 pm',
-					name: 'Bob',
-					subject: 'Math'
-				}
-			]
-		},{
-			date: 'Feb 20',
-			appointment: [
-				{
-					isTeaching: true,
-					time: '2 pm',
-					name: 'Mel',
-					subject: 'Math'
-				},{
-					isTeaching: false,
-					time: '3 pm',
-					name: 'Sal',
-					subject: 'History'
-				},{
-					isTeaching: false,
-					time: '6 pm',
-					name: 'Bob',
-					subject: 'Spanish'
-				}
-			]
-		},{
-			date: 'Feb 19',
-			appointment: [
-				{
-					isTeaching: false,
-					time: '3 pm',
-					name: 'Rob',
-					subject: 'Guitar'
-				},{
-					isTeaching: true,
-					time: '4 pm',
-					name: 'Haley',
-					subject: 'English'
-				},{
-					isTeaching: false,
-					time: '6 pm',
-					name: 'Bob',
-					subject: 'Math'
-				}
-			]
-		},{
-			date: 'Feb 20',
-			appointment: [
-				{
-					isTeaching: true,
-					time: '2 pm',
-					name: 'Mel',
-					subject: 'Math'
-				},{
-					isTeaching: false,
-					time: '3 pm',
-					name: 'Sal',
-					subject: 'History'
-				},{
-					isTeaching: false,
-					time: '6 pm',
-					name: 'Bob',
-					subject: 'Spanish'
-				}
-			]
-		}
-	]
-
 		 return(
 			 <div className={style.page}>
 			 	<HomeGreeting />
@@ -114,7 +30,7 @@ const HomePage = () => {
 				}
 
 
-					<HomeCalendar schedule = {schedule}/>
+					<ScheduleComponent />
 			 </div>
 
 		 )
