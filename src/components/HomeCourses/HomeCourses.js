@@ -20,7 +20,6 @@ const HomeCourses = ({name, title, sessions}) => {
                       name={session.StudentName ? session.StudentName : session.TutorName }
                       time={session.StartOn}
                       sessionID={session['SK (GSI-1-PK)']}
-
                   />
                     })
                 }
