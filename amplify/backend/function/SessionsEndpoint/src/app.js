@@ -6,10 +6,13 @@ or in the "license" file accompanying this file. This file is distributed on an 
 See the License for the specific language governing permissions and limitations under the License.
 */
 
-
 const express = require('express')
 const bodyParser = require('body-parser')
+//const {randomUUID} = require('crypto');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
+const AWS = require('aws-sdk');
+AWS.config.update({region:'us-west-2'})
+const docClient = new AWS.DynamoDB.DocumentClient();
 
 // declare a new express app
 const app = express()
@@ -32,7 +35,7 @@ app.use(function(req, res, next) {
   const params = {
     TableName : 'Tutorhub',
     IndexName : 'GSI2',
-    KeyConditionExpression: 'begins_with(#PK, :session)',
+    FilterExpression: 'begins_with(#PK, :session)',
     ExpressionAttributeValues: {
       ':session': 'Session'
     },
@@ -50,7 +53,8 @@ app.use(function(req, res, next) {
 /****************************
 * Get a session details by id *
 ****************************/
-app.get('sessions/:id', async(req, res) => {
+
+app.get('/sessions/:id', async(req, res) => {
   const {id} = req.params;
 
   const params = {
@@ -62,12 +66,11 @@ app.get('sessions/:id', async(req, res) => {
     },
     ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)' }
   }
-  console.log(params);
 
   try {
     const data = await docClient.query(params).promise();
-    const session = data.Items[0]
-    res.json({success: 'get call succeed!', data: session});
+    
+    res.json({success: 'get call succeed!', data: data});
   } catch (err) {
     res.status(500).json({err:err});
   }
@@ -89,12 +92,11 @@ app.get('/sessions/:subject', async(req, res)=>{
     },
     ExpressionAttributeNames: { '#PK': 'GSI-2-PK' }
   }
-  console.log(params);
 
   try {
     const data = await docClient.query(params).promise();
-    const session = data.Items[0]
-    res.json({success: 'get call succeed!', data: session});
+    //const session = data.Items[0]
+    res.json({success: 'get call succeed!', data: data});
   } catch (err) {
     res.status(500).json({err:err});
   }
@@ -127,10 +129,13 @@ app.delete('/sessions/:id', async(req, res) => {
   }
 });
 
+app.listen(3000, function() {
+  console.log("App started")
+});
+
 // Export the app object. When executing the application local this does nothing. However,
 // to port it to AWS Lambda we will create a wrapper around that will load the app from
 // this file
 module.exports = app
-
 
 
