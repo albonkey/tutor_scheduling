@@ -14,6 +14,11 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "SessionsEndpoint": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "api": {
@@ -32,6 +37,14 @@
         {
           "category": "function",
           "resourceName": "coursesEndpoint",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "SessionsEndpoint",
           "attributes": [
             "Name",
             "Arn"

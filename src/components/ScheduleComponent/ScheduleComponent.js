@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {API } from 'aws-amplify';
+import { useDispatch, useSelector } from 'react-redux';
+import {API} from 'aws-amplify';
 import style from './ScheduleComponent.module.scss';
+import { getAvailabilityInfo } from '../../features/availability/availabilityInfoSlice';
+import { saveAvailability} from '../../features/availability/availabilitySaveSlice';
 
 const ScheduleComponent = () => {
 	const [editable, setEditable] = useState(false);
@@ -22,6 +25,11 @@ const ScheduleComponent = () => {
 			}
 		}});
 
+	const availabilityInfo = useSelector(state => state.availabilityInfo);
+	const userInfo = useSelector(state => state.user);
+
+	const dispatch = useDispatch();
+
 	const createDate = (offset) => {
 		const date = new Date();
 		const add = offset ? offset : 0;
@@ -31,7 +39,7 @@ const ScheduleComponent = () => {
 	}
 
 	const updateSchedule = (day, time, action) => {
-		const newSchedule = {...schedule};
+		const newSchedule = structuredClone(schedule);
 
 		if(action === 'makeAvailable'){
 			let newTime = {'type': 'Available'};
@@ -108,7 +116,13 @@ const ScheduleComponent = () => {
 		const month = date.toLocaleDateString('en-US', { month: 'short'});
 		const dateNumber = date.getDate();
 		const dateString = date.toLocaleDateString();
-		const dayData = schedule[dateString] ? schedule[dateString] : {};
+
+		let dayData = {};
+		if(schedule){
+			dayData = schedule[dateString] ? schedule[dateString] : {};
+		}
+
+
 		const hours = [];
 
 
@@ -132,6 +146,18 @@ const ScheduleComponent = () => {
 			)
 	}
 
+	const submitHandler = async (user, availability) => {
+		dispatch(saveAvailability(user, availability));
+	}
+
+	useEffect(() => {
+		dispatch(getAvailabilityInfo(userInfo.id))
+		.then(response => {
+			const obj = structuredClone(response)
+			setSchedule(obj);
+		});
+	}, []);
+
 	 return(
 		 <div className={style.wrapper}>
 		 	<div className={style.header}>
@@ -146,6 +172,7 @@ const ScheduleComponent = () => {
 							}>Cancel</button>
 							<button className={style.button + ' ' + style.green} onClick={() => {
 								setEditable(!editable);
+								submitHandler(userInfo.id, schedule)
 							}}>Update</button>
 						</div>
 
