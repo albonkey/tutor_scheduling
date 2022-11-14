@@ -3,7 +3,7 @@ import {API} from 'aws-amplify';
 export const coursesSlice = createSlice({
   name: 'courses',
   initialState: {
-    courseList: [],
+    courseList: []
   },
   reducers: {
     courseListRequest: (state) => {
@@ -22,7 +22,10 @@ export const coursesSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { courseListRequest, courseListSuccess, courseListFail } = coursesSlice.actions;
+export const { 
+    courseListRequest, 
+    courseListSuccess, 
+    courseListFail } = coursesSlice.actions;
 
 export const listCourses = (user) => async (dispatch) => {
   try{

@@ -2,23 +2,23 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import style from './SessionListItem.module.scss';
 
-const SessionListItem = ({isTeaching, subject, name, time, sessionID}) => {
+const SessionListItem = ({session}) => {
 
-const background = isTeaching ? style.teach : style.learn;
-
+    const background = session['GSI-1-SK'] === 'Tutor' ? style.teach : style.learn;
+    
     return(
         <div className = {style.wrapper + ' ' + background}>
             <div className={style.info}>
                 <span className={style.status}>
                     {
-                        isTeaching ? 'Teaching' : 'Learning'
+                        session['GSI-1-SK'] === 'Tutor' ? 'Teaching' : 'Learning'
                     }
                 </span>
-                <span>{`${subject} with ${name}`}</span>
+                <span>{`${session.Subject} with ${session.TutorName}`}</span>
             </div>
             <div className={style.info}>
-                <Link className={style.link} to={`/session/${sessionID}`}>View Session</Link>
-                <span>{time}</span>
+                <Link className={style.link} to={`/session/${session['GSI-1-SK']}`}>View Session</Link>
+                <span>{session.StartOn}</span>
             </div>
         </div>
     )

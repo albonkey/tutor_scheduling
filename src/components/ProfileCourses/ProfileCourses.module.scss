@@ -2,10 +2,12 @@
 @import "../../styles/abstracts/_variables.scss";
 
 .wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 25px 0;
   width: 100%;
-  margin-top: 25px;
 }
-
 .heading2 {
     @include headingMedium;
 }

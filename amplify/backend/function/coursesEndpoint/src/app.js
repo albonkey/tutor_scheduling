@@ -11,7 +11,10 @@ See the License for the specific language governing permissions and limitations 
 
 const express = require('express')
 const bodyParser = require('body-parser')
+const {randomUUID} = require('crypto');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
+const AWS = require('aws-sdk');
+const docClient = new AWS.DynamoDB.DocumentClient();
 
 // declare a new express app
 const app = express()
@@ -26,19 +29,144 @@ app.use(function(req, res, next) {
 });
 
 
-/**********************
- * Example get method *
- **********************/
+// Get all courses
+ app.get('/courses', async(req, res) => {
 
-app.get('/courses', function(req, res) {
-  // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
+  const params = {
+    TableName : 'Tutorhub',
+    IndexName : 'GSI2',
+    FilterExpression: 'begins_with(#PK, :course)',
+    ExpressionAttributeValues: { ':course': 'Course' },
+    ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)' }
+  }
+
+  try {
+    const data = await docClient.scan(params).promise();
+    const courses = data.Items
+    res.json({success: 'get call succeed!', data: courses});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
 });
 
-app.get('/courses/:id', function(req, res) {
-  // Add your code here
 
-  res.json({success: 'get call succeed!', url: req.url});
+// Get a course by ID
+app.get('/courses/:id', async(req, res) => {
+  const {id} = req.params;
+
+  const params = {
+    TableName : 'Tutorhub',
+    IndexName : 'GSI2',
+    KeyConditionExpression: '#PK = :course',
+    ExpressionAttributeValues: {
+      ':course': `Course-${id}`
+    },
+    ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)' }
+  }
+  console.log(params);
+
+  try {
+    const data = await docClient.query(params).promise();
+    const course = data.Items[0]
+    res.json({success: 'get call succeed!', data: course});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
+//THESE ALL NEED THE USER ID FIRST
+
+// Create a course
+app.post('/courses/users/:id', async(req, res) => {
+  const {id} = req.params;
+  const cid = randomUUID();
+  const {Subject, Level, Description, Rating, TotalSessions } = req.body;
+
+  const params = {
+    TableName : 'Tutorhub',
+    Item: {
+      'PK': `User-${id}`,
+      'SK (GSI-1-PK)': `Course-${Subject}`,
+      'GSI-1-SK': Subject,
+      'Level': Level,
+      'Description': Description,
+      'Rating': Rating,
+      'TotalSessions': TotalSessions
+    }
+  }
+
+
+  
+  try {
+    const data = await docClient.put(params).promise();
+    res.json({success: 'get call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
+// Update a course
+app.put('/courses/:cid/users/:id', async(req, res) => {
+  const { id, cid } = req.params;
+  const { Subject, Level, Description, Rating, TotalSessions } = req.body;
+
+  const params = {
+    TableName : 'Tutorhub',
+    Key: {
+        "PK": `User-${id}`,
+        "SK (GSI-1-PK)": `Course-${cid}`
+    },
+    UpdateExpression: 'Set #Subject = :Subject, #Level = :Level, #Description = :Description, #Rating = :Rating, #TotalSessions = :TotalSessions',
+    ExpressionAttributeValues: {
+      ':Subject': Subject,
+      ':Level': Level,
+      ':Description': Description,
+      ':Rating': Rating,
+      ':TotalSessions': TotalSessions
+    },
+    ExpressionAttributeNames: {
+      '#Subject' : 'GSI-1-SK',
+      '#Level' : 'Level',
+      '#Description' : 'Description',
+      '#Rating' : 'Rating',
+      '#TotalSessions' : 'TotalSessions'
+    }
+  }
+
+  try {
+    const data = await docClient.update(params).promise();
+    res.json({success: 'post call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
+
+
+// Delete a course
+app.delete('/courses/:cid/users/:id', async(req, res) => {
+  const { id, cid } = req.params;
+
+  const params = {
+    TableName : 'Tutorhub',
+    // KeyConditionExpression: '#PK = :user and #SK = :course)',
+    // ExpressionAttributeValues: {
+    //   ':user': `User-${id}`,
+    //   ':course': `Course-${cid}`
+    // },
+    // ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK' }
+    Key: {
+      "PK": `User-${id}`,
+      "SK (GSI-1-PK)": `Course-${cid}`
+    }
+  }
+
+  try {
+    const data = await docClient.delete(params).promise();
+    res.json({success: 'delete call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
 });
 
 

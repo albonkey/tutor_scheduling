@@ -31,9 +31,7 @@
   @include breakpoint(tablet){
     width: 50%;
   }
-
 }
-
 .heading {
     @include headingBig;
 }

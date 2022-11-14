@@ -2,20 +2,11 @@ import React, {useState, useEffect} from 'react';
 import { useSelector } from 'react-redux';
 import { API } from 'aws-amplify';
 import style from './HomePage.module.scss';
-import HomeCourses from '../../components/HomeCourses/HomeCourses';
+import HomeSessions from '../../components/HomeSessions/HomeSessions';
 import HomeCalendar from '../../components/HomeCalendar/HomeCalendar';
 
 const HomePage = () => {
 	const id = useSelector((state) => state.user.id)
-	const [sessions, setSessions] = useState([]);
-	const getSessions = async (userID) => {
-		const response = await API.get('tutorhubAPI', `/users/${userID}/sessions`);
-		setSessions([...response.data.Items]);
-		console.log(sessions);
-	}
-	useEffect(() => {
-		getSessions(id);
-	}, [])
 
 	const schedule = [
 		{
@@ -104,15 +95,13 @@ const HomePage = () => {
 		 return(
 			 <div className={style.page}>
 			 	{
-					sessions &&
-					<HomeCourses
-						name = {'Welcome Carl Solli'}
-						title = {'Today'}
-						sessions = {sessions} />
+					<HomeSessions
+						userID = {id} />
 				}
 
-
+				{
 					<HomeCalendar schedule = {schedule}/>
+}
 			 </div>
 
 		 )
