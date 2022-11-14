@@ -6,12 +6,7 @@
     flex-direction: column;
     justify-content: space-between;
     margin: 10px;
-    
-    
-    @include breakpoint(tablet) {
-        align-items: flex-start;
-        width: 100%;
-    }
+    width: 100%;
   }
   .heading2{
     @include headingMedium
