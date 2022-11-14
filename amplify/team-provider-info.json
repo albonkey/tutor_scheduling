@@ -27,7 +27,7 @@
         },
         "SessionsEndpoint": {
           "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
-          "s3Key": "amplify-builds/SessionsEndpoint-2f474a39476d7a372b55-build.zip"
+          "s3Key": "amplify-builds/SessionsEndpoint-612f3355737570704358-build.zip"
         }
       },
       "api": {

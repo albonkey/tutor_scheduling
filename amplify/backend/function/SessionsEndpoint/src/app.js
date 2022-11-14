@@ -85,7 +85,7 @@ app.get('/sessions/:subject', async(req, res)=>{
   const{subject}=req.params;
   const params = {
     TableName : 'TutorHub',
-    IndexName : 'GSI: SessionGSI',
+    IndexName : 'SessionGSI',
     KeyConditionExpression: '#PK = :subject',
     ExpressionAttributeValues: {
       ':subject': subject
