@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 /*
 Copyright 2017 - 2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 Licensed under the Apache License, Version 2.0 (the "License"). You may not use this file except in compliance with the License. A copy of the License is located at
@@ -6,6 +10,7 @@ or in the "license" file accompanying this file. This file is distributed on an 
 See the License for the specific language governing permissions and limitations under the License.
 */
 
+<<<<<<< HEAD
 const express = require('express')
 const bodyParser = require('body-parser')
 //const {randomUUID} = require('crypto');
@@ -13,6 +18,14 @@ const awsServerlessExpressMiddleware = require('aws-serverless-express/middlewar
 const AWS = require('aws-sdk');
 AWS.config.update({region:'us-west-2'})
 const docClient = new AWS.DynamoDB.DocumentClient();
+=======
+
+
+
+const express = require('express')
+const bodyParser = require('body-parser')
+const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
+>>>>>>> master
 
 // declare a new express app
 const app = express()
@@ -26,6 +39,7 @@ app.use(function(req, res, next) {
   next()
 });
 
+<<<<<<< HEAD
 /**********************
  * Get all sessions *
  **********************/
@@ -153,11 +167,75 @@ app.delete('/sessions/:id', async(req, res) => {
 
 app.listen(3000, function() {
   console.log("App started")
+=======
+
+/**********************
+ * Example get method *
+ **********************/
+
+app.get('/sessions', function(req, res) {
+  // Add your code here
+  res.json({success: 'get call succeed!', url: req.url});
+});
+
+app.get('/sessions/*', function(req, res) {
+  // Add your code here
+  res.json({success: 'get call succeed!', url: req.url});
+});
+
+/****************************
+* Example post method *
+****************************/
+
+app.post('/sessions', function(req, res) {
+  // Add your code here
+  res.json({success: 'post call succeed!', url: req.url, body: req.body})
+});
+
+app.post('/sessions/*', function(req, res) {
+  // Add your code here
+  res.json({success: 'post call succeed!', url: req.url, body: req.body})
+});
+
+/****************************
+* Example put method *
+****************************/
+
+app.put('/sessions', function(req, res) {
+  // Add your code here
+  res.json({success: 'put call succeed!', url: req.url, body: req.body})
+});
+
+app.put('/sessions/*', function(req, res) {
+  // Add your code here
+  res.json({success: 'put call succeed!', url: req.url, body: req.body})
+});
+
+/****************************
+* Example delete method *
+****************************/
+
+app.delete('/sessions', function(req, res) {
+  // Add your code here
+  res.json({success: 'delete call succeed!', url: req.url});
+});
+
+app.delete('/sessions/*', function(req, res) {
+  // Add your code here
+  res.json({success: 'delete call succeed!', url: req.url});
+});
+
+app.listen(3000, function() {
+    console.log("App started")
+>>>>>>> master
 });
 
 // Export the app object. When executing the application local this does nothing. However,
 // to port it to AWS Lambda we will create a wrapper around that will load the app from
 // this file
 module.exports = app
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> master

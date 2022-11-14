@@ -14,7 +14,6 @@ const bodyParser = require('body-parser')
 const {randomUUID} = require('crypto');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 const AWS = require('aws-sdk');
-AWS.config.update({region:'us-west-2'})
 const docClient = new AWS.DynamoDB.DocumentClient();
 
 // declare a new express app
@@ -28,6 +27,7 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "*")
   next()
 });
+
 
 // Get all courses
  app.get('/courses', async(req, res) => {

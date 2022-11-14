@@ -4,6 +4,8 @@ import coursesReducer from '../features/courses/coursesSlice';
 import reviewsReducer from '../features/reviews/reviewsSlice';
 import availabilityInfoReducer from '../features/availability/availabilityInfoSlice';
 import availabilitySaveReducer from '../features/availability/availabilitySaveSlice';
+import sessionsReducer from '../features/sessions/sessionsSlice';
+
 
 export default configureStore({
   reducer: {
@@ -11,6 +13,8 @@ export default configureStore({
     courses: coursesReducer,
     reviews: reviewsReducer,
     availabilityInfo: availabilityInfoReducer,
-    availabilitySave: availabilitySaveReducer
+    availabilitySave: availabilitySaveReducer,
+    sessions: sessionsReducer
+
   },
 })

@@ -9,20 +9,22 @@ import { faCaretUp as upCaret} from '@fortawesome/free-solid-svg-icons';
 const CourseCard = ({course}) => {
     const [isSelected, setIsSelected] = useState(false);
 
+
     return(
         <div className={style.wrapper}>
             <div className={style.intro}>
                 <div className={style.course}>
                     <span className={style.heading3}>
-                        {'Math'}
+                        {course['GSI-1-SK']}
                         <div className={style.subheading}>
-                            {course.TotalSessions} Sessions
+                            {course['Level']}
                         </div>
                     </span>
                 </div>
                 <div className={style.icons}>
                     <div>
-                        <StarRating rating={course.Rating} />
+                        <StarRating 
+                        rating={course.Rating} />
                     </div>
                     <div
                         className={style.carets}
