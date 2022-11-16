@@ -3,34 +3,31 @@ import style from './CourseSearchResult.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 import StarRating from '../StarRating/StarRating';
-import ScheduleSession from '../ScheduleSession/ScheduleSession';
+import ScheduleAppointment from '../ScheduleAppointment/ScheduleAppointment';
 
-const CourseSearchResult = ({course}) => {
-	const {name, subject, level, nrOfLessons, rating, info} = course;
+const CourseSearchResult = ({ id, name, subject, level, totalSessions, rating, info, user, selected, onPress}) => {
 	const [toggle, setToggle] = useState(false);
 
 	 return(
-		 <div className={style.wrapper}>
+		 <div className={[style.wrapper, selected && style.selected].join(' ')} onClick={() => onPress(id, user)}>
 		 	<div className={style.intro} onClick={() => setToggle(!toggle)}>
 				<div>
-					<div>{name}</div>
+					<div className={style.name}>{name}</div>
 					<div className={style.courseTitle}>
 						{subject} | {level}
 					</div>
 				</div>
 				<div className={style.right}>
 					<div className={style.ratingContainer}>
-						<div>{nrOfLessons} lessons</div>
+						<div>{totalSessions} lessons</div>
 						<StarRating rating={rating}  />
 					</div>
 					<FontAwesomeIcon icon={toggle ? faAngleUp : faAngleDown} className={style.icon} />
 				</div>
 			</div>
-			<div className={[style.extended, !toggle && style.hidden].join(' ') }>
+			<div className={[style.extended, !selected && style.hidden].join(' ') }>
 				<h3 className={style.heading}>About Course</h3>
 				<p className={style.info}>{info}</p>
-				<h3 className={style.heading}>Schedule Session</h3>
-				<ScheduleSession course={course}/>
 			</div>
 		 </div>
 	 )

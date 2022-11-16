@@ -2,11 +2,11 @@ import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import style from './ProfileCourses.module.scss';
 import CourseCard from '../CourseCard/CourseCard';
-import { listCourses } from '../../features/courses/coursesSlice';
+import { listCourses } from '../../features/courses/courseListSlice';
 
 const ProfileCourses = ({userID}) => {
   const dispatch = useDispatch();
-	const courses = useSelector((state) => state.courses);
+	const courses = useSelector((state) => state.courseList);
 
   useEffect(() => {
 		dispatch(listCourses(userID));
@@ -24,19 +24,19 @@ const ProfileCourses = ({userID}) => {
                     <div className= {style.heading2}>Tutoring</div>
                     <div className = {style.cards}>
                       {
-                        
+
                         courses.courses.map(course => {
-                          return <CourseCard 
+                          return <CourseCard
                           key = {course['GSI-1-SK']}
                           course={course}/>
                         })
                       }
 
-                    </div>   
+                    </div>
                 </div>
             :
             <div className= {style.heading2}>
-                Tutoring 
+                Tutoring
                 <div>No user information</div>
             </div>
         }
