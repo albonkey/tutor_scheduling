@@ -1,17 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import style from './ProfileIntro.module.scss';
 import placeholder from './placeholderImage.jpg';
 import StarRating from '../StarRating/StarRating.js'
 import { getUserInfo } from '../../features/user/userSlice';
+import { updateUser } from '../../features/user/updateUserSlice';
+import PopUp from '../PopUpComponent/PopUp';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen as pen } from '@fortawesome/free-solid-svg-icons';
 
 const ProfileIntro = ({userID}) => {
     const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
 
+    const updateUserSuccess = useSelector((state) => state.updateUserSuccess);
+
+    const [updateInfo, setUpdateInfo] = useState({
+        Details: 'Details',
+        Name: user.userInfo['GSI-1-SK'],
+        Bio: user.userInfo['Bio'],
+    });
+
+    const [buttonPopup, setButtonPopup] = useState(false);
+
+    const handleChange = (event) => {
+        setUpdateInfo({...updateInfo, [event.target.name]: event.target.value });
+    };
+
+    const handleSubmit = (event) => {
+        console.log(updateInfo);
+        dispatch(updateUser({...updateInfo, user: userID }));
+    }
+
     useEffect(() => {
         dispatch(getUserInfo(userID))
-    }, [])
+    }, [updateUserSuccess])
 
     return(
         <div className = {style.wrapper}>
@@ -21,13 +44,24 @@ const ProfileIntro = ({userID}) => {
             :
             user.userInfo ?
                 <div className = {style.wrapper}>
+                    {/*Main page - user info */}
                     <div className = {style.info}>
                         <div className= {style.heading} >User Rating</div>
                         <div className={style.stars}>
                             <StarRating rating={user.userInfo.Rating}/>
                         </div>
                         <div className = {style.smallText}>{user.userInfo.TotalSessions} Sessions of tutoring</div>
-                        <div className= {style.heading2}>About me
+                        <div className = {style.about}>
+                            <div className= {style.heading2}>
+                                About me
+                            </div>
+                            <div className = {style.icon}>
+                                <button onClick = {() => setButtonPopup(true)} >
+                                    <FontAwesomeIcon icon = { pen } />
+                                </button>
+                            </div>
+                        </div>
+                        <div className = {style.heading2}>
                             <p>{user.userInfo.Bio}</p>
                         </div>
                     </div>
@@ -43,6 +77,29 @@ const ProfileIntro = ({userID}) => {
                 <div>No information</div>
             </div>
         }
+            {/*Popup page - create a course */}
+        <div>
+                <PopUp trigger = {buttonPopup} setTrigger = {setButtonPopup}>
+                    <div className = {style.form}>
+                      <form onSubmit = {handleSubmit}>
+                        <div className = {style.formHeading}>
+                            Edit bio
+                        </div>
+                        <textarea
+                            className = {style.formInputs}
+                            name = 'Bio'
+                            value = {updateInfo.Bio}
+                            onChange = {handleChange}
+                            />
+                      </form>
+                      <div className = {style.submit}>
+                          <button onClick={handleSubmit}>
+                            Submit
+                          </button>
+                      </div>
+                    </div>
+                </PopUp>
+            </div>
         </div>
     )
 }
