@@ -2,6 +2,7 @@ import React, {useEffect, useState } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import style from './ProfileCourses.module.scss';
 import CourseCard from '../CourseCard/CourseCard';
+
 import { listCourses } from '../../features/courses/coursesSlice';
 import { createCourse } from '../../features/courses/createCourseSlice';
 import PopUp from '../PopUpComponent/PopUp';
@@ -11,7 +12,7 @@ import { faPlus as plus } from '@fortawesome/free-solid-svg-icons';
 
 const ProfileCourses = ({userID}) => {
   const dispatch = useDispatch();
-	const courses = useSelector((state) => state.courses);
+	const courses = useSelector((state) => state.courseList);
 
   const createCourseSuccess = useSelector((state) => state.createCourseSuccess);
   
@@ -57,18 +58,19 @@ const ProfileCourses = ({userID}) => {
                     </div>
                       <div className = {style.cards}>
                       {
+
                         courses.courses.map(course => {
-                          return <CourseCard 
+                          return <CourseCard
                           key = {course['GSI-1-SK']}
                           course={course}/>
                         })
                       }
 
-                    </div>   
+                    </div>
                 </div>
             :
             <div className= {style.heading2}>
-                Tutoring 
+                Tutoring
                 <div>No user information</div>
             </div>
         }

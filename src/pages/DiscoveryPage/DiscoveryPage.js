@@ -1,75 +1,113 @@
 import React, {useState} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import style from './DiscoveryPage.module.scss';
 import CourseSearchResult from '../../components/CourseSearchResult/CourseSearchResult';
-import {courses} from './data.js';
-
+import {searchCourses} from '../../features/courses/courseSearchSlice';
+import {getAvailabilityInfo} from '../../features/availability/availabilityInfoSlice'
 const DiscoveryPage = () => {
-	const [level, setLevel] = useState('');
-	const [time, setTime] = useState('');
-	const [day, setDay] = useState('');
 	const [search, setSearch] = useState('');
-
+	const [courseSelected, setCourseSelected] = useState('No course selected');
+	const [dateSelected, setDateSelected] = useState('');
+	const [timeSelected, setTimeSelected] = useState('');
+	const {courses, loading, error, searchTerm} = useSelector(state => state.courseSearch);
+	const {availability} = useSelector(state => state.availabilityInfo)
+	const dispatch = useDispatch();
 	const doSearch = (e) => {
 		e.preventDefault();
 
-		console.log({
-			level,
-			time,
-			day,
-			search
-		})
+		dispatch(searchCourses(search));
+		setSearch('');
+	}
+	const selectCourse = (course, user) => {
+		setCourseSelected(course);
+		dispatch(getAvailabilityInfo(user));
 	}
 
+	const dayCreator = () => {
+		const days = [];
+		for(let i = 0; i < 10; i++){
+			const date = new Date();
+			date.setDate(date.getDate() + i);
+			const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+			const month = date.toLocaleDateString('en-US', { month: 'short'});
+			const dateString = date.toLocaleDateString();
+			const isSelected = dateSelected === dateString;
+			days.push(<div className={[style.appointmentDay, isSelected && style.selected].join(' ')} onClick={() => setDateSelected(dateString)} key={dateString}>{`${date.getDate()} ${month}`}</div>);
+		}
+
+		return (
+			<div className={style.appointmentWidget}>
+				{days}
+			</div>
+		)
+	}
+	const appointmentCreator = (day, availability) => {
+		const appointments = [];
+
+		if(availability[day]){
+			for (const appointment in availability[day]){
+
+				const isSelected = timeSelected === appointment;
+				appointments.push(
+					<div className={[style.appointment, isSelected && style.selected].join(' ')} onClick={() => setTimeSelected(appointment)}>
+						<span>{appointment}</span>
+					</div>
+				)
+			}
+		}
+		return <div className={style.appointmentWrapper}>{appointments}</div>;
+	}
 	 return(
 		 <div className={style.page}>
-		 	<h2 className={style.pageHeading}>Find Tutor</h2>
-		 	<form className={style.searchWrapper} onSubmit={doSearch}>
-				<div className={style.searchMain}>
-					<div className={style.searchAttributes}>
-						<div className={style.searchAttribute}>
-							<select value={level} onChange={(e) => setLevel(e.target.value)}>
-								<option value=''>Level</option>
-								<option value='easy'>Easy</option>
-								<option value='intermediate'>Intermediate</option>
-								<option value='hard'>Hard</option>
-							</select>
-						</div>
-						<div className={style.searchAttribute}>
-							<select value={time} onChange={(e) => setTime(e.target.value)}>
-								<option value=''>Time</option>
-								<option value='morning'>Morning</option>
-								<option value='afternoon'>Afternoon</option>
-							</select>
-						</div>
-						<div className={style.searchAttribute}>
-							<select value={day} onChange={(e) => setDay(e.target.value)}>
-								<option value=''>Day</option>
-								<option value='monday'>Monday</option>
-								<option value='tuesday'>Tuesday</option>
-								<option value='wednesday'>Wednesday</option>
-								<option value='thursday'>Thursday</option>
-								<option value='friday'>Friday</option>
-								<option value='saturday'>Saturday</option>
-								<option value='sunday'>Sunday</option>
-							</select>
-						</div>
+			 	<h2 className={style.pageHeading}>Find Tutor</h2>
+				<div className={style.contentWrapper}>
+					<div className={style.mainWrapper}>
+						<form className={style.searchWrapper} onSubmit={doSearch}>
+							<div className={style.searchMain}>
+								<div className={style.search}>
+									<input placeholder={'Search for subject'} value={search} onChange={(e) => setSearch(e.target.value)} />
+								</div>
+							</div>
+							<div className={style.searchButton}>
+								<button type='submit'>Search</button>
+							</div>
+						</form>
+
+						{
+							loading ?
+								<div>Loading... </div>
+							: error ?
+								<div>Error</div> :
+							<>
+								<h3 className={style.heading}>Results for {searchTerm}</h3>
+								<div className={style.results}>
+										{
+											courses.map(course => {
+												return <CourseSearchResult
+													key={course['SK (GSI-1-PK)']}
+													id={course['SK (GSI-1-PK)']}
+													name={course.TutorName}
+													subject={course['GSI-1-SK']}
+													level={course.Level}
+													totalSessions={course.TotalSessions}
+													rating={course.Rating}
+													info={course.Description}
+													user={course['PK'].substr(5)}
+													selected={course['SK (GSI-1-PK)'] === courseSelected}
+													onPress={selectCourse}
+													/>
+											})
+										}
+								</div>
+							</>
+						}
 					</div>
-					<div className={style.search}>
-						<input placeholder={'Search for subject'} value={search} onChange={(e) => setSearch(e.target.value)} />
+					<div className={style.sideWrapper}>
+						<div className={style.courseSelected}>{courseSelected}</div>
+						{dayCreator()}
+						{appointmentCreator(dateSelected, availability)}
 					</div>
 				</div>
-				<div className={style.searchButton}>
-					<button type='submit'>Search</button>
-				</div>
-			</form>
-			<h3 className={style.heading}>Results</h3>
-			<div className={style.results}>
-					{
-						courses.map(course => {
-							return <CourseSearchResult course={course} />
-						})
-					}
-			</div>
 		 </div>
 	 )
 }
