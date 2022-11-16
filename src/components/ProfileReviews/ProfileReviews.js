@@ -36,10 +36,10 @@ const ProfileReviews = ({userID}) => {
           </div>
         :
         <div className= {style.heading2}>
-              Reviews 
+              Reviews
                 <div>No reviews</div>
         </div>
-      } 
+      }
       </div>
     );
 }

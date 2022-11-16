@@ -31,7 +31,7 @@ export const listSessions = (user) => async (dispatch) => {
     try {
         dispatch(sessionListRequest());
 
-        const {data} = await API.get ('tutorhubAPI', `/users/${user}/sessions`);
+        const {data} = await API.get('tutorhubAPI', `/users/${user}/sessions`);
 
         dispatch (sessionListSuccess([...data.Items]));
     } catch(error) {
