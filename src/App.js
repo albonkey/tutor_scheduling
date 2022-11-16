@@ -28,6 +28,7 @@ function App({signOut, user}) {
     dispatch(updateUserId(user.username))
     dispatch(getUserInfo(user.username))
 
+
   }, [])
   return (
     <BrowserRouter>

@@ -8,9 +8,7 @@ import { faStar as faOpenStar} from '@fortawesome/free-regular-svg-icons';
 const StarRating = ({rating}) => {
     const stars = [];
     let currentRating = rating;
-
-    console.log(rating)
-
+    
     for(let i = 0; i < 5; i++){
       if(currentRating >= 1){
         stars.push(<FontAwesomeIcon icon={faStar} />)

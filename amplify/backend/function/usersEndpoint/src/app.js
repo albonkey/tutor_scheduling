@@ -151,7 +151,7 @@ app.post('/users/:id/reviews', async(req, res) => {
 
 // Create a session for a user by ID
 // This should be in sessions endpoint and just be Post /sessions
-app.post('/users/:id/sessions', async(req, res) => {
+app.post('/sessions', async(req, res) => {
   const {id} = req.params;
   const sid = randomUUID();
   const {Subject, Level, Description, StartOn, Amount, tid, Status, StudentName, TutorName} = req.body;
@@ -212,6 +212,7 @@ app.post('/users/:id/sessions', async(req, res) => {
     res.status(500).json({err:err});
   }
 });
+
 
 // Create a payment for a user by ID
 // This should be in payments endpoint and just be Post /payments
@@ -284,7 +285,8 @@ app.put('/users/:id', async(req, res) => {
   const params = {
     TableName : 'Tutorhub',
     Key: {
-        "PK": `User-${id}`
+        "PK": `User-${id}`,
+        "SK": 'Details'
     },
     UpdateExpression: `Set #SK = :Details, #Name = :Name, #Bio = :Bio`,
     ExpressionAttributeValues: {
