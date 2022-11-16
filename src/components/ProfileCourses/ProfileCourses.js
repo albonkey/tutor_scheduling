@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import style from './ProfileCourses.module.scss';
 import CourseCard from '../CourseCard/CourseCard';
 
-import { listCourses } from '../../features/courses/coursesSlice';
+import { listCourses } from '../../features/courses/courseListSlice';
 import { createCourse } from '../../features/courses/createCourseSlice';
 import PopUp from '../PopUpComponent/PopUp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,9 +13,9 @@ import { faPlus as plus } from '@fortawesome/free-solid-svg-icons';
 const ProfileCourses = ({userID}) => {
   const dispatch = useDispatch();
 	const courses = useSelector((state) => state.courseList);
-
+  console.log(courses);
   const createCourseSuccess = useSelector((state) => state.createCourseSuccess);
-  
+
   const [courseInfo, setCourseInfo] = useState({
         Subject: "",
         Level: "",
@@ -23,7 +23,7 @@ const ProfileCourses = ({userID}) => {
     });
 
   const [buttonPopup, setButtonPopup] = useState(false);
-  
+
   const handleChange = (event) => {
     setCourseInfo({ ...courseInfo, [event.target.name]: event.target.value });
   };
@@ -50,7 +50,7 @@ const ProfileCourses = ({userID}) => {
                 {/*Main page - load courses */}
                     <div className = {style.header}>
                         <div className= {style.heading2}>Tutoring</div>
-                        <div className = {style.icon}> 
+                        <div className = {style.icon}>
                             <button onClick = { () => setButtonPopup(true)} >
                               <FontAwesomeIcon icon = {plus} />
                             </button>
@@ -106,7 +106,7 @@ const ProfileCourses = ({userID}) => {
                             <option value = "Beginner">Beginner</option>
                             <option value = "Intermediate">Intermediate</option>
                             <option value = "Advanced">Advanced</option>
-                        </select> 
+                        </select>
                         <div className = {style.title}>
                             Description
                         </div>
