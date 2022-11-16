@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import style from './ProfileCourses.module.scss';
 import CourseCard from '../CourseCard/CourseCard';
 import { listCourses } from '../../features/courses/coursesSlice';
+import { createCourse } from '../../features/courses/createCourseSlice';
 import PopUp from '../PopUpComponent/PopUp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus as plus } from '@fortawesome/free-solid-svg-icons';
@@ -12,27 +13,29 @@ const ProfileCourses = ({userID}) => {
   const dispatch = useDispatch();
 	const courses = useSelector((state) => state.courses);
 
-  const [buttonPopup, setButtonPopup] = useState(false);
+  const createCourseSuccess = useSelector((state) => state.createCourseSuccess);
   
   const [courseInfo, setCourseInfo] = useState({
-      Subject: "",
-      Level: "",
-      Description: "",
-  });
+        Subject: "",
+        Level: "",
+        Description: "",
+    });
 
+  const [buttonPopup, setButtonPopup] = useState(false);
+  
   const handleChange = (event) => {
     setCourseInfo({ ...courseInfo, [event.target.name]: event.target.value });
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(courseInfo);
+    dispatch(createCourse({...courseInfo, user: userID }));
     setCourseInfo({ Subject: "", Level: "", Description: "" });
   };
 
   useEffect(() => {
 		dispatch(listCourses(userID));
-	}, [])
+	}, [createCourseSuccess])
 
 
     return(
@@ -54,7 +57,6 @@ const ProfileCourses = ({userID}) => {
                     </div>
                       <div className = {style.cards}>
                       {
-                        
                         courses.courses.map(course => {
                           return <CourseCard 
                           key = {course['GSI-1-SK']}
@@ -96,6 +98,9 @@ const ProfileCourses = ({userID}) => {
                           value = {courseInfo.Level}
                           onChange = {handleChange}
                         >
+                            <option disabled={true} value="">
+                                --Select a level--
+                            </option>
                             <option value = "Beginner">Beginner</option>
                             <option value = "Intermediate">Intermediate</option>
                             <option value = "Advanced">Advanced</option>

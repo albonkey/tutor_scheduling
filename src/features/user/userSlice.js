@@ -26,7 +26,11 @@ export const userSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { updateUserId, userInfoRequest, userInfoSuccess, userInfoFail } = userSlice.actions
+export const { 
+  updateUserId, 
+  userInfoRequest, 
+  userInfoSuccess, 
+  userInfoFail } = userSlice.actions
 
 export const getUserInfo = (id) => async(dispatch) => {
   try{
@@ -36,8 +40,6 @@ export const getUserInfo = (id) => async(dispatch) => {
   } catch(error){
     dispatch(userInfoFail(error.message));
   }
-
-
-
 }
+
 export default userSlice.reducer

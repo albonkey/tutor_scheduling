@@ -17,19 +17,6 @@ export const coursesSlice = createSlice({
     courseListFail: (state, action) => {
       state.loading = false;
       state.error = action.payload;
-    },
-
-    createCourseRequest: (state) => {
-      state.loading= true;
-    },
-    createCourseSuccess: (state, action) => {
-      state.loading = false;
-      state.success = true;
-      state.course = action.payload;
-    },
-    createCourseFail: (state,action) => {
-      state.loading = false;
-      state.error = action.payload;
     }
   },
 })
@@ -38,10 +25,7 @@ export const coursesSlice = createSlice({
 export const { 
     courseListRequest, 
     courseListSuccess, 
-    courseListFail,
-    createCourseRequest, 
-    createCourseSuccess, 
-    createCourseFail } = coursesSlice.actions;
+    courseListFail } = coursesSlice.actions;
 
 export const listCourses = (user) => async (dispatch) => {
   try{
@@ -54,17 +38,6 @@ export const listCourses = (user) => async (dispatch) => {
     dispatch(courseListFail(error.message));
   }
 
-}
-
-export const createCourse = (user) => async (dispatch) => {
-  try{
-    dispatch(createCourseRequest());
-
-    const {data} = await API.post('tutorhubAPI', `/users/${user}/courses`);
-    dispatch(createCourseSuccess(data.Items[0]));
-  } catch(error) {
-    dispatch(createCourseFail(error.message));
-  }
 }
 
 export default coursesSlice.reducer
