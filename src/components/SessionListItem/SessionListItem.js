@@ -4,7 +4,7 @@ import style from './SessionListItem.module.scss';
 
 const SessionListItem = ({isTeaching, subject, name, time, sessionID}) => {
 
-const background = isTeaching ? style.teach : style.learn;
+    const background = isTeaching ? style.teach : style.learn;
 
     return(
         <div className = {style.wrapper + ' ' + background}>

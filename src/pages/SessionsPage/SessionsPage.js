@@ -22,11 +22,11 @@ const sessions = [
 		 	<SessionList
 				title = {'Today'}
 				sessions = {sessions}
-				 
+
 			 />
 			 <SessionList
 				title = {'Upcoming Sessions'}
-				sessions = {sessions} 
+				sessions = {sessions}
 			 />
 		 </div>
 	 )

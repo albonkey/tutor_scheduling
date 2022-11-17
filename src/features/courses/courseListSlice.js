@@ -1,9 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 import {API} from 'aws-amplify';
-export const coursesSlice = createSlice({
-  name: 'courses',
+export const courseListSlice = createSlice({
+  name: 'courseList',
   initialState: {
-    courseList: [],
+    courses: []
   },
   reducers: {
     courseListRequest: (state) => {
@@ -22,7 +22,10 @@ export const coursesSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { courseListRequest, courseListSuccess, courseListFail } = coursesSlice.actions;
+export const {
+    courseListRequest,
+    courseListSuccess,
+    courseListFail } = courseListSlice.actions;
 
 export const listCourses = (user) => async (dispatch) => {
   try{
@@ -37,4 +40,4 @@ export const listCourses = (user) => async (dispatch) => {
 
 }
 
-export default coursesSlice.reducer
+export default courseListSlice.reducer

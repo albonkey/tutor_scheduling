@@ -1,0 +1,50 @@
+@import "../../styles/abstracts/_mixins.scss";
+@import "../../styles/abstracts/_variables.scss";
+
+.wrapper{
+    display: flex;
+    margin-top: 10px;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px grey;
+    background-color: color(secondary, base);
+  }
+  .info{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 2rem;
+    padding: 5px 20px;
+    @include flexCenter;
+  }
+  .sub1 {
+    display: flex;
+    flex-basis: 85%;
+  }
+  .sub2{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .align{
+    flex-basis: 20%;
+  }
+  .download {
+    padding: 10px;
+    color: color(accent, base);
+  }
+  .xmark {
+    padding: 10px;
+    color: lighten(color(accent, base), 7%);
+  }
+  .link{
+    @include smallText;
+
+    text-decoration: underline;
+    cursor: pointer;
+
+    // When we hover the element these rules will be applied
+    &:hover{
+        color: lighten(color(accent, base), 5%);
+    }
+  }

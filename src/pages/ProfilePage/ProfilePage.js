@@ -1,9 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {listCourses} from '../../features/courses/coursesSlice';
-import {listReviews} from '../../features/reviews/reviewsSlice';
+import React from 'react';
+import {useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom';
-import { API } from 'aws-amplify';
 import style from './ProfilePage.module.scss';
 import ProfileIntro from '../../components/ProfileIntro/ProfileIntro';
 import ProfileCourses from '../../components/ProfileCourses/ProfileCourses';
@@ -11,16 +8,7 @@ import ProfileReviews from '../../components/ProfileReviews/ProfileReviews';
 
 const ProfilePage = () => {
 	const { id } = useParams();
-	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
-	const courses = useSelector((state) => state.courses.courses);
-	const reviews = useSelector((state) => state.reviews.reviews);
-
-	useEffect(() => {
-		dispatch(listCourses(id));
-		dispatch(listReviews(id));
-	}, [])
-
 
 
 	 return(
@@ -28,20 +16,17 @@ const ProfilePage = () => {
 			<div className={style.header}>
 				{user.userInfo['GSI-1-SK']}
 			</div>
+
 			{
-				user && <ProfileIntro user={user.userInfo}/>
+				user && <ProfileIntro userID = {id}/>
 			}
 
 			{
-				courses && <ProfileCourses
-					courses = {courses}
-				/>
+				<ProfileCourses userID = {id}/>
 			}
 
-
 			{
-				reviews &&
-				 <ProfileReviews reviews={reviews} />
+				 <ProfileReviews userID = {id} />
 			}
 
 		</div>

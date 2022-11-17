@@ -15,7 +15,7 @@ const {randomUUID} = require('crypto');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
-
+const User = require('./controllers');
 // declare a new express app
 const app = express()
 app.use(bodyParser.json())
@@ -34,141 +34,36 @@ app.use(function(req, res, next) {
  **********************/
 
 // Get a user by ID
-app.get('/users/:id', async(req, res) => {
-  const {id} = req.params;
-
-  const params = {
-    TableName : 'Tutorhub',
-    KeyConditionExpression: '#PK = :user and #SK = :details',
-    ExpressionAttributeValues: {
-      ':user': `User-${id}`,
-      ':details': 'Details'
-    },
-    ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK' }
-  }
-  try {
-    const data = await docClient.query(params).promise();
-    res.json({success: 'get call succeed!', data: data});
-  } catch (err) {
-    res.status(500).json({err:err});
-  }
-});
+app.get('/users/:id', User.getUserById);
 
 // Get all reviews for a user by ID
-app.get('/users/:id/reviews', async(req, res) => {
-  const {id} = req.params;
-
-  const params = {
-    TableName : 'Tutorhub',
-    KeyConditionExpression: '#PK = :user and begins_with(#SK, :review)',
-    ExpressionAttributeValues: {
-      ':user': `User-${id}`,
-      ':review': 'Review'
-    },
-    ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK' }
-  }
-  try {
-    const data = await docClient.query(params).promise();
-    res.json({success: 'get call succeed!', data: data});
-  } catch (err) {
-    res.status(500).json({err:err});
-  }
-
-});
+app.get('/users/:id/reviews', User.getUserReviews);
 
 // Get all courses for a user by ID
-app.get('/users/:id/courses', async(req, res) => {
-  const {id} = req.params;
-
-  const params = {
-    TableName : 'Tutorhub',
-    KeyConditionExpression: '#PK = :user and begins_with(#SK, :course)',
-    ExpressionAttributeValues: {
-      ':user': `User-${id}`,
-      ':course': 'Course'
-    },
-    ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK' }
-  }
-
-  try {
-    const data = await docClient.query(params).promise();
-    res.json({success: 'get call succeed!', data: data});
-  } catch (err) {
-    res.status(500).json({err:err});
-  }
-});
+app.get('/users/:id/courses', User.getUserCourses);
 
 // Get all sessions for a user by ID
-app.get('/users/:id/sessions', async(req, res) => {
-  const {id} = req.params;
-
-  const params = {
-    TableName : 'Tutorhub',
-    KeyConditionExpression: '#PK = :user and begins_with(#SK, :session)',
-    ExpressionAttributeValues: {
-      ':user': `User-${id}`,
-      ':session': 'Session'
-    },
-    ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK' }
-  }
-
-  try {
-    const data = await docClient.query(params).promise();
-    res.json({success: 'get call succeed!', data: data});
-  } catch (err) {
-    res.status(500).json({err:err});
-  }
-});
+app.get('/users/:id/sessions', User.getUserSessions);
 
 // Get all payments for a user by ID
-app.get('/users/:id/payments', async(req, res) => {
-  const {id} = req.params;
+app.get('/users/:id/payments', User.getUserPayments);
 
-  const params = {
-    TableName : 'Tutorhub',
-    KeyConditionExpression: '#PK = :user and begins_with(#SK, :payment)',
-    ExpressionAttributeValues: {
-      ':user': `User-${id}`,
-      ':payment': 'Payment'
-    },
-    ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK' }
-  }
+app.get('/users/:id/availability', User.getUserAvailability);
 
-  try {
-    const data = await docClient.query(params).promise();
-    res.json({success: 'get call succeed!', data: data});
-  } catch (err) {
-    res.status(500).json({err:err});
-  }
-});
+app.put('/users/:id/availability', User.updateUserAvailability);
 
 /**********************
  *   POST methods     *
  **********************/
 
 // Create a user
-app.post('/users', async(req, res) => {
-  const {id} = req.params;
-
-  const params = {
-    TableName: 'Tutorhub',
-    Item: {
-      'PK': `User-${id}`
-    }
-  }
-  try {
-    const data = await docClient.put(params).promise();
-    res.json({success: 'post call succeed!', data: data});
-  } catch (err) {
-    res.status(500).json({err:err});
-  }
-});
+app.post('/users', User.createUser);
 
 // Create a course for a user by ID
 app.post('/users/:id/courses', async(req, res) => {
   const {id} = req.params;
   const cid = randomUUID();
-  const {Subject, Level, Description, Rating, TotalSessions } = req.body;
+  const {Subject, Level, Description } = req.body;
 
   const params = {
     TableName : 'Tutorhub',
@@ -178,8 +73,8 @@ app.post('/users/:id/courses', async(req, res) => {
       'GSI-1-SK': Subject,
       'Level': Level,
       'Description': Description,
-      'Rating': Rating,
-      'TotalSessions': TotalSessions,
+      'Rating': 0,
+      'TotalSessions': 0,
     }
   }
 
@@ -192,6 +87,7 @@ app.post('/users/:id/courses', async(req, res) => {
 });
 
 // Create a review for a user by ID
+// This should be in reviews endpoint and just be Post /reviews
 app.post('/users/:id/reviews', async(req, res) => {
   const {id} = req.params;
   const rid = randomUUID();
@@ -254,7 +150,8 @@ app.post('/users/:id/reviews', async(req, res) => {
 });
 
 // Create a session for a user by ID
-app.post('/users/:id/sessions', async(req, res) => {
+// This should be in sessions endpoint and just be Post /sessions
+app.post('/sessions', async(req, res) => {
   const {id} = req.params;
   const sid = randomUUID();
   const {Subject, Level, Description, StartOn, Amount, tid, Status, StudentName, TutorName} = req.body;
@@ -316,7 +213,9 @@ app.post('/users/:id/sessions', async(req, res) => {
   }
 });
 
+
 // Create a payment for a user by ID
+// This should be in payments endpoint and just be Post /payments
 app.post('/users/:id/payments', async(req, res) => {
   const {id} = req.params;
   const pid = randomUUID();
@@ -386,7 +285,8 @@ app.put('/users/:id', async(req, res) => {
   const params = {
     TableName : 'Tutorhub',
     Key: {
-        "PK": `User-${id}`
+        "PK": `User-${id}`,
+        "SK": 'Details'
     },
     UpdateExpression: `Set #SK = :Details, #Name = :Name, #Bio = :Bio`,
     ExpressionAttributeValues: {
@@ -420,7 +320,7 @@ app.put('/users/:id/courses/:cid', async(req, res) => {
         "PK": `User-${id}`,
         "SK (GSI-1-PK)": `Course-${cid}`
     },
-    UpdateExpression: `Set #Subject = :Subject, #Level = :Level, #Description = :Description, 
+    UpdateExpression: `Set #Subject = :Subject, #Level = :Level, #Description = :Description,
                        #Rating = :Rating, #TotalSessions = :TotalSessions`,
     ExpressionAttributeValues: {
       ':Subject': Subject,
@@ -447,6 +347,7 @@ app.put('/users/:id/courses/:cid', async(req, res) => {
 });
 
 // Update a review for a user by ID
+// This should be in reviews endpoint and just be Put /reviews/:id
 app.put('/users/:id/reviews/:rid', async(req, res) => {
   const { id, rid } = req.params;
   const { Description, Rating, tid } = req.body;
@@ -519,6 +420,7 @@ app.put('/users/:id/reviews/:rid', async(req, res) => {
 });
 
 // Update a session for a user by ID
+// This should be in sessions endpoint and just be Put /sessions/:id
 app.put('/users/:id/sessions/:sid', async(req, res) => {
   const { id, sid } = req.params;
   const { tid, Status } = req.body;
@@ -628,6 +530,7 @@ app.delete('/users/:id/courses/:cid', async(req, res) => {
 });
 
 // Delete a review for a user by ID
+// This should be in reviews endpoint and just be Delete /reviews/:id
 app.delete('/users/:id/reviews/:rid', async(req, res) => {
   const {id, rid} = req.params;
   const {tid} = body.params;
@@ -673,6 +576,7 @@ app.delete('/users/:id/reviews/:rid', async(req, res) => {
 });
 
 // Delete a session for a user by ID
+// This should be in sessions endpoint and just be Delete /sessions/:id
 app.delete('/users/:id/sessions/:sid', async(req, res) => {
   const {id, sid} = req.params;
   const {tid} = body.params;

@@ -2,7 +2,24 @@
 @import "../../styles/abstracts/_variables.scss";
 
 .page{
-  @include page;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  gap: 30px;
+}
+.contentWrapper{
+  display: flex;
+  gap: 30px;
+}
+.mainWrapper{
+  flex-basis: 50%;
+  flex-grow: 1;
+}
+.sideWrapper{
+  display: flex;
+  flex-direction: column;
+  flex-basis: 30%;
+  gap: 10px;
 }
 .pageHeading{
   width: 100%;
@@ -82,10 +99,71 @@
     padding: 10px;
     background-color: color(secondary, base);
     border: 1px solid color(accent, base);
+    color: color(accent, base);
     border-radius: 10px;
     font-size: 1.2rem;
   }
 }
 .heading{
   width: 100%;
+}
+.results{
+  width: 100%;
+}
+.courseSelected{
+  padding: 15px;
+  border-radius: 15px;
+  background-color: color(primary, darker);
+  color: color(accent, base);
+}
+.appointmentWidget{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: color(primary, darker);
+}
+.appointmentDay{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 18%;
+  box-sizing: border-box;
+
+  background-color: color(primary, lighter);
+  color: color(accent, base);
+
+  border-radius: 15px;
+  font-size: 0.8rem;
+
+  cursor: pointer;
+
+  &:hover{
+    background-color: color(secondary, lighter);
+  }
+}
+.appointmentDay:before {
+    content: '';
+    display: block;
+    padding-top: 100%;
+}
+.appointmentWrapper{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.appointment{
+  display: flex;
+  background-color: color(primary, darker);
+  padding: 15px;
+  border-radius: 5px;
+
+  cursor: pointer;
+  &:hover{
+    background-color: color(secondary, lighter);
+  }
+}
+.selected{
+  background-color: color(secondary, base);
 }

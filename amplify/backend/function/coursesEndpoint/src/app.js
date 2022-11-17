@@ -31,12 +31,17 @@ app.use(function(req, res, next) {
 // Get all courses
  app.get('/courses', async(req, res) => {
 
+// Get all courses
+ app.get('/courses', async(req, res) => {
+  const {search} = req.query;
+
   const params = {
     TableName : 'Tutorhub',
     IndexName : 'GSI2',
-    FilterExpression: 'begins_with(#PK, :course)',
-    ExpressionAttributeValues: { ':course': 'Course' },
-    ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)' }
+    FilterExpression: 'begins_with(#PK, :course) and begins_with(#SK, :search)',
+    ExpressionAttributeValues: { ':course': `Course`,
+                                  ':search': search },
+    ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)', '#SK': 'GSI-1-SK' }
   }
 
   try {
