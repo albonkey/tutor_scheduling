@@ -19,6 +19,11 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "reviewsEndpoint": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "api": {
@@ -45,6 +50,14 @@
         {
           "category": "function",
           "resourceName": "SessionsEndpoint",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "reviewsEndpoint",
           "attributes": [
             "Name",
             "Arn"
