@@ -10,7 +10,7 @@ const {sessions} = useSelector(state => state.sessions);
 
   useEffect(() => {
     dispatch(listSessions(user))
-  })
+  }, [])
 
     return(
         <div className = {style.wrapper}>
