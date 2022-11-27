@@ -167,3 +167,13 @@
 .selected{
   background-color: color(secondary, base);
 }
+.button{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 30px;
+  border-radius: 10px;
+  background-color: color(accent, base);
+  color: white;
+  margin-top: 15px;
+}

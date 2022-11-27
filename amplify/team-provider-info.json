@@ -19,11 +19,11 @@
         },
         "usersEndpoint": {
           "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
-          "s3Key": "amplify-builds/usersEndpoint-52614c4e726645595a41-build.zip"
+          "s3Key": "amplify-builds/usersEndpoint-624f3768563850425965-build.zip"
         },
         "coursesEndpoint": {
           "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
-          "s3Key": "amplify-builds/coursesEndpoint-69785859545a767a5534-build.zip"
+          "s3Key": "amplify-builds/coursesEndpoint-5a65494e3748362b6534-build.zip"
         },
         "SessionsEndpoint": {
           "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",

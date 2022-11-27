@@ -5,6 +5,10 @@
   font-size: 1.5rem;
   margin-top: 5px;
 }
+@mixin headingSmall{
+  font-size: 1.2rem;
+  font-weight: bold;
+}
 @mixin text{
   line-height: 1.2;
   max-width: 700px;

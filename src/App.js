@@ -18,6 +18,7 @@ import PaymentsPage from './pages/PaymentsPage/PaymentsPage';
 import DiscoveryPage from './pages/DiscoveryPage/DiscoveryPage';
 import DocumentsPage from './pages/DocumentsPage/DocumentsPage';
 import SettingsPage from './pages/SettingsPage/SettingsPage';
+import BookSession from './pages/BookSession/BookSession';
 
 Amplify.configure(awsExports);
 
@@ -48,6 +49,9 @@ function App({signOut, user}) {
               </Route>
               <Route path='/session/:id'>
                 <SessionPage/>
+              </Route>
+              <Route path='/book/session'>
+                <BookSession />
               </Route>
               <Route path='/payments'>
                 <PaymentsPage/>
