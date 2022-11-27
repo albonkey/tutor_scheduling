@@ -42,41 +42,18 @@ app.use(function(req, res, next) {
   }
 });
 
-/****************************
-* Get a session details by id *
-****************************/
-// app.get('sessions/:id', async(req, res) => {
-//   const {id} = req.params;
-
-//   const params = {
-//     TableName : 'Tutorhub',
-//     IndexName : 'GSI2',
-//     KeyConditionExpression: '#PK = :session',
-//     ExpressionAttributeValues: {
-//       ':session': `Session-${id}`
-//     },
-//     ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)' }
-//   }
-
-//   try {
-//     const data = await docClient.query(params).promise();
-//     //const session = data.Items[0]
-//     res.json({success: 'get call succeed!', data: data});
-//   } catch (err) {
-//     res.status(500).json({err:err});
-//   }
-// });
-
-// Get a course by ID
+/**********************
+ * Get session by id *
+ **********************/
 app.get('/sessions/:id', async(req, res) => {
   const {id} = req.params;
 
   const params = {
     TableName : 'Tutorhub',
     IndexName : 'GSI2',
-    KeyConditionExpression: '#PK = :course',
+    KeyConditionExpression: '#PK = :session',
     ExpressionAttributeValues: {
-      ':course': `Session-${id}`
+      ':session': `Session-${id}`
     },
     ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)' }
   }
