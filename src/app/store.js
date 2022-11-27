@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from '../features/user/userSlice';
+import updateUserReducer from '../features/user/updateUserSlice';
 import courseSearchReducer from '../features/courses/courseSearchSlice';
 import courseListReducer from '../features/courses/courseListSlice';
 import reviewsReducer from '../features/reviews/reviewsSlice';
@@ -11,6 +12,7 @@ import sessionsReducer from '../features/sessions/sessionsSlice';
 export default configureStore({
   reducer: {
     user: userReducer,
+    updateUser: updateUserReducer,
     courseSearch: courseSearchReducer,
     courseList: courseListReducer,
     reviews: reviewsReducer,

@@ -3,17 +3,18 @@ import {API} from 'aws-amplify';
 export const updateUserSlice = createSlice({
   name: 'updateUser',
   initialState: {
-    updateInfo: {}
+    user: {}
   },
   reducers: {
-    
+
     updateUserRequest: (state) => {
       state.loading = true;
+      state.updateUserSuccess = true;
     },
     updateUserSuccess: (state, action) => {
       state.loading = false;
       state.updateUserSuccess = true;
-      state.bio = action.payload;
+      state.user = action.payload;
     },
     updateUserFail: (state, action) => {
       state.loading = false;
@@ -23,7 +24,7 @@ export const updateUserSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { 
+export const {
   updateUserRequest,
   updateUserSuccess,
   updateUserFail,

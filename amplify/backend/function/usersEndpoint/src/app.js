@@ -286,16 +286,14 @@ app.put('/users/:id', async(req, res) => {
     TableName : 'Tutorhub',
     Key: {
         "PK": `User-${id}`,
-        "SK": 'Details'
+        "SK (GSI-1-PK)": 'Details'
     },
-    UpdateExpression: `Set #SK = :Details, #Name = :Name, #Bio = :Bio`,
+    UpdateExpression: `Set #Name = :Name, #Bio = :Bio`,
     ExpressionAttributeValues: {
-      ':Details': 'Details',
       ':Name': Name,
       ':Bio': Bio
     },
     ExpressionAttributeNames: {
-      '#SK' : 'SK (GSI-1-PK)',
       '#Name' : 'GSI-1-SK',
       '#Bio' : 'Bio'
     }
