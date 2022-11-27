@@ -154,7 +154,7 @@ app.post('/users/:id/reviews', async(req, res) => {
 app.post('/sessions', async(req, res) => {
   const {id} = req.params;
   const sid = randomUUID();
-  const {Subject, Level, Description, StartOn, Amount, tid, Status, StudentName, TutorName} = req.body;
+  const {Subject, Level, Description, StartOn, Amount, tid, Status, StudentName, TutorName, availability} = req.body;
 
   const params = {
     TransactItems: [
