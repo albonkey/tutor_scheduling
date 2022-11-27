@@ -16,8 +16,8 @@ const ProfileIntro = ({userID}) => {
     const updateUserSuccess = useSelector((state) => state.updateUserSuccess);
 
     const [updateInfo, setUpdateInfo] = useState({
-        Details: 'Details',
-        Name: user.userInfo['GSI-1-SK'],
+        'SK (GSI-1-PK)': 'Details',
+        'GSI-1-SK': user.userInfo['GSI-1-SK'],
         Bio: user.userInfo['Bio'],
     });
 
@@ -83,11 +83,18 @@ const ProfileIntro = ({userID}) => {
                     <div className = {style.form}>
                       <form onSubmit = {handleSubmit}>
                         <div className = {style.formHeading}>
-                            Edit bio
+                            Edit Profile
                         </div>
+                        <input className = {style.formInputs}
+                            type = 'text'
+                            name = 'Name'
+							defaultValue={user.userInfo['GSI-1-SK']}
+                            value = {updateInfo['GSI-1-PK']}
+                            onChange = {handleChange}/>
                         <textarea
                             className = {style.formInputs}
                             name = 'Bio'
+                            defaultValue={user.userInfo.Bio}
                             value = {updateInfo.Bio}
                             onChange = {handleChange}
                             />
