@@ -625,6 +625,66 @@ app.delete('/users/:id/sessions/:sid', async(req, res) => {
 app.listen(3000, function() {
     console.log("App started")
 });
+/**********************************
+*  Add user availability
+**********************************/
+app.post('/users/:id', async(req, res) => {
+  const {id} = req.params;
+  const {availability} = req.body;
+
+  const params = {
+    TransactItems: [
+      {
+        Put: {
+          TableName: 'Tutorhub',
+          Item: {
+            'availability': availability
+          }
+        }
+      }
+    ]
+  };
+  try {
+    const data = await docClient.transactWriteItems(params).promise();
+    res.json({success: 'post call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
+
+/**********************************
+*  update user availability
+**********************************/
+
+app.put('/users/:id', async(req, res) => {
+  const {id} = req.params;
+  const { availability } = req.body;
+
+  const params = {
+    TableName : 'Tutorhub',
+    Key: {
+        "PK": `User-${id}`,
+        "SK": 'Details'
+    },
+    UpdateExpression: `Set #SK = :Details, #availability = :availability`,
+    ExpressionAttributeValues: {
+      ':Details': 'Details',
+      ':availability': availability
+      
+    },
+    ExpressionAttributeNames: {
+      '#SK' : 'SK (GSI-1-PK)',
+      '#availability' : 'availability'
+    }
+  }
+
+  try {
+    const data = await docClient.update(params).promise();
+    res.json({success: 'put call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+});
 
 // Export the app object. When executing the application local this does nothing. However,
 // to port it to AWS Lambda we will create a wrapper around that will load the app from
