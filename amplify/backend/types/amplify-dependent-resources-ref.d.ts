@@ -1,5 +1,11 @@
 export type AmplifyDependentResourcesAttributes = {
     "function": {
+        "Practice": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
         "usersEndpoint": {
             "Name": "string",
             "Arn": "string",
