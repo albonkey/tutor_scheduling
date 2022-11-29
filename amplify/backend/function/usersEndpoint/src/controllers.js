@@ -160,11 +160,16 @@ const updateUserAvailability = async (req, res) => {
 
 const createUser = async (req, res) => {
   const {id} = req.params;
+  const {firstName} = req.body;
+  const {lastName} = req.body;
 
   const params = {
     TableName: 'Tutorhub',
     Item: {
-      'PK': `User-${id}`
+      'PK': `User-${id}`,
+      'SK (GSI-1-PK)': 'Details',
+      'FirstName': firstName,
+      'LastName': lastName
     }
   }
   try {
