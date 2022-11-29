@@ -628,23 +628,19 @@ app.listen(3000, function() {
 /**********************************
 *  Add user availability
 **********************************/
-app.post('/users/:id', async(req, res) => {
+app.post('/users/:id/addAppointment', async(req, res) => {
   const {id} = req.params;
+  const aid=randomUUID();
   const {availability} = req.body;
-
   const params = {
-    TransactItems: [
-      {
-        Put: {
           TableName: 'Tutorhub',
           Item: {
-            'availability': availability
-          }
-        }
-      }
-    ]
-  };
-  try {
+            'PK': `User-${rid}`,
+            'SK (GSI-1-PK)': `Availability-${aid}`,
+            'GSI-1-SK': availability
+          } 
+         }
+   try {
     const data = await docClient.transactWriteItems(params).promise();
     res.json({success: 'post call succeed!', data: data});
   } catch (err) {
@@ -656,7 +652,7 @@ app.post('/users/:id', async(req, res) => {
 *  update user availability
 **********************************/
 
-app.put('/users/:id', async(req, res) => {
+/*app.put('/users/:id/', async(req, res) => {
   const {id} = req.params;
   const { availability } = req.body;
 
@@ -684,7 +680,7 @@ app.put('/users/:id', async(req, res) => {
   } catch (err) {
     res.status(500).json({err:err});
   }
-});
+});*/
 
 // Export the app object. When executing the application local this does nothing. However,
 // to port it to AWS Lambda we will create a wrapper around that will load the app from
