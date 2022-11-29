@@ -625,19 +625,20 @@ app.delete('/users/:id/sessions/:sid', async(req, res) => {
 app.listen(3000, function() {
     console.log("App started")
 });
+
 /**********************************
 *  Add user availability
 **********************************/
+
 app.post('/users/:id/addAppointment', async(req, res) => {
   const {id} = req.params;
-  const aid=randomUUID();
   const {availability} = req.body;
   const params = {
           TableName: 'Tutorhub',
           Item: {
-            'PK': `User-${rid}`,
-            'SK (GSI-1-PK)': `Availability-${aid}`,
-            'GSI-1-SK': availability
+            'PK': `User-${id}`,
+            'SK (GSI-1-PK)': `Availability`,
+            'Data': availability
           } 
          }
    try {
