@@ -21,6 +21,13 @@
       "permissions": {
         "setting": "open"
       }
+    },
+    "/reviews": {
+      "name": "/reviews",
+      "lambdaFunction": "reviewsEndpoint",
+      "permissions": {
+        "setting": "open"
+      }
     }
   }
 }
