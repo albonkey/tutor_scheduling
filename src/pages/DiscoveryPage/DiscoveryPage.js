@@ -29,17 +29,18 @@ const DiscoveryPage = () => {
 		setHasSelected(false);
 		setDateSelected('');
 		setTimeSelected('');
+
 	}
 
 	const selectAppointment = (appointment, day, course) => {
-	const object = {
-		time: appointment,
-		day: day,
-		course: course
-	}
-	setTimeSelected(appointment);
-	setSelectedAppointment(object);
-	setHasSelected(true);
+		const object = {
+			time: appointment,
+			day: day,
+			course: course
+		}
+		setTimeSelected(appointment);
+		setSelectedAppointment(object);
+		setHasSelected(true);
 }
 	const dayCreator = () => {
 		const days = [];
@@ -130,8 +131,14 @@ const DiscoveryPage = () => {
 							}
 
 						</div>
-						{dayCreator()}
-						{appointmentCreator(dateSelected, availability)}
+						{
+							courseSelected &&
+							<>
+								{dayCreator()}
+								{appointmentCreator(dateSelected, availability)}
+							</>
+						}
+
 					</div>
 				</div>
 		 </div>

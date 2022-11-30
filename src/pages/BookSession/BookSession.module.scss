@@ -5,6 +5,9 @@
   display: flex;
   flex-direction: column;
   padding: 30px;
+  max-width: 80rem;
+  margin: 0 auto;
+  width: 100%;
 }
 .header{
   display: flex;
@@ -43,9 +46,12 @@
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
-  max-width: 60rem;
   border-bottom: 2px solid color(accent, base);
   padding: 30px 0;
+
+  &:last-child{
+    border-bottom: none;
+  }
 }
 .textarea{
   display: flex;
@@ -55,13 +61,52 @@
 }
 .booking{
   display: flex;
+  flex-direction: column;
   flex-basis: 30%;
+  gap: 15px;
   margin-top: 30px;
   padding: 20px;
   box-shadow: 1px 1px 3px grey;
   border-radius: 10px;
 
 }
+.bookingHeader{
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  align-items: center;
+}
+.bookingTime{
+  border: 1px solid color(accent, base);
+  border-radius: 10px;
+}
+.timeContainer{
+  padding: 10px;
+  &:first-child{
+    border-bottom: 1px solid color(accent, base);
+  }
+  .timeTitle{
+    font-weight: bold;
+    color: color(accent, base);
+  }
+}
+
 .cost{
   @include headingMedium;
+}
+
+.button{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 30px;
+  border-radius: 10px;
+  background-color: color(accent, base);
+  color: white;
+  margin-top: 15px;
+
+  &:hover{
+    color: color(secondary, base);
+    transition: .2s;
+  }
 }

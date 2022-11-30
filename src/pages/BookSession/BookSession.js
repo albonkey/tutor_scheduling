@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, Link } from 'react-router-dom';
 import style from './BookSession.module.scss';
 import useQuery from '../../hooks/useQuery';
-import {getCourse } from '../../features/courses/courseInfoSlice'
+import { getCourse } from '../../features/courses/courseInfoSlice';
+import StarRating from '../../components/StarRating/StarRating';
 const BookSession = () => {
 	const query = useQuery();
+	const [textarea, setTextarea] = useState('');
 	const {course} = useSelector(state => state.courseInfo)
 	const dispatch = useDispatch();
 
@@ -22,7 +24,7 @@ const BookSession = () => {
 			</div>
 			{
 				course &&
-				<div className={style.main}>
+				<form className={style.main}>
 
 					<div className={style.info}>
 						<div className={style.section}>
@@ -36,18 +38,34 @@ const BookSession = () => {
 							{course['Description']}
 						</div>
 						<div className={style.section}>
-							<textarea className={style.textarea} placeholder='What would you like to learn from this session?' />
+							<textarea className={style.textarea} placeholder='What would you like to learn from this session?' value={textarea} onChange={(e) => setTextarea(e.target.value)} />
 						</div>
 					</div>
 
 					<div className={style.booking}>
-						<div>
+						<div className={style.bookingHeader}>
 							<div>
 								<span className={style.cost}>$30</span> session
 							</div>
+							<div>
+								<StarRating rating={course.Rating} small />
+							</div>
 						</div>
+						<div className={style.bookingTime}>
+							<div className={style.timeContainer}>
+								<div className={style.timeTitle}>Date</div>
+								<div>{query.get('date')}</div>
+							</div>
+							<div className={style.timeContainer}>
+								<div className={style.timeTitle}>Time</div>
+								<div>{query.get('time')}</div>
+							</div>
+						</div>
+						<button className={style.button} type='submit'>
+							Schedule Session
+						</button>
 					</div>
-				</div>
+				</form>
 			}
 
 		 </div>
