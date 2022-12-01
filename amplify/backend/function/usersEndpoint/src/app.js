@@ -661,11 +661,10 @@ app.post('/users/:id/addAppointment', async(req, res) => {
     TableName : 'Tutorhub',
     Key: {
         "PK": `User-${id}`,
-        "SK": 'Details'
+        SK(GSI-1-PK)': `Availability`
     },
-    UpdateExpression: `Set #SK = :Details, #availability = :availability`,
+    UpdateExpression: `Set #SK = :Availability, #availability = :availability`,
     ExpressionAttributeValues: {
-      ':Details': 'Details',
       ':availability': availability
       
     },
