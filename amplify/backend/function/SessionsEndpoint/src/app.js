@@ -67,7 +67,6 @@ app.get('/sessions/:id', async(req, res) => {
   }
 });
 
-
 /****************************
 * Get session by subject *
 ****************************/
@@ -92,7 +91,6 @@ app.get('/sessions/:subject', async(req, res)=>{
     res.status(500).json({err:err});
   }
 });
-
 
 /**********************************
 *  Delete a Session by ID
@@ -120,13 +118,13 @@ app.delete('/sessions/:id', async(req, res) => {
   }
 });
 
-
 app.listen(3000, function() {
     console.log("App started")
 });
-
 
 // Export the app object. When executing the application local this does nothing. However,
 // to port it to AWS Lambda we will create a wrapper around that will load the app from
 // this file
 module.exports = app
+
+

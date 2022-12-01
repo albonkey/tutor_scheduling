@@ -88,73 +88,13 @@ app.post('/users/:id/courses', async(req, res) => {
 
 // Create a review for a user by ID
 // This should be in reviews endpoint and just be Post /reviews
-app.post('/users/:id/reviews', async(req, res) => {
-  const {id} = req.params;
-  const rid = randomUUID();
-  const {Description, Rating, Name, tid} = req.body;
-  const CreatedOn = new Date();
-
-  const params = {
-    TransactItems: [
-      {
-        Put: {
-          TableName: 'Tutorhub',
-          Item: {
-            'PK': `Review-${rid}`,
-            'SK (GSI-1-PK)': `Review-${rid}`,
-            'GSI-1-SK': 'Details',
-            'Description': Description,
-            'Rating': Rating,
-            'CreatedOn': CreatedOn,
-            'ReviewerID': `User-${id}`,
-            'ReviewedID': `User-${tid}`
-          }
-        }
-      },
-      {
-        Put: {
-          TableName: 'Tutorhub',
-          Item: {
-            'PK': `User-${id}`,
-            'SK (GSI-1-PK)': `Review-${rid}`,
-            'GSI-1-SK': 'Reviewer',
-            'Description': Description,
-            'Rating': Rating,
-            'CreatedOn': CreatedOn
-          }
-        }
-      },
-      {
-        Put: {
-          TableName: 'Tutorhub',
-          Item: {
-            'PK': `User-${tid}`,
-            'SK (GSI-1-PK)': `Review-${rid}`,
-            'GSI-1-SK': 'Reviewed',
-            'Description': Description,
-            'Rating': Rating,
-            'CreatedOn': CreatedOn,
-            'ReviewerName': Name
-          }
-        }
-      }
-    ]
-  };
-
-  try {
-    const data = await docClient.transactWriteItems(params).promise();
-    res.json({success: 'post call succeed!', data: data});
-  } catch (err) {
-    res.status(500).json({err:err});
-  }
-});
 
 // Create a session for a user by ID
 // This should be in sessions endpoint and just be Post /sessions
 app.post('/sessions', async(req, res) => {
   const {id} = req.params;
   const sid = randomUUID();
-  const {Subject, Level, Description, StartOn, Amount, tid, Status, StudentName, TutorName} = req.body;
+  const {Subject, Level, Description, StartOn, Amount, tid, Status, StudentName, TutorName, availability} = req.body;
 
   const params = {
     TransactItems: [
@@ -280,23 +220,23 @@ app.post('/users/:id/payments', async(req, res) => {
 // Update a user by ID
 app.put('/users/:id', async(req, res) => {
   const {id} = req.params;
-  const { Name, Bio } = req.body;
+  const { FirstName, LastName, bio } = req.body;
 
   const params = {
     TableName : 'Tutorhub',
     Key: {
         "PK": `User-${id}`,
-        "SK": 'Details'
+        "SK (GSI-1-PK)": 'Details'
     },
-    UpdateExpression: `Set #SK = :Details, #Name = :Name, #Bio = :Bio`,
+    UpdateExpression: `Set #FirstName = :firstName, #LastName = :lastName, #Bio = :bio`,
     ExpressionAttributeValues: {
-      ':Details': 'Details',
-      ':Name': Name,
-      ':Bio': Bio
+      ':firstName': FirstName,
+      ':lastName': LastName,
+      ':bio': bio
     },
     ExpressionAttributeNames: {
-      '#SK' : 'SK (GSI-1-PK)',
-      '#Name' : 'GSI-1-SK',
+      '#FirstName' : 'FirstName',
+      '#LastName' : 'LastName',
       '#Bio' : 'Bio'
     }
   }
@@ -348,76 +288,6 @@ app.put('/users/:id/courses/:cid', async(req, res) => {
 
 // Update a review for a user by ID
 // This should be in reviews endpoint and just be Put /reviews/:id
-app.put('/users/:id/reviews/:rid', async(req, res) => {
-  const { id, rid } = req.params;
-  const { Description, Rating, tid } = req.body;
-
-  const params = {
-    TransactItems: [
-      {
-        Update: {
-          TableName: 'Tutorhub',
-          Key: {
-            "PK": `User-${id}`,
-            "SK (GSI-1-PK)": `Review-${rid}`
-          },
-          UpdateExpression: 'Set #Description = :Description, #Rating = :Rating',
-          ExpressionAttributeValues: {
-            ':Description': Description,
-            ':Rating': Rating
-          },
-          ExpressionAttributeNames: {
-            '#Description' : 'Description',
-            '#Rating' : 'Rating'
-          }
-        }
-      },
-      {
-        Update: {
-          TableName: 'Tutorhub',
-          Key: {
-            "PK": `User-${tid}`,
-            "SK (GSI-1-PK)": `Review-${rid}`
-          },
-          UpdateExpression: 'Set #Description = :Description, #Rating = :Rating',
-          ExpressionAttributeValues: {
-            ':Description': Description,
-            ':Rating': Rating
-          },
-          ExpressionAttributeNames: {
-            '#Description' : 'Description',
-            '#Rating' : 'Rating'
-          }
-        }
-      },
-      {
-        Update: {
-          TableName: 'Tutorhub',
-          Key: {
-            "PK": `Review-${rid}`,
-            "SK (GSI-1-PK)": `Review-${rid}`
-          },
-          UpdateExpression: 'Set #Description = :Description, #Rating = :Rating',
-          ExpressionAttributeValues: {
-            ':Description': Description,
-            ':Rating': Rating
-          },
-          ExpressionAttributeNames: {
-            '#Description' : 'Description',
-            '#Rating' : 'Rating'
-          }
-        }
-      }
-    ]
-  };
-
-  try {
-    const data = await docClient.transactWriteItems(params).promise();
-    res.json({success: 'put call succeed!', data: data});
-  } catch (err) {
-    res.status(500).json({err:err});
-  }
-});
 
 // Update a session for a user by ID
 // This should be in sessions endpoint and just be Put /sessions/:id
@@ -625,7 +495,6 @@ app.delete('/users/:id/sessions/:sid', async(req, res) => {
 app.listen(3000, function() {
     console.log("App started")
 });
-
 /**********************************
 *  Add user availability
 **********************************/
@@ -681,6 +550,7 @@ app.post('/users/:id/addAppointment', async(req, res) => {
     res.status(500).json({err:err});
   }
 });*/
+
 
 // Export the app object. When executing the application local this does nothing. However,
 // to port it to AWS Lambda we will create a wrapper around that will load the app from
