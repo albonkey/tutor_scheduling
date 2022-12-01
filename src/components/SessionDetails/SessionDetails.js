@@ -4,11 +4,11 @@ import {Link} from 'react-router-dom';
 import StarRating from '../StarRating/StarRating';
 import style from './SessionDetails.module.scss';
 import placeholder from './placeholderImage.jpg';
-import { getSession } from '../../features/sessions/getSessionSlice';
+import { getSession } from '../../features/sessions/sessionInfoSlice';
 import { sessionTutor } from '../../features/sessions/sessionTutorSlice';
 
 const SessionDetails = ({ id }) => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 	const sessionID = id.split('-')[1];
 	const sessionInfo = useSelector((state) => state.getSession); 
     const [session, setSession] = useState({});
@@ -23,8 +23,6 @@ const SessionDetails = ({ id }) => {
         setTutor(sessionInfo.session[2])
 	}, [])
 
-    console.log(student);
-
     return(
         <div className = {style.wrapper}>
         {/*Header section*/}
@@ -32,13 +30,13 @@ const SessionDetails = ({ id }) => {
                 <Link className={style.link} to={`/sessions`}>Return to Sessions</Link>
             </div>
             <div className = {style.header}>
-                <div className = {style.heading}>Session      
+                <div className = {style.heading}>Session
                     <span className = {style.classLevel}>
                         {session['GSI-2-PK']} | {session['Level']}
                     </span>
                 </div>
                 <div className =  {style.id}>
-                        #{session['SK (GSI-1-PK)']}  
+                        #{session['SK (GSI-1-PK)']}
                 </div>
             </div>
 

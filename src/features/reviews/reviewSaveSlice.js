@@ -4,7 +4,7 @@ import {API} from 'aws-amplify';
 export const reviewSaveSlice = createSlice({
     name: 'reviewSave',
     initialState: {
-        reviewSave: []
+        review: {}
     },
     reducers: {
         reviewSaveRequest: (state) => {
@@ -12,7 +12,7 @@ export const reviewSaveSlice = createSlice({
         },
         reviewSaveSuccess: (state, action) => {
             state.loading = false;
-            state.reviewSaveSuccess = true;
+            state.success = true;
             state.review = action.payload;
         },
         reviewSaveFail: (state, action) => {
@@ -20,7 +20,7 @@ export const reviewSaveSlice = createSlice({
             state.error = action.payload;
         }
     },
-}) 
+})
 
 //Action creators are generated for each case reducer function
 export const {
@@ -30,7 +30,6 @@ export const {
 
 export const reviewSave = (review) => async(dispatch) => {
     try{
-        const user = review.user;
         dispatch(reviewSaveRequest());
 
         const info = {
@@ -38,7 +37,7 @@ export const reviewSave = (review) => async(dispatch) => {
                 ...review
             }
         }
-        const {data} = await API.post('tutorhubAPI', `/review/${user}`, info);
+        const {data} = await API.post('tutorhubAPI', `/reviews`, info);
 
         dispatch(reviewSaveSuccess(data.Items[0]));
     } catch(error) {

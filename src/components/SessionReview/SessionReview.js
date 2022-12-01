@@ -2,7 +2,7 @@ import React, {useEffect, useState } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import style from './SessionReview.module.scss';
 import { reviewSave } from '../../features/reviews/reviewSaveSlice';
-import { getReview } from '../../features/reviews/getReviewSlice';
+import { getReview } from '../../features/reviews/reviewInfoSlice';
 import ReviewCard from '../ReviewCard/ReviewCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
@@ -22,7 +22,7 @@ const SessionReview = ({ id }) => {
         Description: "",
         Rating: "",
     });
-    
+
     const [buttonPopup, setButtonPopup] = useState(false);
 
     const handleChange = (event) => {
@@ -76,22 +76,22 @@ const SessionReview = ({ id }) => {
                                             onChange = {handleChange}
                                             />
                                         {
-                                            ratingVal <= (hover || rating) ? 
-                                            <FontAwesomeIcon 
+                                            ratingVal <= (hover || rating) ?
+                                            <FontAwesomeIcon
                                                 icon = {faStar}
-                                                onMouseEnter = {() => setHover(ratingVal)} 
+                                                onMouseEnter = {() => setHover(ratingVal)}
                                                 onMouseLeave = {() => setHover(null)} />
-                                            : 
-                                            <FontAwesomeIcon 
+                                            :
+                                            <FontAwesomeIcon
                                                 icon = {faOpenStar}
-                                                onMouseEnter = {() => setHover(ratingVal)} 
+                                                onMouseEnter = {() => setHover(ratingVal)}
                                                 onMouseLeave = {() => setHover(null)} />
-                                        }   
+                                        }
                                     </label>
                                 )
-                            })} 
+                            })}
                         </div>
-                    </div>   
+                    </div>
                     <div className = {style.text}>
                         <button onClick = { () => setButtonPopup(true)} >
                             Add Note

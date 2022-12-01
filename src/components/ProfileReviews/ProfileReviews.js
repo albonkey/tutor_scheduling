@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import style from './ProfileReviews.module.scss';
 import ReviewCard from '../ReviewCard/ReviewCard';
-import { listReviews } from '../../features/reviews/reviewsSlice';
+import { listReviews } from '../../features/reviews/reviewListSlice';
 import { reviewSave } from '../../features/reviews/reviewSaveSlice';
 import PopUp from '../PopUpComponent/PopUp';
 
@@ -21,7 +21,7 @@ const ProfileReviews = ({userID}) => {
     const handleChange = (event) => {
       setReviewInfo({ ...reviewInfo, [event.target.name]: event.target.value });
     };
-  
+
     const handleSubmit = (event) => {
       event.preventDefault();
       dispatch(reviewSave({...reviewInfo, user: userID }));
@@ -61,7 +61,7 @@ const ProfileReviews = ({userID}) => {
                 <div>No reviews</div>
                 <div>
                   <button onClick = { () => setButtonPopup(true)} >
-                      Review session          
+                      Review session
                   </button>
                 </div>
         </div>
@@ -98,7 +98,7 @@ const ProfileReviews = ({userID}) => {
                     </div>
                 </PopUp>
             </div>
-        
+
       </div>
     );
 }

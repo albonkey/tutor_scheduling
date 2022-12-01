@@ -27,9 +27,8 @@ function App({signOut, user}) {
   useEffect(() => {
     dispatch(updateUserId(user.username))
     dispatch(getUserInfo(user.username))
+  }, []);
 
-
-  }, [])
   return (
     <BrowserRouter>
       <TopMenu signOut={signOut}/>

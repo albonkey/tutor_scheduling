@@ -4,7 +4,7 @@ import style from './ProfileIntro.module.scss';
 import placeholder from './placeholderImage.jpg';
 import StarRating from '../StarRating/StarRating.js'
 import { getUserInfo } from '../../features/user/userSlice';
-import { updateUser } from '../../features/user/updateUserSlice';
+import { updateUser } from '../../features/user/userSaveSlice';
 import PopUp from '../PopUpComponent/PopUp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen as pen } from '@fortawesome/free-solid-svg-icons';

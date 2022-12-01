@@ -1,33 +1,33 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from '../features/user/userSlice';
-import updateUserReducer from '../features/user/updateUserSlice';
+import userSaveReducer from '../features/user/userSaveSlice';
 import courseSearchReducer from '../features/courses/courseSearchSlice';
 import courseListReducer from '../features/courses/courseListSlice';
-import createCoursesReducer from '../features/courses/createCourseSlice';
-import reviewsReducer from '../features/reviews/reviewsSlice';
+import courseSaveReducer from '../features/courses/courseSaveSlice';
+import reviewListReducer from '../features/reviews/reviewListSlice';
 import reviewSaveReducer from '../features/reviews/reviewSaveSlice';
-import  getReview  from '../features/reviews/getReviewSlice';
+import reviewInfoReducer  from '../features/reviews/reviewInfoSlice';
 import availabilityInfoReducer from '../features/availability/availabilityInfoSlice';
 import availabilitySaveReducer from '../features/availability/availabilitySaveSlice';
 import sessionsReducer from '../features/sessions/sessionsSlice';
-import getSessionReducer from '../features/sessions/getSessionSlice';
+import sessionInfoReducer from '../features/sessions/sessionInfoSlice';
 import sessionTutorReducer from '../features/sessions/sessionTutorSlice';
 
 
 export default configureStore({
   reducer: {
     user: userReducer,
-    updateUser: updateUserReducer,
+    userSave: userSaveReducer,
     courseSearch: courseSearchReducer,
     courseList: courseListReducer,
-    createCourses: createCoursesReducer,
-    reviews: reviewsReducer,
+    courseSave: courseSaveReducer,
+    reviews: reviewListReducer,
     reviewSave: reviewSaveReducer,
-    getReview: getReview,
+    reviewInfo: reviewInfoReducer,
     availabilityInfo: availabilityInfoReducer,
     availabilitySave: availabilitySaveReducer,
     sessions: sessionsReducer,
-    getSession: getSessionReducer,
+    sessionInfo: sessionInfoReducer,
     sessionTutor: sessionTutorReducer
   },
 })
