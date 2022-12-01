@@ -10,42 +10,6 @@ import SessionReview from '../../components/SessionReview/SessionReview';
 const SessionPage = () => {
 	const { id } = useParams();
 	
-
-	const Details = {
-		PK: '47878298',
-		GSI2PK: 'Chemistry',
-		Level: 'AP',
-		Description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae eros egestas, sodales nunc eu, fermentum enim. Nunc a efficitur nibh. Integer cursus pulvinar erat, ut congue arcu ultrices a. Suspendisse pulvinar quam nisi, eget malesuada nulla porttitor ut. Nullam sit amet risus vitae eros lobortis tristique in quis nisi.',
-		StartOn: '10/30/22-3:00',
-		TutorID: 'User 1',
-		StudentID: 'User 2'
-	};
-	const Student = {
-		PK: 'User 2',
-		Description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vitae eros egestas, sodales nunc eu, fermentum enim. Nunc a efficitur nibh. Integer cursus pulvinar erat, ut congue arcu ultrices a. Suspendisse pulvinar quam nisi, eget malesuada nulla porttitor ut. Nullam sit amet risus vitae eros lobortis tristique in quis nisi.',
-		Rating: 3.5
-	};
-	const Tutor = {
-			PK: 'User 1',
-			Rating: '3'
-		};
-	
-	const documents = [
-		{
-			title: 'Study Guide',
-			date: '10/29/2022',
-			type: 'pdf'
-		},{
-			title: 'Worksheet',
-			date: '10/27/2022',
-			type: 'pdf'
-		},{
-			title: 'Quiz',
-			date: '10/20/2022',
-			type: 'jpg'
-		}
-	];
-
 	 return(
 		 <div className={style.page}>
 			<div>
@@ -56,7 +20,7 @@ const SessionPage = () => {
 				}
 				{
 					<SessionReview id = { id } />
-				}
+				}		
 			</div>
 		 </div>
 	 )

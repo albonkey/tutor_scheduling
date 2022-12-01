@@ -1,21 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {API} from 'aws-amplify';
 
-export const getSessionSlice = createSlice({
-    name: 'getSession',
+export const sessionTutorSlice = createSlice({
+    name: 'sessionTutor',
     initialState: {
-        session: {}
+        tutor: {}
     },
     reducers: {
-        getSessionRequest: (state) => {
+        sessionTutorRequest: (state) =>{
             state.loading = true;
         },
-        getSessionSuccess:(state, action) => {
+        sessionTutorSuccess: (state, action) => {
             state.loading = false;
             state.success = true;
             state.session = action.payload;
         },
-        getSessionFail: (state, action) => {
+        sessionTutorFail: (state, action) => {
             state.loading = false;
             state.error = action.payload;
         }
@@ -24,21 +24,21 @@ export const getSessionSlice = createSlice({
 
 //Action creators are generated for each case reducer function
 export const {
-    getSessionRequest,
-    getSessionSuccess,
-    getSessionFail } = getSessionSlice.actions;
+    sessionTutorRequest,
+    sessionTutorSuccess,
+    sessionTutorFail } = sessionTutorSlice.actions;
 
-export const getSession = (sessionID) => async (dispatch) => {
+export const sessionTutor = (sessionID) => async (dispatch) => {
     try {
-        dispatch(getSessionRequest());
+        dispatch(sessionTutorRequest());
 
         const {data} = await API.get('tutorhubAPI', `/sessions/${sessionID}`);
 
-        dispatch(getSessionSuccess(data.Items[0]));
+        dispatch(sessionTutorSuccess(data.Items[2]));
         
     } catch(error) {
-        dispatch (getSessionFail(error.message));
+        dispatch(sessionTutorFail(error.message));
     }
 }
 
-export default getSessionSlice.reducer
+export default sessionTutorSlice.reducer

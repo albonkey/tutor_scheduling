@@ -1,22 +1,25 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
-import {useParams} from 'react-router-dom';
 import StarRating from '../StarRating/StarRating';
 import style from './SessionDetails.module.scss';
 import placeholder from './placeholderImage.jpg';
 import { getSession } from '../../features/sessions/getSessionSlice';
+import { sessionTutor } from '../../features/sessions/sessionTutorSlice';
 
 const SessionDetails = ({ id }) => {
-
     const dispatch = useDispatch();
 	const sessionID = id.split('-')[1];
 	const {session} = useSelector((state) => state.getSession); 
+    const {tutor} = useSelector((state) => state.sessionTutor);
 
 	useEffect(() => {
 		dispatch(getSession(sessionID));
+        dispatch(sessionTutor(sessionID));
 	}, [])
     
+    console.log(tutor)
+
     return(
         <div className = {style.wrapper}>
         {/*Header section*/}
@@ -34,10 +37,10 @@ const SessionDetails = ({ id }) => {
                 </div>
             </div>
 
-        {/*Tutor section*/}
+        {/*Tutor section: display= name, rating, startOn, Description*/}
             <div className = {style.tutor}>
                 <div className = {style.heading}>
-                    Tutor {session['GSI-1-SK']} 
+                    Tutor {tutor.StartOn} 
 
 {/*
                     <div className = {style.stars1}>   

@@ -1,9 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-import { API } from 'aws-amplify';
 import style from './HomePage.module.scss';
 import HomeGreeting from '../../components/HomeGreeting/HomeGreeting';
-import SessionList from '../../components/SessionList/SessionList';
 import ScheduleComponent from '../../components/ScheduleComponent/ScheduleComponent';
 import HomeSessions from '../../components/HomeSessions/HomeSessions';
 

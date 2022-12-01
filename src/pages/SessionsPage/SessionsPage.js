@@ -8,15 +8,15 @@ import {Link} from 'react-router-dom';
 
 
 const SessionsPage = () => {
-
 	const dispatch = useDispatch();
+    const user = useSelector((state) => state.user);
 	const sessions = useSelector((state) => state.sessions);
     const today = moment(new Date()).format('MM/DD/YY');
 	
 	let emptyList = true;
 
     useEffect(() => {
-        dispatch(listSessions('1'))
+        dispatch(listSessions(user.id))
     }, [])
 
 	 return(
@@ -25,7 +25,7 @@ const SessionsPage = () => {
         sessions.loading ?
             <div className = {style.heading2}>Page loading</div>
         :
-        sessions.sessions.length > 0 ?
+        sessions.sessions ?
             <div className = {style.wrapper}>
                 <div className= {style.heading2}>
                     <div className = {style.title}>

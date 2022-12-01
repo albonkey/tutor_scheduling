@@ -1,9 +1,7 @@
 import React, {useEffect, useState } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import style from './SessionReview.module.scss';
-import { getSession } from '../../features/sessions/getSessionSlice';
 import { reviewSave } from '../../features/reviews/reviewSaveSlice';
-import { listReviews } from '../../features/reviews/reviewsSlice';
 import { getReview } from '../../features/reviews/getReviewSlice';
 import ReviewCard from '../ReviewCard/ReviewCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,9 +11,7 @@ import PopUp from '../PopUpComponent/PopUp';
 
 const SessionReview = ({ id }) => {
     const dispatch = useDispatch();
-
-    const sessionID = id.split('-')[1];
-	const {session} = useSelector((state) => state.getSession);
+    const user = useSelector((state) => state.user);
 
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
@@ -35,12 +31,11 @@ const SessionReview = ({ id }) => {
 
       const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(reviewSave({...reviewInfo, user: 'dbfcf367-b6e5-46f3-8f23-0d6e39701333' }))
+        dispatch(reviewSave({...reviewInfo, user: user.id }))
          };
 
       useEffect(() => {
-		dispatch(getSession(sessionID));
-        dispatch(getReview('dbfcf367-b6e5-46f3-8f23-0d6e39701333'))
+        dispatch(getReview(user.id))
 	}, [reviewSaveSuccess])
 
 
@@ -52,23 +47,20 @@ const SessionReview = ({ id }) => {
         :
         reviews.review ?
           <div className = {style.wrapper}>
-          {/*Main page - load courses */}
+          {/* LOAD REVIEW CARD */}
               <div>
                   <div className= {style.heading}>Reviews</div>
               </div>
               <div className = {style.cards}>
-                
                    <ReviewCard
                         review = {reviews.review}
                     />
-                  
-            
               </div>
               <button className = {style.subheading}>Read more</button>
           </div>
                 :
                 <div className = {style.content}>
-        {/* ADD REVIEW RATING */}
+            {/* REVIEW STAR RATING */}
                     <div className = {style.starSection}>
                         <div className = {style.stars}>
                             {[...Array(5)].map((star, index) => {
@@ -112,7 +104,7 @@ const SessionReview = ({ id }) => {
                     </div>
                 </div>
             }
-            {/*Popup page - create a course */}
+            {/* POPUP PAGE ADD REVIEW COMMENT */}
         <div>
                 <PopUp trigger = {buttonPopup} setTrigger = {setButtonPopup}>
                     <div className = {style.form}>
