@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 import StarRating from '../StarRating/StarRating';
@@ -10,15 +10,20 @@ import { sessionTutor } from '../../features/sessions/sessionTutorSlice';
 const SessionDetails = ({ id }) => {
     const dispatch = useDispatch();
 	const sessionID = id.split('-')[1];
-	const {session} = useSelector((state) => state.getSession); 
-    const {tutor} = useSelector((state) => state.sessionTutor);
+	const sessionInfo = useSelector((state) => state.getSession); 
+    const [session, setSession] = useState({});
+    const [student, setStudent] = useState({});
+    const [tutor, setTutor] = useState({});
 
 	useEffect(() => {
 		dispatch(getSession(sessionID));
-        dispatch(sessionTutor(sessionID));
+
+        setSession(sessionInfo.session[0]);
+        setStudent(sessionInfo.session[1]);
+        setTutor(sessionInfo.session[2])
 	}, [])
-    
-    console.log(tutor)
+
+    console.log(student);
 
     return(
         <div className = {style.wrapper}>
@@ -29,7 +34,7 @@ const SessionDetails = ({ id }) => {
             <div className = {style.header}>
                 <div className = {style.heading}>Session      
                     <span className = {style.classLevel}>
-                        {session['GSI-2-PK']} | {session['Level']} 
+                        {session['GSI-2-PK']} | {session['Level']}
                     </span>
                 </div>
                 <div className =  {style.id}>
@@ -40,9 +45,8 @@ const SessionDetails = ({ id }) => {
         {/*Tutor section: display= name, rating, startOn, Description*/}
             <div className = {style.tutor}>
                 <div className = {style.heading}>
-                    Tutor {tutor.StartOn} 
-
-{/*
+                    <div>Tutor: </div>
+                    <div>{student.TutorName}</div>
                     <div className = {style.stars1}>   
                     <StarRating rating={tutor.Rating}/>
                     </div>
@@ -66,38 +70,35 @@ const SessionDetails = ({ id }) => {
                     <div className = {style.info}>
                         {session.Description}
                     </div>
-*/}
                 </div>
             </div>
 
         {/*Student section*/}
-{/*
             <div className = {style.student}>
                 <div className = {style.sub1}>
                     <div className = {style.sub2}>
                         <div className = {style.heading}>
-                            Student {session.StudentID}
+                            <div>Student : {tutor.StudentName}</div>
                         </div>
                         <div className = {style.stars2}>
-                            <StarRating rating={tutor.Rating}/>
+                            <StarRating rating={student.Rating}/>
                         </div>
                     </div>
                     <div className = {style.heading}>
-                        What {session.StudentName} wants from the session
+                        What {tutor.StudentName} wants from the session
                     </div>
                     <div className = {style.heading}>
                         <div className = {style.info}>
-                            {session.Description}
+                            {student.Description}
                         </div>
                      </div>
                 </div>
                 <div className = {style.imageContainer}>
                     {
-                        tutor.Picture ? <img src={tutor.Picture} alt='' className={style.image}/> : <img src={placeholder} alt='' className={style.image} />
+                        student.Picture ? <img src={student.Picture} alt='' className={style.image}/> : <img src={placeholder} alt='' className={style.image} />
                     }
                     </div>
                 </div>
-    */}
         </div>
     )
 }

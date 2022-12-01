@@ -4,7 +4,7 @@ import {API} from 'aws-amplify';
 export const getSessionSlice = createSlice({
     name: 'getSession',
     initialState: {
-        session: {}
+        session: []
     },
     reducers: {
         getSessionRequest: (state) => {
@@ -34,8 +34,9 @@ export const getSession = (sessionID) => async (dispatch) => {
 
         const {data} = await API.get('tutorhubAPI', `/sessions/${sessionID}`);
 
-        dispatch(getSessionSuccess(data.Items[0]));
-        
+        dispatch(getSessionSuccess([...data.Items]));
+
+        return data.Items;
     } catch(error) {
         dispatch (getSessionFail(error.message));
     }
