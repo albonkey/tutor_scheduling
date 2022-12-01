@@ -5,7 +5,7 @@ import SessionListItem from '../SessionListItem/SessionListItem';
 import { listSessions } from '../../features/sessions/sessionsSlice';
 
 const SessionList = ({title, user}) => {
-const {sessions} = useSelector(state => state.sessions);
+  const {sessions} = useSelector(state => state.sessions);
   const dispatch = useDispatch();
 
   useEffect(() => {

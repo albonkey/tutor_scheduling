@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {API} from 'aws-amplify';
-export const reviewsSlice = createSlice({
-  name: 'reviews',
+
+export const reviewListSlice = createSlice({
+  name: 'reviewList',
   initialState: {
     reviews: [],
   },
@@ -22,7 +23,7 @@ export const reviewsSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { reviewListRequest, reviewListSuccess, reviewListFail } = reviewsSlice.actions;
+export const { reviewListRequest, reviewListSuccess, reviewListFail } = reviewListSlice.actions;
 
 export const listReviews = (user) => async (dispatch) => {
   try{
@@ -34,4 +35,4 @@ export const listReviews = (user) => async (dispatch) => {
   }
 }
 
-export default reviewsSlice.reducer
+export default reviewListSlice.reducer

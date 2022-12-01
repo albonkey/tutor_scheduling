@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {API} from 'aws-amplify';
+
 export const sessionsSlice = createSlice({
     name: 'sessions',
     initialState: {
