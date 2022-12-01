@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {API} from 'aws-amplify';
+
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -26,10 +27,10 @@ export const userSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { 
-  updateUserId, 
-  userInfoRequest, 
-  userInfoSuccess, 
+export const {
+  updateUserId,
+  userInfoRequest,
+  userInfoSuccess,
   userInfoFail } = userSlice.actions
 
 export const getUserInfo = (id) => async(dispatch) => {
@@ -37,6 +38,8 @@ export const getUserInfo = (id) => async(dispatch) => {
     dispatch(userInfoRequest());
     const {data} = await API.get('tutorhubAPI', `/users/${id}`);
     dispatch(userInfoSuccess(data.Items[0]));
+
+    return data.Items[0];
   } catch(error){
     dispatch(userInfoFail(error.message));
   }
