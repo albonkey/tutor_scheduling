@@ -19,7 +19,7 @@
         },
         "usersEndpoint": {
           "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
-          "s3Key": "amplify-builds/usersEndpoint-304c594f592f666a6c75-build.zip"
+          "s3Key": "amplify-builds/usersEndpoint-52614c4e726645595a41-build.zip"
         },
         "coursesEndpoint": {
           "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",

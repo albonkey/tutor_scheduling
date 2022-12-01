@@ -4,7 +4,7 @@ import style from './ProfileCourses.module.scss';
 import CourseCard from '../CourseCard/CourseCard';
 
 import { listCourses } from '../../features/courses/courseListSlice';
-import { createCourse } from '../../features/courses/createCourseSlice';
+import { createCourse } from '../../features/courses/courseSaveSlice';
 import PopUp from '../PopUpComponent/PopUp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus as plus } from '@fortawesome/free-solid-svg-icons';

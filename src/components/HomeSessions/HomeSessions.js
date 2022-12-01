@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
-import moment from 'moment';
 import style from './HomeSessions.module.scss';
 import SessionListItem from '../SessionListItem/SessionListItem';
 import { listSessions } from '../../features/sessions/sessionsSlice';
@@ -10,13 +9,13 @@ import image from './image.jpg';
 const HomeSessions = ({userID}) => {
     const dispatch = useDispatch();
     const sessions = useSelector((state) => state.sessions);
-    const today = moment(new Date()).format('MM/DD/YY');
+    const today = new Date().toLocaleDateString();
     let emptyList = true;
 
     useEffect(() => {
         dispatch(listSessions(userID))
     }, [])
-    
+
     return(
         <div className = {style.wrapper}>
         {
@@ -54,7 +53,7 @@ const HomeSessions = ({userID}) => {
 
         {/* If no sessions scheduled for today */}
         {
-        emptyList ? 
+        emptyList ?
             <div className = {style.empty}>
                 <div className = {style.button}>
                     <button>
@@ -68,7 +67,7 @@ const HomeSessions = ({userID}) => {
         :
             <div>No load</div>
         }
-        
+
 		</div>
     )
 }

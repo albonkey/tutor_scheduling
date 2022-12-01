@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {API} from 'aws-amplify';
 
-export const getReviewSlice = createSlice({
-    name: 'getReview',
+export const reviewInfoSlice = createSlice({
+    name: 'review',
     initialState: {
         review: {},
     },
@@ -26,7 +26,7 @@ export const getReviewSlice = createSlice({
 export const {
     getReviewRequest,
     getReviewSuccess,
-    getReviewFail } = getReviewSlice.actions;
+    getReviewFail } = reviewInfoSlice.actions;
 
     export const getReview = (id) => async (dispatch) => {
         try {
@@ -39,4 +39,4 @@ export const {
             dispatch(getReviewFail(error.message));
         }
     }
-export default getReviewSlice.reducer
+export default reviewInfoSlice.reducer

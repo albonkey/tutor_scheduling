@@ -5,7 +5,7 @@ import style from './ProfilePage.module.scss';
 import ProfileIntro from '../../components/ProfileIntro/ProfileIntro';
 import ProfileCourses from '../../components/ProfileCourses/ProfileCourses';
 import ProfileReviews from '../../components/ProfileReviews/ProfileReviews';
-import { updateUser } from '../../features/user/updateUserSlice';
+import { updateUser } from '../../features/user/userSaveSlice';
 import PopUp from '../../components/PopUpComponent/PopUp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen as pen } from '@fortawesome/free-solid-svg-icons';
@@ -57,7 +57,7 @@ const ProfilePage = () => {
 			{
 				<ProfileReviews userID = {id} />
 			}
-		
+
 		{/*Popup page - create a course */}
 			<div>
 				<PopUp trigger = {buttonPopup} setTrigger = {setButtonPopup}>

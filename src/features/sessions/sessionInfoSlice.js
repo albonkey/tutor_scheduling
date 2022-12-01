@@ -1,21 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {API} from 'aws-amplify';
 
-export const getSessionSlice = createSlice({
-    name: 'getSession',
+export const sessionInfoSlice = createSlice({
+    name: 'session',
     initialState: {
         session: {}
     },
     reducers: {
-        getSessionRequest: (state) => {
+        sessionInfoRequest: (state) => {
             state.loading = true;
         },
-        getSessionSuccess:(state, action) => {
+        sessionInfoSuccess:(state, action) => {
             state.loading = false;
             state.success = true;
             state.session = action.payload;
         },
-        getSessionFail: (state, action) => {
+        sessionInfoFail: (state, action) => {
             state.loading = false;
             state.error = action.payload;
         }
@@ -24,21 +24,21 @@ export const getSessionSlice = createSlice({
 
 //Action creators are generated for each case reducer function
 export const {
-    getSessionRequest,
-    getSessionSuccess,
-    getSessionFail } = getSessionSlice.actions;
+    sessionInfoRequest,
+    sessionInfoSuccess,
+    sessionInfoFail } = sessionInfoSlice.actions;
 
 export const getSession = (sessionID) => async (dispatch) => {
     try {
-        dispatch(getSessionRequest());
+        dispatch(sessionInfoRequest());
 
         const {data} = await API.get('tutorhubAPI', `/sessions/${sessionID}`);
 
-        dispatch(getSessionSuccess(data.Items[0]));
-        
+        dispatch(sessionInfoSuccess(data.Items[0]));
+
     } catch(error) {
-        dispatch (getSessionFail(error.message));
+        dispatch (sessionInfoFail(error.message));
     }
 }
 
-export default getSessionSlice.reducer
+export default sessionInfoSlice.reducer;
