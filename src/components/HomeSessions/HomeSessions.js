@@ -1,17 +1,19 @@
 import React, { useEffect } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import {Link} from 'react-router-dom';
+import moment from 'moment';
 import style from './HomeSessions.module.scss';
 import SessionListItem from '../SessionListItem/SessionListItem';
-import { getUserInfo } from '../../features/user/userSlice';
 import { listSessions } from '../../features/sessions/sessionsSlice';
+import image from './image.jpg';
 
 const HomeSessions = ({userID}) => {
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.user);
     const sessions = useSelector((state) => state.sessions);
+    const today = moment(new Date()).format('MM/DD/YY');
+    let emptyList = true;
 
     useEffect(() => {
-        dispatch(getUserInfo(userID));
         dispatch(listSessions(userID))
     }, [])
     
@@ -24,29 +26,49 @@ const HomeSessions = ({userID}) => {
         sessions.sessions ?
             <div className = {style.wrapper}>
                 <div className= {style.heading2}>
-                    Welcome {user.userInfo['GSI-1-SK']}
                     <div className = {style.title}>
                         Today's sessions
                     </div>
                 </div>
                 <div>
-                    {
+                {
                     sessions.sessions.map(session => {
-                    return <SessionListItem
-                        key = {session['SK (GSI-1-PK)']}
-                        session = {session}
-                    />
+                        if(session.StartOn.split('-')[0] === '11/11/22')
+                        {
+                            emptyList = false;
+                            return <SessionListItem
+                                key = {session['SK (GSI-1-PK)']}
+                                session = {session}
+                            />
+                        }
                     })
-                    }
-                    </div>
-
+                }
+                </div>
             </div>
         :
         <div className= {style.heading2}>
-            Sessions
-                <div>No sessions today</div>
+            Today's sessions
+                <div>No sessions scheduled for today.</div>
         </div>
         }
+
+        {/* If no sessions scheduled for today */}
+        {
+        emptyList ? 
+            <div className = {style.empty}>
+                <div className = {style.button}>
+                    <button>
+                        <Link className={style.link} to={`/discover`}>Schedule a session</Link>
+                    </button>
+                </div>
+                <div>
+                    <img src={image} className={style.image} alt='' />
+                </div>
+            </div>
+        :
+            <div>No load</div>
+        }
+        
 		</div>
     )
 }

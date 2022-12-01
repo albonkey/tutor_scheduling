@@ -13,8 +13,7 @@ import { faPlus as plus } from '@fortawesome/free-solid-svg-icons';
 const ProfileCourses = ({userID}) => {
   const dispatch = useDispatch();
 	const courses = useSelector((state) => state.courseList);
-  console.log(courses);
-  const createCourseSuccess = useSelector((state) => state.createCourseSuccess);
+  const createCourseSuccess = useSelector((state) => state.createCourse);
 
   const [courseInfo, setCourseInfo] = useState({
         Subject: "",

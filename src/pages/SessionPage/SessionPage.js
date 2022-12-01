@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import {useParams} from 'react-router-dom';
 import { API } from 'aws-amplify';
 import style from './SessionPage.module.scss';
+import { getSession } from '../../features/sessions/getSessionSlice'
 import SessionDetails from '../../components/SessionDetails/SessionDetails';
-import SessionDocuments from '../../components/SessionDocuments/SessionDocuments';
 import SessionReview from '../../components/SessionReview/SessionReview';
 
 const SessionPage = () => {
-	let { id } = useParams();
+	const { id } = useParams();
+	
 
 	const Details = {
 		PK: '47878298',
@@ -48,16 +50,12 @@ const SessionPage = () => {
 		 <div className={style.page}>
 			<div>
 				{
-				<SessionDetails 
-					tutor = {Tutor}
-					details = {Details}
-					student = {Student} />
+					id &&
+					<SessionDetails 
+						id = { id } />
 				}
 				{
-				<SessionDocuments documents = {documents}/>
-				}
-				{
-				<SessionReview />
+					<SessionReview id = { id } />
 				}
 			</div>
 		 </div>

@@ -5,6 +5,7 @@ import style from './HomePage.module.scss';
 import HomeGreeting from '../../components/HomeGreeting/HomeGreeting';
 import SessionList from '../../components/SessionList/SessionList';
 import ScheduleComponent from '../../components/ScheduleComponent/ScheduleComponent';
+import HomeSessions from '../../components/HomeSessions/HomeSessions';
 
 const HomePage = () => {
 	const user = useSelector((state) => state.user)
@@ -15,10 +16,10 @@ const HomePage = () => {
 					user.id &&
 					<>
 						<HomeGreeting />
-						<SessionList
-							title={'Today'}
-							user={user.id}
-						/>
+						
+						<HomeSessions
+							userID = {user.id}
+					/>
 						<ScheduleComponent />
 					</>
 				}

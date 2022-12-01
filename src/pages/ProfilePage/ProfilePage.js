@@ -16,7 +16,7 @@ const ProfilePage = () => {
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
 
-	const updateUserSuccess = useSelector((state) => state.updateUserSuccess);
+	const updateUserSuccess = useSelector((state) => state.updateUser);
 
     const [updateInfo, setUpdateInfo] = useState({
         'SK (GSI-1-PK)': 'Details',
@@ -31,7 +31,6 @@ const ProfilePage = () => {
     };
 
     const handleSubmit = (event) => {
-        console.log(updateInfo);
         dispatch(updateUser({...updateInfo, user: userID }));
     }
 
