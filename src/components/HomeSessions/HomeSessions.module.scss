@@ -11,7 +11,32 @@
 .heading2{
   @include headingMedium
 }
-  .title{
+.title{
     border-top: 2px solid color(accent, base);
     padding-top: 15px;
+}
+.empty{
+  display: flex;
+  flex-direction: row;
+}
+.button{
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  margin-top: 75px;
+  border-radius: 10px;
+  padding: 5px;
+  max-height: 50px;;
+  background-color: color(accent, base);
+  color: color(primary, base);
+
+  &:hover{
+    background-color: lighten(color(accent, base), 5%);
   }
+}
+.link{
+  @include headingMedium
+}
+.image{
+  width: 100%;
+}

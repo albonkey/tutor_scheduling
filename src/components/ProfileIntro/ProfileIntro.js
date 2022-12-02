@@ -4,22 +4,17 @@ import style from './ProfileIntro.module.scss';
 import placeholder from './placeholderImage.jpg';
 import StarRating from '../StarRating/StarRating.js'
 import { getUserInfo } from '../../features/user/userSlice';
-import { updateUser } from '../../features/user/updateUserSlice';
+import { updateUser } from '../../features/user/userSaveSlice';
 import PopUp from '../PopUpComponent/PopUp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen as pen } from '@fortawesome/free-solid-svg-icons';
 
 const ProfileIntro = ({userID}) => {
     const dispatch = useDispatch();
-	const user = useSelector((state) => state.user);
+	  const user = useSelector((state) => state.user);
+    const {updateUserSuccess} = useSelector((state) => state.updateUser);
 
-    const updateUserSuccess = useSelector((state) => state.updateUserSuccess);
-
-    const [updateInfo, setUpdateInfo] = useState({
-        Details: 'Details',
-        Name: user.userInfo['GSI-1-SK'],
-        Bio: user.userInfo['Bio'],
-    });
+    const [updateInfo, setUpdateInfo] = useState({});
 
     const [buttonPopup, setButtonPopup] = useState(false);
 
@@ -28,25 +23,31 @@ const ProfileIntro = ({userID}) => {
     };
 
     const handleSubmit = (event) => {
-        console.log(updateInfo);
+        event.preventDefault();
         dispatch(updateUser({...updateInfo, user: userID }));
+        setButtonPopup(false);
     }
 
     useEffect(() => {
-        dispatch(getUserInfo(userID))
+        dispatch(getUserInfo(userID)).then((data) => {
+          setUpdateInfo({
+              Name: data['GSI-1-SK'],
+              Bio: data['Bio']
+          })
+        });
     }, [updateUserSuccess])
 
     return(
         <div className = {style.wrapper}>
         {
             user.loading ?
-                <div>Page Loading</div> 
+                <div>Page Loading</div>
             :
             user.userInfo ?
                 <div className = {style.wrapper}>
                     {/*Main page - user info */}
                     <div className = {style.info}>
-                        <div className= {style.heading} >User Rating</div>
+                        <div className= {style.heading} >Tutor Rating</div>
                         <div className={style.stars}>
                             <StarRating rating={user.userInfo.Rating}/>
                         </div>
@@ -73,7 +74,7 @@ const ProfileIntro = ({userID}) => {
                 </div>
             :
             <div className= {style.heading2}>
-              User 
+              User
                 <div>No information</div>
             </div>
         }
@@ -83,8 +84,13 @@ const ProfileIntro = ({userID}) => {
                     <div className = {style.form}>
                       <form onSubmit = {handleSubmit}>
                         <div className = {style.formHeading}>
-                            Edit bio
+                            Edit Profile
                         </div>
+                        <input className = {style.formInputs}
+                            type = 'text'
+                            name = 'Name'
+                            value = {updateInfo.Name}
+                            onChange = {handleChange}/>
                         <textarea
                             className = {style.formInputs}
                             name = 'Bio'

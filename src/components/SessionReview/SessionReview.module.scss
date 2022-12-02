@@ -4,7 +4,7 @@
 .wrapper{
     display: flex;
     flex-direction: column;
-    margin-top: 15px;
+    margin-top: 25px;
   }
   .heading{
     @include headingMedium;
@@ -17,8 +17,19 @@
     margin: 50px 0;
     text-align: center;
   }
+  .starSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  input[type = 'radio']{
+    display: none;
+}
   .stars{
-    font-size: 1.3rem;
+    font-size: 1.5rem;
+    color: color(accent, base);
+    cursor: pointer; 
+    transition: color 200ms;
     margin-bottom: 20px;
   }
   .text {
@@ -33,4 +44,36 @@
     background-color: color(secondary, base);
     color: color(accent, base);
     @include text;
+  }
+  .form {
+    @include headingMedium;
+    color: color(accent, base);
+  }
+  .formHeading {
+    @include headingBig;
+    border-bottom: 1px solid color(accent, base);
+    margin-bottom: 15px;
+  }
+  .formInputs {
+    width: 100%;
+    background-color: color(secondary, base);
+    box-shadow: none;
+    border-color: color(accent, base);
+    border-radius: 10px;
+    min-height: 50px;
+    max-width: 765px;
+    color: color(accent, base);
+    margin: 5px;
+    padding: 10px;
+  }
+  .submit {
+      color: lighten(color(secondary, base), 20%);
+      background-color: color(accent, base);
+      min-width: 220px;
+      max-width: 40%;
+      padding: 10px 30px;
+      text-align: center;
+      border-radius: 10px;
+      margin-left: auto;
+      margin-right: 0;
   }

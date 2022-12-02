@@ -1,29 +1,48 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {Link} from 'react-router-dom';
 import StarRating from '../StarRating/StarRating';
 import style from './SessionDetails.module.scss';
 import placeholder from './placeholderImage.jpg';
+import { getSession } from '../../features/sessions/sessionInfoSlice';
+import { sessionTutor } from '../../features/sessions/sessionTutorSlice';
 
-const SessionDetails = ({tutor, details,student}) => {
+const SessionDetails = ({ id }) => {
+  const dispatch = useDispatch();
+	const sessionID = id.split('-')[1];
+	const {session} = useSelector((state) => state.getSession);
+  const {tutor} = useSelector((state) => state.sessionTutor);
+
+	useEffect(() => {
+		dispatch(getSession(sessionID));
+        dispatch(sessionTutor(sessionID));
+	}, [])
+
+    console.log(tutor)
+
     return(
         <div className = {style.wrapper}>
         {/*Header section*/}
-            <div className = {style.link}>
-                Return to Sessions
+            <div>
+                <Link className={style.link} to={`/sessions`}>Return to Sessions</Link>
             </div>
             <div className = {style.header}>
-                <div className = {style.heading}>Session      
+                <div className = {style.heading}>Session
                     <span className = {style.classLevel}>
-                        {details.GSI2PK} | {details.Level} 
+                        {session['GSI-2-PK']} | {session['Level']}
                     </span>
                 </div>
                 <div className =  {style.id}>
-                        #{details.PK}  
+                        #{session['SK (GSI-1-PK)']}
                 </div>
             </div>
-        {/*Tutor section*/}
+
+        {/*Tutor section: display= name, rating, startOn, Description*/}
             <div className = {style.tutor}>
                 <div className = {style.heading}>
-                    Tutor {tutor.PK}
+                    Tutor {tutor.StartOn}
+
+{/*
                     <div className = {style.stars1}>
                     <StarRating rating={tutor.Rating}/>
                     </div>
@@ -31,7 +50,7 @@ const SessionDetails = ({tutor, details,student}) => {
                         Time
                     </div>
                     <div className = {style.info}>
-                        {details.StartOn}
+                        {session.StartOn}
                     </div>
                     <div className = {style.heading}>Location</div>
                     <div className = {style.info}>Online</div>
@@ -45,27 +64,30 @@ const SessionDetails = ({tutor, details,student}) => {
             <div className = {style.about}>
                 <div className = {style.heading}>About Course
                     <div className = {style.info}>
-                        {details.Description}
+                        {session.Description}
                     </div>
+*/}
                 </div>
             </div>
+
         {/*Student section*/}
+{/*
             <div className = {style.student}>
                 <div className = {style.sub1}>
                     <div className = {style.sub2}>
                         <div className = {style.heading}>
-                            Student {student.PK}
+                            Student {session.StudentID}
                         </div>
                         <div className = {style.stars2}>
                             <StarRating rating={tutor.Rating}/>
                         </div>
                     </div>
                     <div className = {style.heading}>
-                        What {student.PK} wants from the session
+                        What {session.StudentName} wants from the session
                     </div>
                     <div className = {style.heading}>
                         <div className = {style.info}>
-                            {details.Description}
+                            {session.Description}
                         </div>
                      </div>
                 </div>
@@ -75,6 +97,7 @@ const SessionDetails = ({tutor, details,student}) => {
                     }
                     </div>
                 </div>
+    */}
         </div>
     )
 }

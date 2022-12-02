@@ -4,3 +4,39 @@
 .page{
     @include page;
   }
+  .wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 10px;
+    width: 100%;
+  }
+  .heading2{
+    @include headingMedium
+  }
+  .title{
+      border-bottom: 2px solid color(accent, base);
+      padding-top: 30px;
+  }
+  .empty{
+    display: flex;
+    flex-direction: row;
+  }
+  .button{
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    margin-top: 75px;
+    border-radius: 10px;
+    padding: 5px;
+    max-height: 50px;;
+    background-color: color(accent, base);
+    color: color(primary, base);
+  
+    &:hover{
+      background-color: lighten(color(accent, base), 5%);
+    }
+  }
+  .link{
+    @include headingMedium
+  }
