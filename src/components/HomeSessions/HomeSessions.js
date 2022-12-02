@@ -56,7 +56,7 @@ const HomeSessions = ({userID}) => {
               <img src={image} className={style.image} alt='' />
               <div className={style.placeholderText}>
                 <div>Looks like you have no sessions today...</div>
-                <Link className={style.link} to={`/discover`}>Schedule a session</Link>
+                <Link className={style.link} to={`/discover`}>Search for sessions</Link>
 
               </div>
               </div>
