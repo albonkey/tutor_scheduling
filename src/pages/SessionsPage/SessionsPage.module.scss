@@ -3,40 +3,31 @@
 
 .page{
     @include page;
-  }
-  .wrapper{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin: 10px;
-    width: 100%;
-  }
-  .heading2{
-    @include headingMedium
-  }
-  .title{
-      border-bottom: 2px solid color(accent, base);
-      padding-top: 30px;
-  }
-  .empty{
-    display: flex;
-    flex-direction: row;
-  }
-  .button{
-    display: flex;
-    flex-grow: 1;
-    justify-content: center;
-    margin-top: 75px;
-    border-radius: 10px;
-    padding: 5px;
-    max-height: 50px;;
-    background-color: color(accent, base);
-    color: color(primary, base);
-  
-    &:hover{
-      background-color: lighten(color(accent, base), 5%);
-    }
-  }
-  .link{
-    @include headingMedium
-  }
+}
+.header{
+  width: 100%;
+  padding: 15px 0;
+  border-bottom: 1px solid color(accent, base);
+  font-size: 2rem;
+}
+
+.sessionsWrapper{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 25px;
+
+}
+.heading{
+  @include headingMedium;
+  margin-bottom: 10px;
+}
+
+.placeholder{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 250px;
+  background-color: color(primary, darker);
+  border-radius: 10px;
+}

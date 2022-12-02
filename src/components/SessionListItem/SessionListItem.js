@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import style from './SessionListItem.module.scss';
 
-const SessionListItem = ({key, session}) => {
+const SessionListItem = ({session}) => {
 
     const background = session['GSI-1-SK'] === 'Tutor' ? style.teach : style.learn;
 

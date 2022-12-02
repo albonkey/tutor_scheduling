@@ -29,7 +29,7 @@ const BookSession = () => {
 					<div className={style.info}>
 						<div className={style.section}>
 							<div>
-								<div className={style.infoHeading}>{`${course['GSI-1-SK']} with ${course['TutorName']}`}</div>
+								<div className={style.infoHeading}>{`${course['GSI-1-SK']} with ${course['Name']}`}</div>
 								<div>{course['Level']}</div>
 							</div>
 							<div className={style.image} />

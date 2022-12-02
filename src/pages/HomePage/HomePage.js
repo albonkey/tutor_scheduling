@@ -10,7 +10,6 @@ import HomeSessions from '../../components/HomeSessions/HomeSessions';
 
 const HomePage = () => {
 	const user = useSelector((state) => state.user)
-
 	const { route } = useAuthenticator((context) => [
     context.route,
   ]);
@@ -23,14 +22,12 @@ const HomePage = () => {
 						user.id &&
 						<>
 							<HomeGreeting />
-							<SessionList
-								title={'Today'}
-								user={user.id}
+							<HomeSessions
+								userID = {user.id}
 							/>
 							<ScheduleComponent />
 						</>
 					}
-
 				 </div>
 			:
 			<div className={style.landingPage}>

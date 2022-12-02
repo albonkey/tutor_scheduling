@@ -106,7 +106,7 @@ const DiscoveryPage = () => {
 												return <CourseSearchResult
 													key={course['SK (GSI-1-PK)']}
 													id={course['SK (GSI-1-PK)']}
-													name={course.TutorName}
+													name={course.Name}
 													subject={course['GSI-1-SK']}
 													level={course.Level}
 													totalSessions={course.TotalSessions}

@@ -32,13 +32,12 @@
   align-items: center;
   gap: 30px;
   width: 100%;
-  max-width: 1000px;
-  padding: 10px;
+  max-width: 70rem;
+  padding: 10px 10px 50px 10px;
   margin: 0 auto;
 
-
   @include breakpoint(tablet){
-    padding: 25px;
+    padding: 25px 25px 75px 25px;
   }
 }
 
