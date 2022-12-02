@@ -4,14 +4,17 @@ import style from './DiscoveryPage.module.scss';
 import CourseSearchResult from '../../components/CourseSearchResult/CourseSearchResult';
 import {searchCourses} from '../../features/courses/courseSearchSlice';
 import {getAvailabilityInfo} from '../../features/availability/availabilityInfoSlice'
+
 const DiscoveryPage = () => {
 	const [search, setSearch] = useState('');
 	const [courseSelected, setCourseSelected] = useState('No course selected');
 	const [dateSelected, setDateSelected] = useState('');
 	const [timeSelected, setTimeSelected] = useState('');
+	const [selectedAppointment, setSelectedAppointment] = useState({});
 	const {courses, loading, error, searchTerm} = useSelector(state => state.courseSearch);
 	const {availability} = useSelector(state => state.availabilityInfo)
 	const dispatch = useDispatch();
+
 	const doSearch = (e) => {
 		e.preventDefault();
 
@@ -21,8 +24,19 @@ const DiscoveryPage = () => {
 	const selectCourse = (course, user) => {
 		setCourseSelected(course);
 		dispatch(getAvailabilityInfo(user));
+		setDateSelected('');
+		setTimeSelected('');
 	}
 
+const selectAppointment = (appointment, day, course) => {
+	const object = {
+		time: appointment,
+		day: day,
+		course: course
+	}
+	setTimeSelected(appointment);
+	setSelectedAppointment(object);
+}
 	const dayCreator = () => {
 		const days = [];
 		for(let i = 0; i < 10; i++){
@@ -49,7 +63,7 @@ const DiscoveryPage = () => {
 
 				const isSelected = timeSelected === appointment;
 				appointments.push(
-					<div className={[style.appointment, isSelected && style.selected].join(' ')} onClick={() => setTimeSelected(appointment)}>
+					<div className={[style.appointment, isSelected && style.selected].join(' ')} onClick={() => selectAppointment(appointment, dateSelected, courseSelected)}>
 						<span>{appointment}</span>
 					</div>
 				)
@@ -103,7 +117,11 @@ const DiscoveryPage = () => {
 						}
 					</div>
 					<div className={style.sideWrapper}>
-						<div className={style.courseSelected}>{courseSelected}</div>
+						<div className={style.courseSelected}>
+							<div>{courseSelected}</div>
+							<div>{selectedAppointment.day + ' ' + selectedAppointment.time}</div>
+
+						</div>
 						{dayCreator()}
 						{appointmentCreator(dateSelected, availability)}
 					</div>

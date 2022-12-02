@@ -9,7 +9,7 @@ const ScheduleComponent = () => {
 	const [editable, setEditable] = useState(false);
 	const [oldSchedule, setOldSchedule] = useState({});
 	const [schedule, setSchedule] = useState({
-		'11/9/2022': {
+		'11/22/2022': {
 			'9am': {
 				'type': 'Available'
 			},
@@ -154,7 +154,7 @@ const ScheduleComponent = () => {
 		dispatch(getAvailabilityInfo(userInfo.id))
 		.then(response => {
 			const obj = structuredClone(response)
-			setSchedule(obj);
+			//setSchedule(obj);
 		});
 	}, []);
 

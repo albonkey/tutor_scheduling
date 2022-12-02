@@ -228,15 +228,14 @@ app.put('/users/:id', async(req, res) => {
         "PK": `User-${id}`,
         "SK (GSI-1-PK)": 'Details'
     },
-    UpdateExpression: `Set #FirstName = :firstName, #LastName = :lastName, #Bio = :bio`,
+
+    UpdateExpression: `Set #Name = :Name, #Bio = :Bio`,
     ExpressionAttributeValues: {
-      ':firstName': FirstName,
-      ':lastName': LastName,
-      ':bio': bio
+      ':Name': Name,
+      ':Bio': Bio
     },
     ExpressionAttributeNames: {
-      '#FirstName' : 'FirstName',
-      '#LastName' : 'LastName',
+      '#Name' : 'GSI-1-SK',
       '#Bio' : 'Bio'
     }
   }

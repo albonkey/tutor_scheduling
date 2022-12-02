@@ -32,7 +32,7 @@
         "reviewsEndpoint": {
           "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
           "s3Key": "amplify-builds/reviewsEndpoint-383245504c563834554c-build.zip"
-        }
+        }   
       },
       "api": {
         "tutorhubAPI": {}

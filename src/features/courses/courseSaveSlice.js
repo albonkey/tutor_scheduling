@@ -1,20 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {API} from 'aws-amplify';
-export const createCoursesSlice = createSlice({
-  name: 'courses',
+
+export const courseSaveSlice = createSlice({
+  name: 'course',
   initialState: {
-    courseList: []
+    course: {}
   },
   reducers: {
-    createCourseRequest: (state) => {
+    courseSaveRequest: (state) => {
       state.loading = true;
     },
-    createCourseSuccess: (state, action) => {
+    courseSaveSuccess: (state, action) => {
       state.loading = false;
-      state.createCourseSuccess = true;
+      state.success = true;
       state.course = action.payload;
     },
-    createCourseFail: (state, action) => {
+    courseSaveFail: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     }
@@ -23,14 +24,14 @@ export const createCoursesSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const {
-    createCourseRequest, 
-    createCourseSuccess, 
-    createCourseFail } = createCoursesSlice.actions;
+    courseSaveRequest,
+    courseSaveSuccess,
+    courseSaveFail } = courseSaveSlice.actions;
 
 export const createCourse = (course) => async (dispatch) => {
   try{
     const user = course.user;
-    dispatch(createCourseRequest());
+    dispatch(courseSaveRequest());
 
     const info = {
       body: {
@@ -39,10 +40,10 @@ export const createCourse = (course) => async (dispatch) => {
     }
     const {data} = await API.post('tutorhubAPI', `/users/${user}/courses`, info);
 
-    dispatch(createCourseSuccess(data.Items[0]));
+    dispatch(courseSaveSuccess(data.Items[0]));
   } catch(error) {
-    dispatch(createCourseFail(error.message));
+    dispatch(courseSaveFail(error.message));
   }
 }
 
-export default createCoursesSlice.reducer
+export default courseSaveSlice.reducer
