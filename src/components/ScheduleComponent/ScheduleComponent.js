@@ -192,6 +192,7 @@ const ScheduleComponent = () => {
 					{createDay(createDate(1), editable)}
 					{createDay(createDate(2), editable)}
 					{createDay(createDate(3), editable)}
+					{createDay(createDate(4), editable)}
 			</div>
 		 </div>
 	 )

@@ -13,15 +13,16 @@ import { faPlus as plus } from '@fortawesome/free-solid-svg-icons';
 const ProfileCourses = ({userID}) => {
   const dispatch = useDispatch();
 	const courses = useSelector((state) => state.courseList);
-  const createCourseSuccess = useSelector((state) => state.createCourse);
-
+  const user = useSelector((state) => state.user);
+  const {success} = useSelector((state) => state.courseSave);
+  const [buttonPopup, setButtonPopup] = useState(false);
   const [courseInfo, setCourseInfo] = useState({
         Subject: "",
         Level: "",
         Description: "",
     });
 
-  const [buttonPopup, setButtonPopup] = useState(false);
+
 
   const handleChange = (event) => {
     setCourseInfo({ ...courseInfo, [event.target.name]: event.target.value });
@@ -29,13 +30,15 @@ const ProfileCourses = ({userID}) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(createCourse({...courseInfo, user: userID }));
+    const userName = `${user.userInfo.FirstName} ${user.userInfo.LastName}`
+    dispatch(createCourse({...courseInfo, user: userID, Name: userName }));
     setCourseInfo({ Subject: "", Level: "", Description: "" });
+    setButtonPopup(false);
   };
 
   useEffect(() => {
 		dispatch(listCourses(userID));
-	}, [createCourseSuccess])
+	}, [success])
 
 
     return(

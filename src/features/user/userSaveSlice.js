@@ -8,11 +8,11 @@ export const userSaveSlice = createSlice({
   reducers: {
     saveUserRequest: (state) => {
       state.loading = true;
-      state.updateUserSuccess = true;
+      state.success = false;
     },
     saveUserSuccess: (state, action) => {
       state.loading = false;
-      state.updateUserSuccess = true;
+      state.success = true;
       state.user = action.payload;
     },
     saveUserFail: (state, action) => {

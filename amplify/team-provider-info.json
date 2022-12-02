@@ -19,17 +19,20 @@
         },
         "usersEndpoint": {
           "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
-          "s3Key": "amplify-builds/usersEndpoint-52614c4e726645595a41-build.zip"
+          "s3Key": "amplify-builds/usersEndpoint-516a31634d5370613441-build.zip"
         },
         "coursesEndpoint": {
           "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
-          "s3Key": "amplify-builds/coursesEndpoint-69785859545a767a5534-build.zip"
+          "s3Key": "amplify-builds/coursesEndpoint-5a65494e3748362b6534-build.zip"
         },
         "SessionsEndpoint": {
           "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
           "s3Key": "amplify-builds/SessionsEndpoint-566946554f4b694f6d48-build.zip"
         },
-        "reviewsEndpoint": {}
+        "reviewsEndpoint": {
+          "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
+          "s3Key": "amplify-builds/reviewsEndpoint-383245504c563834554c-build.zip"
+        }
       },
       "api": {
         "tutorhubAPI": {}

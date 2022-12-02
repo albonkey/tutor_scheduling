@@ -11,7 +11,7 @@ const CourseCard = ({course}) => {
 
 
     return(
-        <div className={style.wrapper}>
+        <div className={style.wrapper} onClick = {() => setIsSelected(!isSelected)}>
             <div className={style.intro}>
                 <div className={style.course}>
                     <span className={style.heading3}>
@@ -23,12 +23,12 @@ const CourseCard = ({course}) => {
                 </div>
                 <div className={style.icons}>
                     <div>
-                        <StarRating 
+                        <StarRating
                         rating={course.Rating} />
                     </div>
                     <div
                         className={style.carets}
-                        onClick = {() => setIsSelected(!isSelected)}
+
                     >
                         {
                             isSelected ?
@@ -45,7 +45,6 @@ const CourseCard = ({course}) => {
                 <p className={style.info}>
                     {course.Description}
                 </p>
-					      <button className={style.button}>Schedule Session</button>
             </div>
 
         </div>

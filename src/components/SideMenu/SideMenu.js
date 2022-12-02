@@ -20,7 +20,7 @@ const SideMenu = () => {
 				<li>
 					<NavLink to={`/profile/${user.id}`} className={style.listItem}>
 						<FontAwesomeIcon icon={faPerson} fixedWidth />
-						<span className={style.listItemText}>{user.userInfo['GSI-1-SK']}</span>
+						<span className={style.listItemText}>{`${user.userInfo.FirstName} ${user.userInfo.LastName}`}</span>
 					</NavLink>
 				</li>
 				<li>
@@ -39,12 +39,6 @@ const SideMenu = () => {
 					<NavLink to="/payments" className={style.listItem}>
 						<FontAwesomeIcon icon={faCreditCard} fixedWidth />
 						<span className={style.listItemText}>Payments</span>
-					</NavLink>
-				</li>
-				<li>
-					<NavLink to="/documents" className={style.listItem}>
-						<FontAwesomeIcon icon={faFileLines} fixedWidth />
-						<span className={style.listItemText}>Documents</span>
 					</NavLink>
 				</li>
 				<li>

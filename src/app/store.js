@@ -3,6 +3,7 @@ import userReducer from '../features/user/userSlice';
 import userSaveReducer from '../features/user/userSaveSlice';
 import courseSearchReducer from '../features/courses/courseSearchSlice';
 import courseListReducer from '../features/courses/courseListSlice';
+import courseInfoReducer from '../features/courses/courseInfoSlice';
 import courseSaveReducer from '../features/courses/courseSaveSlice';
 import reviewListReducer from '../features/reviews/reviewListSlice';
 import reviewSaveReducer from '../features/reviews/reviewSaveSlice';
@@ -20,7 +21,11 @@ export default configureStore({
     userSave: userSaveReducer,
     courseSearch: courseSearchReducer,
     courseList: courseListReducer,
+    courseInfo: courseInfoReducer,
     courseSave: courseSaveReducer,
+    availabilityInfo: availabilityInfoReducer,
+    availabilitySave: availabilitySaveReducer,
+    sessions: sessionsReducer,
     reviews: reviewListReducer,
     reviewSave: reviewSaveReducer,
     reviewInfo: reviewInfoReducer,

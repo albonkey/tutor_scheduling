@@ -13,10 +13,60 @@
         justify-content: space-between;
     }
 }
+
 .info {
     display: flex;
-    flex-direction: column;
-    min-width: 300px;
+    flex-grow: 1;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid color(accent, base);
+    padding: 15px 0;
+}
+.smallText{
+  font-weight: bold;
+  color: color(accent, base);
+}
+.about {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-basis: 60%;
+}
+.bioWrapper{
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid color(accent, base);
+  margin-top: 25px;
+}
+.bio{
+  display: flex;
+  flex-grow: 1;
+  border-radius: 10px;
+  margin: 15px 0;
+  font-size: 1.2rem;
+  color: color(accent, base);
+}
+.icons{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  font-size: 20px;
+  color: color(accent, base);
+
+  button{
+    font-size: 0.9rem;
+  }
+}
+.cancel{
+  color: color(warning, base);
+}
+.textarea{
+  min-height: 200px;
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 15px 0;
 }
 .stars{
   font-size: 1.3rem;
@@ -26,10 +76,10 @@
 .imageContainer {
   display: flex;
   justify-content: center;
-  width: 100%;
+  flex-basis: 95%;
 
   @include breakpoint(tablet){
-    width: 50%;
+    flex-basis: 45%;
   }
 }
 .heading {
@@ -37,48 +87,4 @@
 }
 .heading2 {
     @include headingMedium;
-}
-.about {
-  display: flex;
-  flex-direction: row;
-  width: 95%;
-}
-.icon {
-  padding: 10px;
-  margin-left: auto;
-  margin-right: 20px;
-  font-size: 20px;
-  color: color(accent, base);
-}
-.form {
-  @include headingMedium;
-  color: color(accent, base);
-}
-.formHeading {
-  @include headingBig;
-  border-bottom: 1px solid color(accent, base);
-  margin-bottom: 15px;
-}
-.formInputs {
-  width: 100%;
-  background-color: color(secondary, base);
-  box-shadow: none;
-  border-color: color(accent, base);
-  border-radius: 10px;
-  min-height: 50px;
-  max-width: 765px;
-  color: color(accent, base);
-  margin: 5px;
-  padding: 10px;
-}
-.submit {
-    color: lighten(color(secondary, base), 20%);
-    background-color: color(accent, base);
-    min-width: 220px;
-    max-width: 40%;
-    padding: 10px 30px;
-    text-align: center;
-    border-radius: 10px;
-    margin-left: auto;
-    margin-right: 0;
 }

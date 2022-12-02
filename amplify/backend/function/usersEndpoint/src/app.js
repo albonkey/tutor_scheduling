@@ -62,17 +62,18 @@ app.post('/users', User.createUser);
 // Create a course for a user by ID
 app.post('/users/:id/courses', async(req, res) => {
   const {id} = req.params;
-  const cid = randomUUID();
-  const {Subject, Level, Description } = req.body;
+  const courseId = randomUUID();
+  const {Subject, Level, Description, Name} = req.body;
 
   const params = {
     TableName : 'Tutorhub',
     Item: {
       'PK': `User-${id}`,
-      'SK (GSI-1-PK)': `Course-${cid}`,
+      'SK (GSI-1-PK)': `Course-${courseId}`,
       'GSI-1-SK': Subject,
       'Level': Level,
       'Description': Description,
+      'Name': Name,
       'Rating': 0,
       'TotalSessions': 0,
     }
@@ -220,7 +221,7 @@ app.post('/users/:id/payments', async(req, res) => {
 // Update a user by ID
 app.put('/users/:id', async(req, res) => {
   const {id} = req.params;
-  const { Name, Bio } = req.body;
+  const { FirstName, LastName, bio } = req.body;
 
   const params = {
     TableName : 'Tutorhub',
@@ -228,13 +229,15 @@ app.put('/users/:id', async(req, res) => {
         "PK": `User-${id}`,
         "SK (GSI-1-PK)": 'Details'
     },
-    UpdateExpression: `Set #Name = :Name, #Bio = :Bio`,
+    UpdateExpression: `Set #FirstName = :firstName, #LastName = :lastName, #Bio = :bio`,
     ExpressionAttributeValues: {
-      ':Name': Name,
-      ':Bio': Bio
+      ':firstName': FirstName,
+      ':lastName': LastName,
+      ':bio': bio
     },
     ExpressionAttributeNames: {
-      '#Name' : 'GSI-1-SK',
+      '#FirstName' : 'FirstName',
+      '#LastName' : 'LastName',
       '#Bio' : 'Bio'
     }
   }

@@ -4,6 +4,9 @@
 .page{
   display: flex;
   flex-direction: column;
+  max-width: 80rem;
+  width: 100%;
+  margin: 0 auto;
   padding: 30px;
   gap: 30px;
 }
@@ -113,7 +116,7 @@
 .courseSelected{
   padding: 15px;
   border-radius: 15px;
-  background-color: color(primary, darker);
+  box-shadow: 1px 1px 3px grey;
   color: color(accent, base);
 }
 .appointmentWidget{
@@ -122,7 +125,7 @@
   gap: 5px;
   padding: 15px;
   border-radius: 15px;
-  background-color: color(primary, darker);
+  box-shadow: 1px 1px 3px grey;
 }
 .appointmentDay{
   display: flex;
@@ -155,9 +158,9 @@
 }
 .appointment{
   display: flex;
-  background-color: color(primary, darker);
+  box-shadow: 1px 1px 3px grey;
   padding: 15px;
-  border-radius: 5px;
+  border-radius: 10px;
 
   cursor: pointer;
   &:hover{
@@ -166,4 +169,14 @@
 }
 .selected{
   background-color: color(secondary, base);
+}
+.button{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 30px;
+  border-radius: 10px;
+  background-color: color(accent, base);
+  color: white;
+  margin-top: 15px;
 }

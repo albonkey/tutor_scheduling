@@ -27,3 +27,15 @@
     margin: 20px 0;
     text-align: center;
 }
+
+.placeholder{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  background-color: color(primary, darker);
+  min-height: 350px;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  color: color(accent, base);
+}

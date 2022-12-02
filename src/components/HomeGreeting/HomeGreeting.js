@@ -16,13 +16,12 @@ const HomeGreeting = () => {
 		 	<div className={style.greeting}>
 				<img src={image} className={style.image} />
 				<div className={style.greetingText}>
-					Hey {user.userInfo['GSI-1-SK']}!
+					Hey {user.userInfo.FirstName}!
 				</div>
 			</div>
 			<div className={style.info}>
 				<span className={style.day}>{day}</span>
 				<span className={style.date}>{date} {month}</span>
-				<Link to='/schedule' className={style.link}>Update Schedule</Link>
 			</div>
 		 </div>
 	 )

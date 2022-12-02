@@ -60,7 +60,7 @@ app.get('/courses/:id', async(req, res) => {
     IndexName : 'GSI2',
     KeyConditionExpression: '#PK = :course',
     ExpressionAttributeValues: {
-      ':course': `Course-${id}`
+      ':course': `${id}`
     },
     ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)' }
   }

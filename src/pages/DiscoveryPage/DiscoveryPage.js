@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import style from './DiscoveryPage.module.scss';
 import CourseSearchResult from '../../components/CourseSearchResult/CourseSearchResult';
 import {searchCourses} from '../../features/courses/courseSearchSlice';
@@ -7,10 +8,11 @@ import {getAvailabilityInfo} from '../../features/availability/availabilityInfoS
 
 const DiscoveryPage = () => {
 	const [search, setSearch] = useState('');
-	const [courseSelected, setCourseSelected] = useState('No course selected');
+	const [courseSelected, setCourseSelected] = useState('');
 	const [dateSelected, setDateSelected] = useState('');
 	const [timeSelected, setTimeSelected] = useState('');
 	const [selectedAppointment, setSelectedAppointment] = useState({});
+	const [hasSelected, setHasSelected] = useState(false);
 	const {courses, loading, error, searchTerm} = useSelector(state => state.courseSearch);
 	const {availability} = useSelector(state => state.availabilityInfo)
 	const dispatch = useDispatch();
@@ -24,18 +26,21 @@ const DiscoveryPage = () => {
 	const selectCourse = (course, user) => {
 		setCourseSelected(course);
 		dispatch(getAvailabilityInfo(user));
+		setHasSelected(false);
 		setDateSelected('');
 		setTimeSelected('');
+
 	}
 
-const selectAppointment = (appointment, day, course) => {
-	const object = {
-		time: appointment,
-		day: day,
-		course: course
-	}
-	setTimeSelected(appointment);
-	setSelectedAppointment(object);
+	const selectAppointment = (appointment, day, course) => {
+		const object = {
+			time: appointment,
+			day: day,
+			course: course
+		}
+		setTimeSelected(appointment);
+		setSelectedAppointment(object);
+		setHasSelected(true);
 }
 	const dayCreator = () => {
 		const days = [];
@@ -71,6 +76,7 @@ const selectAppointment = (appointment, day, course) => {
 		}
 		return <div className={style.appointmentWrapper}>{appointments}</div>;
 	}
+
 	 return(
 		 <div className={style.page}>
 			 	<h2 className={style.pageHeading}>Find Tutor</h2>
@@ -100,7 +106,7 @@ const selectAppointment = (appointment, day, course) => {
 												return <CourseSearchResult
 													key={course['SK (GSI-1-PK)']}
 													id={course['SK (GSI-1-PK)']}
-													name={course.TutorName}
+													name={course.Name}
 													subject={course['GSI-1-SK']}
 													level={course.Level}
 													totalSessions={course.TotalSessions}
@@ -118,12 +124,21 @@ const selectAppointment = (appointment, day, course) => {
 					</div>
 					<div className={style.sideWrapper}>
 						<div className={style.courseSelected}>
-							<div>{courseSelected}</div>
-							<div>{selectedAppointment.day + ' ' + selectedAppointment.time}</div>
+							<div>{courseSelected ? courseSelected : 'No Course Selected'}</div>
+							<div>{`${selectedAppointment.day ? selectedAppointment.day : ''} ${selectedAppointment.time ? selectedAppointment.time : ''}`}</div>
+							{
+								hasSelected && <Link to={`/book/session?course=${courseSelected}&date=${dateSelected}&time=${timeSelected}`}className={style.button}>Continue</Link>
+							}
 
 						</div>
-						{dayCreator()}
-						{appointmentCreator(dateSelected, availability)}
+						{
+							courseSelected &&
+							<>
+								{dayCreator()}
+								{appointmentCreator(dateSelected, availability)}
+							</>
+						}
+
 					</div>
 				</div>
 		 </div>

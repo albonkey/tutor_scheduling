@@ -4,3 +4,48 @@
 .page{
   @include page;
 }
+.landingPage{
+  display: flex;
+  width: 100vw;
+  height: calc(100vh - 50px);
+}
+.sectionLeft{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  flex-basis: 60%;
+  background-color: color(accent, base);
+  padding-left: 150px;
+  color: color(primary, base);
+
+}
+
+.heading{
+  font-family: 'Roboto', sans-serif;
+  font-size: 3rem;
+  font-weight: bold;
+  max-width: 600px;
+}
+.brand{
+  color: color(black, lighter);
+  font-size: 3.2rem;
+}
+.message{
+  font-size: 1.2rem;
+  margin-top: 20px;
+}
+.button{
+  padding: 15px 100px;
+  background-color: color(black, lighter);
+  margin-top: 30px;
+  color: color(primary, base);
+  border-radius: 10px;
+  transition: 0.3s;
+
+  &:hover{
+    transform: scale(1.05);
+    transition: 0.3s;
+    color: color(accent, base);
+  }
+}

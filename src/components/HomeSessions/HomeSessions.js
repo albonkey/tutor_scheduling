@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import style from './HomeSessions.module.scss';
 import SessionListItem from '../SessionListItem/SessionListItem';
 import { listSessions } from '../../features/sessions/sessionsSlice';
-import image from './image.jpg';
+import image from './image.png';
 
 const HomeSessions = ({userID}) => {
     const dispatch = useDispatch();
@@ -18,17 +18,15 @@ const HomeSessions = ({userID}) => {
 
     return(
         <div className = {style.wrapper}>
+          <div className = {style.heading2}>
+              Today's sessions
+          </div>
         {
         sessions.loading ?
             <div className = {style.heading2}>Page loading</div>
         :
         sessions.sessions ?
             <div className = {style.wrapper}>
-                <div className= {style.heading2}>
-                    <div className = {style.title}>
-                        Today's sessions
-                    </div>
-                </div>
                 <div>
                 {
                     sessions.sessions.map(session => {
@@ -55,15 +53,13 @@ const HomeSessions = ({userID}) => {
         {
         emptyList ?
             <div className = {style.empty}>
-                <div className = {style.button}>
-                    <button>
-                        <Link className={style.link} to={`/discover`}>Schedule a session</Link>
-                    </button>
-                </div>
-                <div>
-                    <img src={image} className={style.image} alt='' />
-                </div>
-            </div>
+              <img src={image} className={style.image} alt='' />
+              <div className={style.placeholderText}>
+                <div>Looks like you have no sessions today...</div>
+                <Link className={style.link} to={`/discover`}>Search for sessions</Link>
+
+              </div>
+              </div>
         :
             <div>No load</div>
         }

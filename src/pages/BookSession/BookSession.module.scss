@@ -1,0 +1,112 @@
+@import "../../styles/abstracts/_mixins.scss";
+@import "../../styles/abstracts/_variables.scss";
+
+.page{
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  max-width: 80rem;
+  margin: 0 auto;
+  width: 100%;
+}
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 2px solid color(accent, base);
+}
+.heading{
+  @include headingMedium;
+}
+.cancel{
+  color: color(error, base);
+}
+.main{
+  display: flex;
+  align-items: flex-start;
+  gap: 5rem;
+}
+.info{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.infoHeading{
+  @include headingSmall;
+}
+.image{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: grey;
+}
+.section{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+  border-bottom: 2px solid color(accent, base);
+  padding: 30px 0;
+
+  &:last-child{
+    border-bottom: none;
+  }
+}
+.textarea{
+  display: flex;
+  flex-grow: 1;
+  min-height: 200px;
+  padding: 10px;
+}
+.booking{
+  display: flex;
+  flex-direction: column;
+  flex-basis: 30%;
+  gap: 15px;
+  margin-top: 30px;
+  padding: 20px;
+  box-shadow: 1px 1px 3px grey;
+  border-radius: 10px;
+
+}
+.bookingHeader{
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  align-items: center;
+}
+.bookingTime{
+  border: 1px solid color(accent, base);
+  border-radius: 10px;
+}
+.timeContainer{
+  padding: 10px;
+  &:first-child{
+    border-bottom: 1px solid color(accent, base);
+  }
+  .timeTitle{
+    font-weight: bold;
+    color: color(accent, base);
+  }
+}
+
+.cost{
+  @include headingMedium;
+}
+
+.button{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 30px;
+  border-radius: 10px;
+  background-color: color(accent, base);
+  color: white;
+  margin-top: 15px;
+
+  &:hover{
+    color: color(secondary, base);
+    transition: .2s;
+  }
+}
