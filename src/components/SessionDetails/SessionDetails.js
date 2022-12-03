@@ -5,22 +5,15 @@ import StarRating from '../StarRating/StarRating';
 import style from './SessionDetails.module.scss';
 import placeholder from './placeholderImage.jpg';
 import { getSession } from '../../features/sessions/sessionInfoSlice';
-import { sessionTutor } from '../../features/sessions/sessionTutorSlice';
+
 
 const SessionDetails = ({ id }) => {
   const dispatch = useDispatch();
 	const sessionID = id.split('-')[1];
-	const sessionInfo = useSelector((state) => state.getSession); 
-    const [session, setSession] = useState({});
-    const [student, setStudent] = useState({});
-    const [tutor, setTutor] = useState({});
+	const {session, tutor, student} = useSelector((state) => state.getSession); 
 
 	useEffect(() => {
 		dispatch(getSession(sessionID));
-
-        setSession(sessionInfo.session[0]);
-        setStudent(sessionInfo.session[1]);
-        setTutor(sessionInfo.session[2])
 	}, [])
 
     return(
