@@ -4,12 +4,12 @@ import {API} from 'aws-amplify';
 export const reviewInfoSlice = createSlice({
     name: 'review',
     initialState: {
-        review: {},
+        review: null,
     },
     reducers: {
         getReviewRequest: (state) => {
             state.loading = true;
-            state.review = {};
+            state.review = null;
         },
         getReviewSuccess: (state, action) => {
             state.loading = false;

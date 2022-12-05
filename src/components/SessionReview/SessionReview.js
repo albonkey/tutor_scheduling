@@ -11,20 +11,17 @@ import PopUp from '../PopUpComponent/PopUp';
 
 const SessionReview = ({session}) => {
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.user);
 
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
     const [writeNote, setWriteNote] = useState(false);
 
-    const {review} = useSelector((state) => state.reviewInfo);
+    const {review, success, error, loading} = useSelector((state) => state.reviewInfo);
     const reviewSaveSuccess = useSelector((state) => state.reviewSave);
     const [reviewInfo, setReviewInfo] = useState({
         description: "",
         rating: "",
     });
-
-    const [buttonPopup, setButtonPopup] = useState(false);
 
     const handleChange = (event) => {
         setReviewInfo({ ...reviewInfo, [event.target.name]: event.target.value });
@@ -32,6 +29,7 @@ const SessionReview = ({session}) => {
 
       const submitHandler = (event) => {
         event.preventDefault();
+        const sessionId = session['SK (GSI-1-PK)'].substr(8)
         dispatch(reviewSave({
           ...reviewInfo,
           tutor: {
@@ -45,23 +43,20 @@ const SessionReview = ({session}) => {
             lastName: session.Student.lastName,
           },
           courseId: session.courseId,
-          sessionId: session.id
+          sessionId: sessionId
 
         }))
          };
 
       useEffect(() => {
-        if(session.reviewId){
           dispatch(getReview(session.reviewId));
-        }
 
-	}, [reviewSaveSuccess])
-
+	    }, [reviewSaveSuccess])
 
     return(
         <div className = {style.wrapper}>
             {
-                review.loading ?
+                loading ?
             <div className = {style.heading2}>Page loading</div>
         :
         review ?
