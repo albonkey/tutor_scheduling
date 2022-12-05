@@ -48,8 +48,8 @@ const ProfileIntro = ({userID}) => {
                     <div className = {style.info}>
                       <form className={style.about} onSubmit={submitHandler}>
                         <div className = {style.smallText}>{user.userInfo.TotalCourses ? user.userInfo.TotalCourses : 0} courses</div>
-                        <div className = {style.smallText}>{user.userInfo.TotalSessions ? user.userInfo.TotalSessions : 0} sessions as a student</div>
-                        <div className = {style.smallText}>{user.userInfo.TotalSessions ? user.userInfo.TotalSessions : 0} sessions as a tutor</div>
+                        <div className = {style.smallText}>{user.userInfo.SessionsStudent ? user.userInfo.SessionsStudent : 0} sessions as a student</div>
+                        <div className = {style.smallText}>{user.userInfo.SessionsTutor ? user.userInfo.SessionsTutor : 0} sessions as a tutor</div>
 
                           <div className={style.bioWrapper}>
                             <div className= {style.heading2}>

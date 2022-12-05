@@ -9,6 +9,7 @@ import {getAvailabilityInfo} from '../../features/availability/availabilityInfoS
 const DiscoveryPage = () => {
 	const [search, setSearch] = useState('');
 	const [courseSelected, setCourseSelected] = useState('');
+	const [subjectSelected, setSubjectSelected] = useState('');
 	const [dateSelected, setDateSelected] = useState('');
 	const [timeSelected, setTimeSelected] = useState('');
 	const [selectedAppointment, setSelectedAppointment] = useState({});
@@ -23,8 +24,9 @@ const DiscoveryPage = () => {
 		dispatch(searchCourses(search));
 		setSearch('');
 	}
-	const selectCourse = (course, user) => {
+	const selectCourse = (course, subject, user) => {
 		setCourseSelected(course);
+		setSubjectSelected(subject);
 		dispatch(getAvailabilityInfo(user));
 		setHasSelected(false);
 		setDateSelected('');
@@ -106,7 +108,8 @@ const DiscoveryPage = () => {
 												return <CourseSearchResult
 													key={course['SK (GSI-1-PK)']}
 													id={course['SK (GSI-1-PK)']}
-													name={course.Name}
+													firstName={course.FirstName}
+													lastName={course.LastName}
 													subject={course['GSI-1-SK']}
 													level={course.Level}
 													totalSessions={course.TotalSessions}
@@ -124,8 +127,8 @@ const DiscoveryPage = () => {
 					</div>
 					<div className={style.sideWrapper}>
 						<div className={style.courseSelected}>
-							<div>{courseSelected ? courseSelected : 'No Course Selected'}</div>
-							<div>{`${selectedAppointment.day ? selectedAppointment.day : ''} ${selectedAppointment.time ? selectedAppointment.time : ''}`}</div>
+							<div>{subjectSelected ? subjectSelected : 'No Course Selected'}</div>
+							<div>{`${selectedAppointment.day ? selectedAppointment.day : '-'} ${selectedAppointment.time ? selectedAppointment.time : ''}`}</div>
 							{
 								hasSelected && <Link to={`/book/session?course=${courseSelected}&date=${dateSelected}&time=${timeSelected}`}className={style.button}>Continue</Link>
 							}

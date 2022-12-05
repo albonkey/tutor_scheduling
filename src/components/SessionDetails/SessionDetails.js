@@ -63,28 +63,30 @@ const SessionDetails = ({ subject, name, level, id  }) => {
                 <div className = {style.sub1}>
                     <div className = {style.sub2}>
                         <div className = {style.heading}>
-                            <div>Student : {tutor.StudentName}</div>
+                            <div>Student : </div>
                         </div>
                         <div className = {style.stars2}>
-                            <StarRating rating={student.Rating}/>
+                            <StarRating rating='5'/>
                         </div>
                     </div>
                     <div className = {style.heading}>
-                        What {tutor.StudentName} wants from the session
+                        What carl wants from the session
                     </div>
                     <div className = {style.heading}>
                         <div className = {style.info}>
-                            {student.Description}
+                            description
                         </div>
                      </div>
                 </div>
                 <div className = {style.imageContainer}>
                     {
-                        student.Picture ? <img src={student.Picture} alt='' className={style.image}/> : <img src={placeholder} alt='' className={style.image} />
+                        false ? <img src={''} alt='' className={style.image}/> : <img src={placeholder} alt='' className={style.image} />
                     }
-                    </div>
                 </div>
+              </div>
         </div>
+      </div>
+    </div>
     )
 }
 

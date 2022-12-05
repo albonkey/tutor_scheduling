@@ -4,18 +4,45 @@ import { useLocation, Link } from 'react-router-dom';
 import style from './BookSession.module.scss';
 import useQuery from '../../hooks/useQuery';
 import { getCourse } from '../../features/courses/courseInfoSlice';
+import { saveSession } from '../../features/sessions/sessionSaveSlice';
 import StarRating from '../../components/StarRating/StarRating';
 const BookSession = () => {
 	const query = useQuery();
 	const [textarea, setTextarea] = useState('');
 	const {course} = useSelector(state => state.courseInfo)
+	const {userInfo, id: userId} = useSelector(state => state.user)
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(getCourse(query.get('course')));
+		const courseId = query.get('course').substr(7);
+		dispatch(getCourse(courseId));
 	}, [])
 
+	const submitHandler = (e) => {
+		e.preventDefault();
+		console.log('Submit')
+		const tutorId = course['PK'].substr(5);
+		const sessionObject = {
+			subject: course['GSI-1-SK'],
+			level: course['Level'],
+			description: course['Description'],
+			date: query.get('date'),
+			time: query.get('time'),
+			cost: course['Cost'],
+			tutor: {
+				id: tutorId,
+				firstName: course['FirstName'],
+				lastName: course['LastName'],
+			},
+			student: {
+				id: userId,
+				firstName: userInfo.FirstName,
+				lastName: userInfo.LastName
+			},
+		}
 
+		dispatch(saveSession(sessionObject));
+	}
 	 return(
 		 <div className={style.page}>
 		 	<div className={style.header}>
@@ -24,12 +51,11 @@ const BookSession = () => {
 			</div>
 			{
 				course &&
-				<form className={style.main}>
-
+				<form className={style.main} onSubmit={submitHandler}>
 					<div className={style.info}>
 						<div className={style.section}>
 							<div>
-								<div className={style.infoHeading}>{`${course['GSI-1-SK']} with ${course['Name']}`}</div>
+								<div className={style.infoHeading}>{`${course['GSI-1-SK']} with ${course['FirstName']} ${course['LastName']}`}</div>
 								<div>{course['Level']}</div>
 							</div>
 							<div className={style.image} />
@@ -61,7 +87,7 @@ const BookSession = () => {
 								<div>{query.get('time')}</div>
 							</div>
 						</div>
-						<button className={style.button} type='submit'>
+						<button type='submit' className={style.button}>
 							Schedule Session
 						</button>
 					</div>

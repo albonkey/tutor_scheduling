@@ -93,8 +93,7 @@ const deleteSessionById = async (req, res) => {
 // Create a session
 const createSession = async (req, res) => {
     const sessionId = randomUUID();
-    const {subject, level, description, startOn, amount, tutorId, studentId, status, studentFirstName, studentLastName,
-            tutorFirstName, tutorLastName, availability} = req.body;
+    const {subject, level, description, date, time, cost, tutor, student} = req.body;
 
     const params = {
       TransactItems: [
@@ -108,11 +107,13 @@ const createSession = async (req, res) => {
               'GSI-2-PK': subject,
               'Level': level,
               'Description': description,
-              'StartOn': startOn,
-              'Amount': amount,
-              'TutorID': `User-${tutorId}`,
-              'StudentID': `User-${studentId}`,
-              'Status': status
+              'Date': date,
+              'Time': time,
+              'Cost': cost,
+              'Student': student,
+              'Tutor': tutor,
+              'Status': 'Upcoming',
+              'ReviewId': ''
             }
           }
         },
@@ -120,13 +121,13 @@ const createSession = async (req, res) => {
           Put: {
             TableName: 'Tutorhub',
             Item: {
-              'PK': `User-${tutorId}`,
+              'PK': `User-${tutor.id}`,
               'SK (GSI-1-PK)': `Session-${sessionId}`,
               'GSI-1-SK': 'Tutor',
               'Subject': subject,
-              'StartOn': startOn,
-              'StudentFirstName': studentFirstName,
-              'StudentLastName': studentLastName
+              'Date': date,
+              'Time': time,
+              'Student': student
             }
           }
         },
@@ -134,13 +135,13 @@ const createSession = async (req, res) => {
           Put: {
             TableName: 'Tutorhub',
             Item: {
-              'PK': `User-${studentId}`,
+              'PK': `User-${student.id}`,
               'SK (GSI-1-PK)': `Session-${sessionId}`,
               'GSI-1-SK': 'Student',
               'Subject': subject,
-              'StartOn': startOn,
-              'TutorFirstName': tutorFirstName,
-              'TutorLastName': tutorLastName
+              'Date': date,
+              'Time': time,
+              'Tutor': tutor
             }
           }
         },
@@ -148,7 +149,7 @@ const createSession = async (req, res) => {
           Update: {
             TableName: 'Tutorhub',
             Key: {
-              "PK": `User-${tutorId}`,
+              "PK": `User-${tutor.id}`,
               "SK (GSI-1-PK)": 'Details'
             },
             ExpressionAttributeNames: {
@@ -164,7 +165,7 @@ const createSession = async (req, res) => {
           Update: {
             TableName: 'Tutorhub',
             Key: {
-              "PK": `User-${studentId}`,
+              "PK": `User-${student.id}`,
               "SK (GSI-1-PK)": 'Details'
             },
             ExpressionAttributeNames: {
@@ -180,7 +181,7 @@ const createSession = async (req, res) => {
     };
 
     try {
-      const data = await docClient.transactWriteItems(params).promise();
+      const data = await docClient.transactWrite(params).promise();
       res.json({success: 'post call succeed!', data: data});
     } catch (err) {
       res.status(500).json({err:err});

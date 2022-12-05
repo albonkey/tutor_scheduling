@@ -27,7 +27,7 @@ const HomeSessions = ({userID}) => {
                 <div>
                 {
                     sessions.sessions.map(session => {
-                        if(session.StartOn.split('-')[0] === '11/11/22')
+                        if(session.date === today)
                         {
                             emptyList = false;
                             return <SessionListItem
