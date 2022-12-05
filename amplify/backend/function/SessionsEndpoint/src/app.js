@@ -25,13 +25,11 @@ app.get('/sessions', Session.getAllSessions);
 
 app.get('/sessions/:id', Session.getSessionById);
 
-app.get('/sessions/:subject', Session.getSessionBySubject);
-
-app.delete('sessions/:id', Session.deleteSessionById);
+app.delete('/sessions/:id', Session.deleteSessionById);
 
 app.post('/sessions', Session.createSession);
 
-app.put('sessions/:id', Session.updateSessionById);
+app.put('/sessions/:id', Session.updateSessionById);
 
 
 app.listen(3000, function() {

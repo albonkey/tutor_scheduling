@@ -22,9 +22,6 @@ const HomeSessions = ({userID}) => {
               Today's sessions
           </div>
         {
-        sessions.loading ?
-            <div className = {style.heading2}>Page loading</div>
-        :
         sessions.sessions ?
             <div className = {style.wrapper}>
                 <div>

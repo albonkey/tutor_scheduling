@@ -38,7 +38,7 @@ export const createCourse = (course) => async (dispatch) => {
         ...course
       }
     }
-    const {data} = await API.post('tutorhubAPI', `/users/${user}/courses`, info);
+    const {data} = await API.post('tutorhubAPI', `/courses`, info);
 
     dispatch(courseSaveSuccess(data.Items[0]));
   } catch(error) {

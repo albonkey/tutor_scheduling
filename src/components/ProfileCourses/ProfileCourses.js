@@ -17,9 +17,10 @@ const ProfileCourses = ({userID}) => {
   const {success} = useSelector((state) => state.courseSave);
   const [buttonPopup, setButtonPopup] = useState(false);
   const [courseInfo, setCourseInfo] = useState({
-        Subject: "",
-        Level: "",
-        Description: "",
+        subject: "",
+        level: "",
+        description: "",
+        cost: 0
     });
 
 
@@ -30,9 +31,13 @@ const ProfileCourses = ({userID}) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const userName = `${user.userInfo.FirstName} ${user.userInfo.LastName}`
-    dispatch(createCourse({...courseInfo, user: userID, Name: userName }));
-    setCourseInfo({ Subject: "", Level: "", Description: "" });
+    dispatch(createCourse({
+      ...courseInfo,
+      firstName: user.userInfo.FirstName,
+      lastName: user.userInfo.LastName,
+      tutorId: user.id
+    }));
+    setCourseInfo({ subject: "", level: "", description: "" });
     setButtonPopup(false);
   };
 
@@ -90,16 +95,16 @@ const ProfileCourses = ({userID}) => {
                         </div>
                         <input className = {style.formInputs}
                             type = 'text'
-                            name = 'Subject'
-                            value = {courseInfo.Subject}
+                            name = 'subject'
+                            value = {courseInfo.subject}
                             onChange = {handleChange}
                         />
                         <div className = {style.title}>
                             Level
                         </div>
                         <select className = {style.formInputs}
-                          name = 'Level'
-                          value = {courseInfo.Level}
+                          name = 'level'
+                          value = {courseInfo.level}
                           onChange = {handleChange}
                         >
                             <option disabled={true} value="">
@@ -110,11 +115,21 @@ const ProfileCourses = ({userID}) => {
                             <option value = "Advanced">Advanced</option>
                         </select>
                         <div className = {style.title}>
+                            Cost ($)
+                        </div>
+                        <input className = {style.formInputs}
+                            type = 'number'
+                            name = 'cost'
+                            min='0'
+                            value = {courseInfo.cost}
+                            onChange = {handleChange}
+                        />
+                        <div className = {style.title}>
                             Description
                         </div>
                         <textarea className = {style.formInputs}
-                            name = 'Description'
-                            value = {courseInfo.Description}
+                            name = 'description'
+                            value = {courseInfo.description}
                             onChange = {handleChange}
                         />
                       </form>

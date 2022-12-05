@@ -54,8 +54,6 @@ app.put('/users/:id/availability', User.updateUserAvailability);
 
 app.post('/users/:id/availability', User.createUserAvailability);
 
-// Get overall rating for a user by id
-app.get('users/:id/rating', User.getAllRatings);
 
 /**********************
  *   POST methods     *
@@ -128,7 +126,7 @@ app.post('/users/:id/payments', async(req, res) => {
  *    PUT methods     *
  **********************/
 
-app.put('users/:id', User.updateUser);
+app.put('/users/:id', User.updateUser);
 
 
 /**********************

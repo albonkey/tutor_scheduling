@@ -7,18 +7,8 @@ import placeholder from './placeholderImage.jpg';
 import { getSession } from '../../features/sessions/sessionInfoSlice';
 import { sessionTutor } from '../../features/sessions/sessionTutorSlice';
 
-const SessionDetails = ({ id }) => {
-  const dispatch = useDispatch();
-	const sessionID = id.split('-')[1];
-	const {session} = useSelector((state) => state.getSession);
-  const {tutor} = useSelector((state) => state.sessionTutor);
+const SessionDetails = ({ subject, name, level, id  }) => {
 
-	useEffect(() => {
-		dispatch(getSession(sessionID));
-        dispatch(sessionTutor(sessionID));
-	}, [])
-
-    console.log(tutor)
 
     return(
         <div className = {style.wrapper}>
@@ -29,18 +19,17 @@ const SessionDetails = ({ id }) => {
             <div className = {style.header}>
                 <div className = {style.heading}>Session
                     <span className = {style.classLevel}>
-                        {session['GSI-2-PK']} | {session['Level']}
+                        {subject} | {level}
                     </span>
                 </div>
                 <div className =  {style.id}>
-                        #{session['SK (GSI-1-PK)']}
+                        #{id}
                 </div>
             </div>
 
         {/*Tutor section: display= name, rating, startOn, Description*/}
             <div className = {style.tutor}>
                 <div className = {style.heading}>
-                    Tutor {tutor.StartOn}
 
 {/*
                     <div className = {style.stars1}>

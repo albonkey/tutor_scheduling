@@ -5,7 +5,7 @@ const {randomUUID} = require('crypto');
 
 const getAllCourses = async(req, res) => {
     const {search} = req.query;
-  
+
     const params = {
       TableName : 'Tutorhub',
       IndexName : 'GSI2',
@@ -14,7 +14,7 @@ const getAllCourses = async(req, res) => {
                                     ':search': search },
       ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)', '#SK': 'GSI-1-SK' }
     }
-  
+
     try {
       const data = await docClient.scan(params).promise();
       const courses = data.Items
@@ -26,7 +26,7 @@ const getAllCourses = async(req, res) => {
 
 const getCourseById = async (req, res) => {
     const {id} = req.params;
-  
+
     const params = {
       TableName : 'Tutorhub',
       IndexName : 'GSI2',
@@ -36,7 +36,7 @@ const getCourseById = async (req, res) => {
       },
       ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)' }
     }
-  
+
     try {
       const data = await docClient.query(params).promise();
       const course = data.Items[0]
@@ -91,7 +91,7 @@ const createCourse = async (req, res) => {
   };
 
   try {
-    const data = await docClient.transactWriteItems(params).promise();
+    const data = await docClient.transactWrite(params).promise();
     res.json({success: 'post call succeed!', data: data});
   } catch (err) {
     res.status(500).json({err:err});

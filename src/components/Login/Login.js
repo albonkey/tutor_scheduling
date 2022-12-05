@@ -20,17 +20,22 @@ const Login = () => {
 
 	 const formFields = {
 		 signUp: {
-			 name: {
+			 given_name: {
+				 placeholder: 'First Name',
 				 order: 1
 			 },
+			 family_name: {
+				 placeholder: 'Last Name',
+				 order: 2
+			 },
 			 email: {
-				 order:2
+				 order:3
 			 },
 			 password: {
-				 order: 3
+				 order: 4
 			 },
 			 confirm_password: {
-				 order: 4
+				 order: 5
 			 }
 		 }
 	 }
@@ -48,7 +53,7 @@ const Login = () => {
 	 return (
 		<View className='auth-wrapper'>
 
-		 	<Authenticator signUpAttributes={['name']} services={services} formFields={formFields}>
+		 	<Authenticator services={services} formFields={formFields}>
 
 			</Authenticator>
 		</View>

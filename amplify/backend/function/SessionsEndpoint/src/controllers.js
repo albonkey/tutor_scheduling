@@ -22,7 +22,7 @@ const getAllSessions = async (req, res) => {
         res.status(500).json({err:err});
     }
 };
-  
+
 // Get a session by ID
 const getSessionById = async (req, res) => {
     const {id} = req.params;
@@ -49,7 +49,7 @@ const getSessionById = async (req, res) => {
 const deleteSessionById = async (req, res) => {
     const {sessionId} = req.params;
     const {tutorId, studentId} = body.params;
-  
+
     const params = {
       TransactItems: [
         {
@@ -81,7 +81,7 @@ const deleteSessionById = async (req, res) => {
         }
       ]
     };
-  
+
     try {
       const data = await docClient.transactWriteItems(params).promise();
       res.json({success: 'delete call succeed!', data: data});
@@ -93,9 +93,9 @@ const deleteSessionById = async (req, res) => {
 // Create a session
 const createSession = async (req, res) => {
     const sessionId = randomUUID();
-    const {subject, level, description, startOn, amount, tutorId, studentId, status, studentFirstName, studentLastName,  
+    const {subject, level, description, startOn, amount, tutorId, studentId, status, studentFirstName, studentLastName,
             tutorFirstName, tutorLastName, availability} = req.body;
-  
+
     const params = {
       TransactItems: [
         {
@@ -178,7 +178,7 @@ const createSession = async (req, res) => {
         },
       ]
     };
-  
+
     try {
       const data = await docClient.transactWriteItems(params).promise();
       res.json({success: 'post call succeed!', data: data});

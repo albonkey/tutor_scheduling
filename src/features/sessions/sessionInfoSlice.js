@@ -31,7 +31,7 @@ export const {
 export const getSession = (sessionID) => async (dispatch) => {
     try {
         dispatch(sessionInfoRequest());
-
+        console.log('Hello');
         const {data} = await API.get('tutorhubAPI', `/sessions/${sessionID}`);
 
         dispatch(sessionInfoSuccess(data.Items[0]));
