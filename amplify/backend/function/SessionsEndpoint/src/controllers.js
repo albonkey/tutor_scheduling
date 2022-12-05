@@ -93,7 +93,7 @@ const deleteSessionById = async (req, res) => {
 // Create a session
 const createSession = async (req, res) => {
     const sessionId = randomUUID();
-    const {subject, level, description, date, time, cost, tutor, student} = req.body;
+    const {subject, level, description, courseId, sessionNeeds, date, time, cost, tutor, student} = req.body;
 
     const params = {
       TransactItems: [
@@ -107,13 +107,14 @@ const createSession = async (req, res) => {
               'GSI-2-PK': subject,
               'Level': level,
               'Description': description,
+              'CourseId': courseId,
+              'SessionNeeds': sessionNeeds,
               'Date': date,
               'Time': time,
               'Cost': cost,
               'Student': student,
               'Tutor': tutor,
               'Status': 'Upcoming',
-              'ReviewId': ''
             }
           }
         },

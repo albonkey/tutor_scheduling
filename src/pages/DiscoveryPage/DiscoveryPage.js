@@ -112,6 +112,7 @@ const DiscoveryPage = () => {
 													lastName={course.LastName}
 													subject={course['GSI-1-SK']}
 													level={course.Level}
+													cost={course.Cost}
 													totalSessions={course.TotalSessions}
 													rating={course.Rating}
 													info={course.Description}

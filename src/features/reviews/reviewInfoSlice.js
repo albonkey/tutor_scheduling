@@ -9,6 +9,7 @@ export const reviewInfoSlice = createSlice({
     reducers: {
         getReviewRequest: (state) => {
             state.loading = true;
+            state.review = {};
         },
         getReviewSuccess: (state, action) => {
             state.loading = false;
@@ -32,7 +33,7 @@ export const {
         try {
             dispatch(getReviewRequest());
 
-            const {data} = await API.get('tutorhubAPI', `/users/${id}/reviews`);
+            const {data} = await API.get('tutorhubAPI', `/reviews/${id}`);
 
             dispatch(getReviewSuccess(data.Items[0]));
         }catch(error) {

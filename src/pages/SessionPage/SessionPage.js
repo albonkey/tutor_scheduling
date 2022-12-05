@@ -13,12 +13,12 @@ const SessionPage = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(getSession(1));
+		const sessionId = id.substr(8);
+		dispatch(getSession(sessionId));
 	}, [])
 
 	 return(
 		 <div className={style.page}>
-			<div>
 				{
 					session &&
 					<SessionDetails
@@ -28,8 +28,11 @@ const SessionPage = () => {
 						id={session['SK (GSI-1-PK)']}
 						 />
 				}
+				{
+					session &&
+						<SessionReview session={session}/>
 
-			</div>
+				}
 		 </div>
 	 )
 }

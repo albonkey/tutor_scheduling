@@ -9,6 +9,7 @@ export const courseSaveSlice = createSlice({
   reducers: {
     courseSaveRequest: (state) => {
       state.loading = true;
+      state.success = false;
     },
     courseSaveSuccess: (state, action) => {
       state.loading = false;

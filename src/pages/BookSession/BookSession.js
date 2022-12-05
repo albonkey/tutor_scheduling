@@ -23,9 +23,11 @@ const BookSession = () => {
 		console.log('Submit')
 		const tutorId = course['PK'].substr(5);
 		const sessionObject = {
+			courseId: course["SK (GSI-1-PK)"],
 			subject: course['GSI-1-SK'],
 			level: course['Level'],
 			description: course['Description'],
+			sessionNeeds: textarea,
 			date: query.get('date'),
 			time: query.get('time'),
 			cost: course['Cost'],
@@ -71,7 +73,7 @@ const BookSession = () => {
 					<div className={style.booking}>
 						<div className={style.bookingHeader}>
 							<div>
-								<span className={style.cost}>$30</span> session
+								<span className={style.cost}>${course['Cost']}</span> session
 							</div>
 							<div>
 								<StarRating rating={course.Rating} small />

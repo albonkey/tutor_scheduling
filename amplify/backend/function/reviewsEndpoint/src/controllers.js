@@ -4,8 +4,10 @@ const {randomUUID} = require('crypto');
 
 const createReview = async (req, res) => {
   const reviewId = randomUUID();
-  const { description, rating, tutorId, studentFirstName, studentLastName, studentId, courseId } = req.body;
+  const { description, rating, tutor, student, courseId, sessionId } = req.body;
   const createdOn = new Date();
+
+  const ratingInt = parseInt(rating, 10);
 
   const params = {
     TransactItems: [
@@ -17,10 +19,10 @@ const createReview = async (req, res) => {
             'SK (GSI-1-PK)': `Review-${reviewId}`,
             'GSI-1-SK': 'Details',
             'Description': description,
-            'Rating': rating,
+            'Rating': ratingInt,
             'CreatedOn': createdOn,
-            'ReviewerID': `User-${studentId}`,
-            'ReviewedID': `User-${tutorId}`
+            'ReviewerID': `User-${student.id}`,
+            'ReviewedID': `User-${tutor.id}`
           }
         }
       },
@@ -28,11 +30,11 @@ const createReview = async (req, res) => {
         Put: {
           TableName: 'Tutorhub',
           Item: {
-            'PK': `User-${studentId}`,
+            'PK': `User-${student.id}`,
             'SK (GSI-1-PK)': `Review-${reviewId}`,
             'GSI-1-SK': 'Reviewer',
             'Description': description,
-            'Rating': rating,
+            'Rating': ratingInt,
             'CreatedOn': createdOn
           }
         }
@@ -41,14 +43,13 @@ const createReview = async (req, res) => {
         Put: {
           TableName: 'Tutorhub',
           Item: {
-            'PK': `User-${tutorId}`,
+            'PK': `User-${tutor.id}`,
             'SK (GSI-1-PK)': `Review-${reviewId}`,
             'GSI-1-SK': 'Reviewed',
             'Description': description,
-            'Rating': rating,
+            'Rating': ratingInt,
             'CreatedOn': createdOn,
-            'ReviewerFirstName': studentFirstName,
-            'ReviewerLastName': studentLastName
+            'Reviewer': student
           }
         }
       },
@@ -56,7 +57,7 @@ const createReview = async (req, res) => {
         Update: {
           TableName: 'Tutorhub',
           Key: {
-            "PK": `User-${tutorId}`,
+            "PK": `User-${tutor.id}`,
             "SK (GSI-1-PK)": `Course-${courseId}`
           },
           ExpressionAttributeNames: {
@@ -64,17 +65,17 @@ const createReview = async (req, res) => {
             '#TotalReviews' : 'TotalReviews'
           },
           ExpressionAttributeValues: {
-            ':addRating': rating,
+            ':addRating': ratingInt,
             ':addTotalReviews': 1
           },
-          UpdateExpression: "SET #Rating = #Rating + :addRating, #TotalReviews = #TotalReviews + :addTotalReviews",
+          UpdateExpression: "ADD #Rating :addRating, #TotalReviews :addTotalReviews",
         }
       },
       {
         Update: {
           TableName: 'Tutorhub',
           Key: {
-            "PK": `User-${tutorId}`,
+            "PK": `User-${tutor.id}`,
             "SK (GSI-1-PK)": 'Details'
           },
           ExpressionAttributeNames: {
@@ -82,17 +83,33 @@ const createReview = async (req, res) => {
             '#OverallReviews' : 'OverallReviews'
           },
           ExpressionAttributeValues: {
-            ':addOverallRating': rating,
+            ':addOverallRating': ratingInt,
             ':addOverallReviews': 1
           },
-          UpdateExpression: "SET #OverallRating = #OverallRating + :addOverallRating, #OverallReviews = #OverallReviews + :addOverallReviews",
+          UpdateExpression: "ADD #OverallRating :addOverallRating, #OverallReviews :addOverallReviews",
+        }
+      },
+      {
+        Update: {
+          TableName: 'Tutorhub',
+          Key: {
+            "PK": `Session-${sessionId}`,
+            "SK (GSI-1-PK)": `Session-${sessionId}`
+          },
+          ExpressionAttributeNames: {
+            '#ReviewId' : 'ReviewId',
+          },
+          ExpressionAttributeValues: {
+            ':addReviewId': `Review-${reviewId}`,
+          },
+          UpdateExpression: "SET #ReviewId = :addReviewId",
         }
       }
     ]
   };
 
   try {
-    const data = await docClient.transactWriteItems(params).promise();
+    const data = await docClient.transactWrite(params).promise();
     res.json({success: 'post call succeed!', data: data});
   } catch (err) {
     res.status(500).json({err:err});
