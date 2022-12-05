@@ -126,7 +126,7 @@ const updateReviewById = async (req, res) => {
   const { description, rating, tutorId, studentFirstName, studentLastName, studentId, courseId, TotalSessions, courseRating} = req.body;
   const createdOn = new Date();
   const totalSessions = TotalSessions + 1;
-  const totalRating = courseRating + rating; 
+  const totalRating = courseRating + rating;
 
   const params = {
     TransactItems: [

@@ -1,11 +1,11 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 import StarRating from '../StarRating/StarRating';
 import style from './SessionDetails.module.scss';
 import placeholder from './placeholderImage.jpg';
 import { getSession } from '../../features/sessions/sessionInfoSlice';
-import { sessionTutor } from '../../features/sessions/sessionTutorSlice';
+
 
 const SessionDetails = ({ subject, name, level, id  }) => {
 
@@ -55,38 +55,35 @@ const SessionDetails = ({ subject, name, level, id  }) => {
                     <div className = {style.info}>
                         {session.Description}
                     </div>
-*/}
                 </div>
             </div>
 
         {/*Student section*/}
-{/*
             <div className = {style.student}>
                 <div className = {style.sub1}>
                     <div className = {style.sub2}>
                         <div className = {style.heading}>
-                            Student {session.StudentID}
+                            <div>Student : {tutor.StudentName}</div>
                         </div>
                         <div className = {style.stars2}>
-                            <StarRating rating={tutor.Rating}/>
+                            <StarRating rating={student.Rating}/>
                         </div>
                     </div>
                     <div className = {style.heading}>
-                        What {session.StudentName} wants from the session
+                        What {tutor.StudentName} wants from the session
                     </div>
                     <div className = {style.heading}>
                         <div className = {style.info}>
-                            {session.Description}
+                            {student.Description}
                         </div>
                      </div>
                 </div>
                 <div className = {style.imageContainer}>
                     {
-                        tutor.Picture ? <img src={tutor.Picture} alt='' className={style.image}/> : <img src={placeholder} alt='' className={style.image} />
+                        student.Picture ? <img src={student.Picture} alt='' className={style.image}/> : <img src={placeholder} alt='' className={style.image} />
                     }
                     </div>
                 </div>
-    */}
         </div>
     )
 }
