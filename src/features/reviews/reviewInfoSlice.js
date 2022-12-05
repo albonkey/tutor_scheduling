@@ -35,7 +35,7 @@ export const {
 
             const {data} = await API.get('tutorhubAPI', `/reviews/${id}`);
 
-            dispatch(getReviewSuccess(data.Items[0]));
+            dispatch(getReviewSuccess(data));
         }catch(error) {
             dispatch(getReviewFail(error.message));
         }

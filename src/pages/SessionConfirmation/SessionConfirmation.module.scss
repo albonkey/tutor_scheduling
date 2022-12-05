@@ -1,0 +1,17 @@
+@import "../../styles/abstracts/_mixins.scss";
+@import "../../styles/abstracts/_variables.scss";
+
+.page{
+  @include page;
+  width: 100%
+}
+
+.heading{
+  @include headingMedium;
+  margin-top: 200px;
+}
+
+.link{
+  color: color(accent, base);
+  text-decoration: underline;
+}

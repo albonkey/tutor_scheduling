@@ -36,7 +36,12 @@ const getUserReviews = async (req, res) => {
   }
   try {
     const data = await docClient.query(params).promise();
-    res.json({success: 'get call succeed!', data: data});
+    const reviews = data.Items.filter(review => {
+      if(review['GSI-1-SK'] === 'Reviewed'){
+        return review;
+      }
+    })
+    res.json({success: 'get call succeed!', data: review});
   } catch (err) {
     res.status(500).json({err:err});
   }
@@ -218,7 +223,7 @@ const createUserAvailability = async (req, res) => {
             'PK': `User-${id}`,
             'SK (GSI-1-PK)': `Availability`,
             'Data': availability
-          } 
+          }
          }
    try {
     const data = await docClient.transactWriteItems(params).promise();

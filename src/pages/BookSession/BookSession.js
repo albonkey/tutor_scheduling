@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import style from './BookSession.module.scss';
 import useQuery from '../../hooks/useQuery';
 import { getCourse } from '../../features/courses/courseInfoSlice';
@@ -8,6 +9,7 @@ import { saveSession } from '../../features/sessions/sessionSaveSlice';
 import StarRating from '../../components/StarRating/StarRating';
 const BookSession = () => {
 	const query = useQuery();
+	const navigate = useNavigate();
 	const [textarea, setTextarea] = useState('');
 	const {course} = useSelector(state => state.courseInfo)
 	const {userInfo, id: userId} = useSelector(state => state.user)
@@ -43,7 +45,9 @@ const BookSession = () => {
 			},
 		}
 
-		dispatch(saveSession(sessionObject));
+		dispatch(saveSession(sessionObject)).then(response => {
+			navigate('/sessionConfirmation');
+		});
 	}
 	 return(
 		 <div className={style.page}>

@@ -9,13 +9,18 @@ import SessionReview from '../../components/SessionReview/SessionReview';
 
 const SessionPage = () => {
 	const { id } = useParams();
-	const {session} = useSelector((state) => state.sessionInfo);
+	const {session, tutor, student} = useSelector((state) => state.sessionInfo);
 	const dispatch = useDispatch();
 
+	console.log(session);
+	console.log(tutor);
+	console.log(student);
 	useEffect(() => {
+		console.log('running');
 		const sessionId = id.substr(8);
 		dispatch(getSession(sessionId));
 	}, [])
+
 
 	 return(
 		 <div className={style.page}>
@@ -23,9 +28,10 @@ const SessionPage = () => {
 					session &&
 					<SessionDetails
 						subject={session['GSI-2-PK']}
-						name={session['GSI-2-PK']}
+						tutor={session['Tutor']}
 						level={session['Level']}
 						id={session['SK (GSI-1-PK)']}
+						rating={4}
 						 />
 				}
 				{

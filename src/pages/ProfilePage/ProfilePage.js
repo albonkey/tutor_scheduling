@@ -14,24 +14,24 @@ import StarRating from '../../components/StarRating/StarRating';
 const ProfilePage = () => {
 	const { id } = useParams();
 	const dispatch = useDispatch();
-	const user = useSelector((state) => state.user);
+	const {userInfo} = useSelector((state) => state.user);
 	const { route } = useAuthenticator((context) => [context.route]);
 
 	 return(
 
 		<div className={style.page}>
-			<div className={style.header}>
-				<span className={style.name}>{`${user.userInfo.FirstName} ${user.userInfo.LastName}`}</span>
-				<StarRating rating={user.userInfo.Rating}/>
+		{
+			userInfo ? <>
 
-			</div>
-			{
-				user ? <>
-					<ProfileIntro userID={id}/>
-					<ProfileCourses userID={id}/>
-					<ProfileReviews userID={id}/>
-				</>
-				:
+				<div className={style.header}>
+					<span className={style.name}>{`${userInfo.FirstName} ${userInfo.LastName}`}</span>
+					<StarRating rating={userInfo.Rating}/>
+				</div>
+				<ProfileIntro userID={id}/>
+				<ProfileCourses userID={id}/>
+				<ProfileReviews userID={id}/>
+			</>
+			:
 				<div>No User with that username</div>
 			}
 

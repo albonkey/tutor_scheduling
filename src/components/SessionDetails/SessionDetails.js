@@ -5,9 +5,9 @@ import StarRating from '../StarRating/StarRating';
 import style from './SessionDetails.module.scss';
 import placeholder from './placeholderImage.jpg';
 import { getSession } from '../../features/sessions/sessionInfoSlice';
+import image from './placeholderImage.jpg';
 
-
-const SessionDetails = ({ subject, name, level, id  }) => {
+const SessionDetails = ({ subject, tutor, level, id, rating  }) => {
 
 
     return(
@@ -20,7 +20,13 @@ const SessionDetails = ({ subject, name, level, id  }) => {
             </div>
           </div>
           <div className={style.tutorInfo}>
-
+            <div className={style.info}>
+              <div className={style.header2}>
+                {`Tutor ${tutor?.firstName} ${tutor?.lastName}`}
+              </div>
+              <StarRating rating={rating} />
+            </div>
+            <img src={image} className={style.image}/>
           </div>
 
     </div>

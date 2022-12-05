@@ -39,9 +39,11 @@ export const saveSession = (session) => async (dispatch) => {
           }
         }
         const {data} = await API.post('tutorhubAPI', `/sessions`, info);
-        console.log(data);
-        dispatch(sessionSaveSuccess(data.Items[0]));
+        dispatch(sessionSaveSuccess(session));
+
+        return session;
     } catch(error) {
+      console.log(error);
         dispatch(sessionSaveFail(error.message));
     }
 }

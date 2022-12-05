@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { API } from 'aws-amplify';
+import { useSelector, useDispatch } from 'react-redux';
+import { API, Auth } from 'aws-amplify';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import style from './HomePage.module.scss';
 import HomeGreeting from '../../components/HomeGreeting/HomeGreeting';
@@ -9,21 +9,23 @@ import ScheduleComponent from '../../components/ScheduleComponent/ScheduleCompon
 import HomeSessions from '../../components/HomeSessions/HomeSessions';
 
 const HomePage = () => {
-	const user = useSelector((state) => state.user)
+	const dispatch = useDispatch();
+	const {userInfo, id} = useSelector((state) => state.user)
 	const { route } = useAuthenticator((context) => [
     context.route,
   ]);
+
 
 		 return(
 			 route === 'authenticated' ?
 				 <div className={style.page}>
 			 		{
 
-						user.id &&
+						id &&
 						<>
 							<HomeGreeting />
 							<HomeSessions
-								userID = {user.id}
+								userID = {id}
 							/>
 							<ScheduleComponent />
 						</>

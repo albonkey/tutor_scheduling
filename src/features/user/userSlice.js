@@ -4,8 +4,8 @@ import {API} from 'aws-amplify';
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
-    id: '',
-    userInfo: {}
+    id: null,
+    userInfo: null
   },
   reducers: {
     updateUserId: (state, action) => {
@@ -22,6 +22,10 @@ export const userSlice = createSlice({
     userInfoFail: (state, action) => {
       state.loading = false;
       state.error = action.payload;
+    },
+    userSignOut: (state) => {
+      state.id = null;
+      state.userInfo = null;
     }
   },
 })
@@ -31,7 +35,8 @@ export const {
   updateUserId,
   userInfoRequest,
   userInfoSuccess,
-  userInfoFail } = userSlice.actions
+  userInfoFail,
+  userSignOut } = userSlice.actions
 
 export const getUserInfo = (id) => async(dispatch) => {
   try{

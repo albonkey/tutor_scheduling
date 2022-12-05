@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import {API} from 'aws-amplify';
 
 export const courseSaveSlice = createSlice({
-  name: 'course',
+  name: 'courseSave',
   initialState: {
     course: {}
   },

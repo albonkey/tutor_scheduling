@@ -29,3 +29,15 @@
   font-size: 2rem;
 
 }
+.tutorInfo{
+  display: flex;
+}
+.header2{
+  @include headingMedium;
+}
+.info{
+  flex-basis: 45%;
+}
+.image{
+  flex-basis: 45%;
+}

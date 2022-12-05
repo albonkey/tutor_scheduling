@@ -117,13 +117,13 @@ const createReview = async (req, res) => {
 };
 
 const getReviewById = async (req, res) => {
-  const {reviewId} = req.params;
+  const {id} = req.params;
 
   const params = {
     TableName : 'Tutorhub',
     KeyConditionExpression: '#PK = :review',
     ExpressionAttributeValues: {
-      ':review': `Review-${reviewId}`,
+      ':review': `Review-${id}`,
     },
     ExpressionAttributeNames: { '#PK': 'PK' }
   }

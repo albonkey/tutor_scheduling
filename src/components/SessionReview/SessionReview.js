@@ -16,8 +16,8 @@ const SessionReview = ({session}) => {
     const [hover, setHover] = useState(null);
     const [writeNote, setWriteNote] = useState(false);
 
-    const {review, success, error, loading} = useSelector((state) => state.reviewInfo);
-    const reviewSaveSuccess = useSelector((state) => state.reviewSave);
+    const {review, loading} = useSelector((state) => state.reviewInfo);
+    const {success} = useSelector((state) => state.reviewSave);
     const [reviewInfo, setReviewInfo] = useState({
         description: "",
         rating: "",
@@ -29,7 +29,8 @@ const SessionReview = ({session}) => {
 
       const submitHandler = (event) => {
         event.preventDefault();
-        const sessionId = session['SK (GSI-1-PK)'].substr(8)
+        const sessionId = session['SK (GSI-1-PK)'].substr(8);
+        const courseId = session['CourseId'].substr(7);
         dispatch(reviewSave({
           ...reviewInfo,
           tutor: {
@@ -42,16 +43,18 @@ const SessionReview = ({session}) => {
             firstName: session.Student.firstName,
             lastName: session.Student.lastName,
           },
-          courseId: session.courseId,
+          courseId: courseId,
           sessionId: sessionId
 
         }))
          };
 
       useEffect(() => {
-          dispatch(getReview(session.reviewId));
-
-	    }, [reviewSaveSuccess])
+        if(session.ReviewId){
+          const reviewId = session.ReviewId.substr(7);
+          dispatch(getReview(reviewId));
+        }
+	    }, [success])
 
     return(
         <div className = {style.wrapper}>
@@ -59,7 +62,7 @@ const SessionReview = ({session}) => {
                 loading ?
             <div className = {style.heading2}>Page loading</div>
         :
-        review ?
+        (session.ReviewId && review) ?
           <div className = {style.wrapper}>
           {/* LOAD REVIEW CARD */}
               <div>

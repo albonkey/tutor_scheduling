@@ -4,13 +4,16 @@ import {API} from 'aws-amplify';
 export const sessionInfoSlice = createSlice({
     name: 'session',
     initialState: {
-        session: {},
-        tutor: {},
-        student: {}
+        session: null,
+        tutor: null,
+        student: null
     },
     reducers: {
         sessionInfoRequest: (state) => {
             state.loading = true;
+            state.session = null;
+            state.tutor = null;
+            state.student = null;
         },
         sessionInfoSuccess:(state, action) => {
             state.loading = false;
@@ -33,7 +36,9 @@ export const {
     sessionInfoFail } = sessionInfoSlice.actions;
 
 export const getSession = (sessionID) => async (dispatch) => {
+  console.log('Running');
     try {
+
         dispatch(sessionInfoRequest());
         const {data} = await API.get('tutorhubAPI', `/sessions/${sessionID}`);
 
