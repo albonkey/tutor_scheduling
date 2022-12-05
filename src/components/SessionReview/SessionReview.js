@@ -1,5 +1,6 @@
 import React, {useEffect, useState } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import style from './SessionReview.module.scss';
 import { reviewSave } from '../../features/reviews/reviewSaveSlice';
 import { getReview } from '../../features/reviews/reviewInfoSlice';
@@ -7,7 +8,7 @@ import ReviewCard from '../ReviewCard/ReviewCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faOpenStar} from '@fortawesome/free-regular-svg-icons';
-import PopUp from '../PopUpComponent/PopUp';
+import StarRating from '../StarRating/StarRating';
 
 const SessionReview = ({session}) => {
     const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const SessionReview = ({session}) => {
     const handleChange = (event) => {
         setReviewInfo({ ...reviewInfo, [event.target.name]: event.target.value });
       };
+
 
       const submitHandler = (event) => {
         event.preventDefault();
@@ -58,22 +60,19 @@ const SessionReview = ({session}) => {
 
     return(
         <div className = {style.wrapper}>
+          <div className= {style.heading}>Review</div>
             {
                 loading ?
             <div className = {style.heading2}>Page loading</div>
         :
         (session.ReviewId && review) ?
-          <div className = {style.wrapper}>
+          <div className = {style.reviewWrapper}>
           {/* LOAD REVIEW CARD */}
-              <div>
-                  <div className= {style.heading}>Reviews</div>
-              </div>
-              <div className = {style.cards}>
-                   <ReviewCard
-                        review = {review}
-                    />
-              </div>
-              <button className = {style.subheading}>Read more</button>
+            <div className={style.reviewInfo}>
+              <div className={style.reviewComment}>{review.Description}</div>
+              <StarRating rating={review.Rating} />
+            </div>
+
           </div>
                 :
                 <form className = {style.content} onSubmit={submitHandler}>
@@ -109,7 +108,6 @@ const SessionReview = ({session}) => {
                             })}
                         </div>
                     </div>
-                    <div className = {style.text}>
                       {
                         writeNote ?
                           <textarea className = {style.formInputs}
@@ -117,19 +115,16 @@ const SessionReview = ({session}) => {
                               name = 'description'
                               value = {reviewInfo.description}
                               onChange = {handleChange}
+                              placeholder='What did you think about the session...'
                           />
                         :
-                          <button onClick = { () => setWriteNote(true)} >
+                          <button onClick = { () => setWriteNote(true)} className={style.addNote}>
                               Add Note
                           </button>
                       }
-
-                    </div>
-                    <div className = {style.submit}>
-                        <button type='submit'>
-                            Create Review
-                        </button>
-                    </div>
+                    <button type='submit' className = {style.submit}>
+                        Post Review
+                    </button>
                 </form>
             }
         </div>

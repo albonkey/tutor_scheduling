@@ -15,7 +15,7 @@ const HomePage = () => {
     context.route,
   ]);
 
-
+	console.log(userInfo);
 		 return(
 			 route === 'authenticated' ?
 				 <div className={style.page}>

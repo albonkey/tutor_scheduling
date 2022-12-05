@@ -30,18 +30,16 @@ const getUserReviews = async (req, res) => {
     KeyConditionExpression: '#PK = :user and begins_with(#SK, :review)',
     ExpressionAttributeValues: {
       ':user': `User-${id}`,
-      ':review': 'Review'
+      ':review': 'Review',
+      ':status': 'Reviewed'
     },
-    ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK' }
+    ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK', '#Attribute': 'GSI-1-SK' },
+    FilterExpression: '#Attribute = :status'
   }
   try {
     const data = await docClient.query(params).promise();
-    const reviews = data.Items.filter(review => {
-      if(review['GSI-1-SK'] === 'Reviewed'){
-        return review;
-      }
-    })
-    res.json({success: 'get call succeed!', data: review});
+
+    res.json({success: 'get call succeed!', data: data.Items});
   } catch (err) {
     res.status(500).json({err:err});
   }

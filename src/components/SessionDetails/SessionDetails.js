@@ -7,7 +7,7 @@ import placeholder from './placeholderImage.jpg';
 import { getSession } from '../../features/sessions/sessionInfoSlice';
 import image from './placeholderImage.jpg';
 
-const SessionDetails = ({ subject, tutor, level, id, rating  }) => {
+const SessionDetails = ({ subject, tutor, student, level, id, rating, date, time , description, sessionNeeds }) => {
 
 
     return(
@@ -25,10 +25,30 @@ const SessionDetails = ({ subject, tutor, level, id, rating  }) => {
                 {`Tutor ${tutor?.firstName} ${tutor?.lastName}`}
               </div>
               <StarRating rating={rating} />
+              <div className={style.header2}>
+                Time
+              </div>
+              <div className={style.infoAttribute}>{`${date} ${time}`}</div>
+              <div className={style.header2}>Location</div>
+              <div className={style.infoAttribute}>Online</div>
+              <div className={style.header2}>About Course</div>
+              <div className={style.infoAttribute}>{description}</div>
             </div>
             <img src={image} className={style.image}/>
           </div>
-
+          <div className={style.studentInfo}>
+            <div className={style.info}>
+              <div className={style.header2}>
+                {`Student ${student?.firstName} ${student?.lastName}`}
+              </div>
+              <StarRating rating={rating} />
+              <div className={style.header2}>
+                Goals for Session
+              </div>
+              <div className={style.infoAttribute}>{sessionNeeds}</div>
+            </div>
+            <img src={image} className={style.imageStudent}/>
+          </div>
     </div>
     )
 }

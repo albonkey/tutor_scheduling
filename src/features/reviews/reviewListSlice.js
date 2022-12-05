@@ -29,7 +29,7 @@ export const listReviews = (user) => async (dispatch) => {
   try{
     dispatch(reviewListRequest());
     const {data} = await API.get('tutorhubAPI', `/users/${user}/reviews`);
-    dispatch(reviewListSuccess([...data.Items]));
+    dispatch(reviewListSuccess([...data]));
   } catch(error){
     dispatch(reviewListFail(error.message));
   }

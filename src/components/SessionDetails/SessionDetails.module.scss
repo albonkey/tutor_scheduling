@@ -31,13 +31,29 @@
 }
 .tutorInfo{
   display: flex;
+  border-bottom: 2px solid color(accent, base);
+  justify-content: space-between;
 }
 .header2{
   @include headingMedium;
+  margin-top: 15px;
 }
 .info{
-  flex-basis: 45%;
+  flex-basis: 65%;
 }
 .image{
-  flex-basis: 45%;
+  flex-basis: 30%;
+}
+.imageStudent{
+  flex-basis: 30%;
+  max-width: 250px;
+}
+.infoAttribute{
+  color: color(accent, base);
+  max-width: 45rem;
+}
+.studentInfo{
+  display: flex;
+  border-bottom: 2px solid color(accent, base);
+  justify-content: space-between;
 }

@@ -5,6 +5,7 @@
     display: flex;
     flex-direction: column;
     margin-top: 25px;
+    width: 100%;
   }
   .heading{
     @include headingMedium;
@@ -13,9 +14,12 @@
   .content {
     display: flex;
     flex-direction: column;
-    align-self: center;
+    align-items: center;
+    justify-content: center;
     margin: 50px 0;
     text-align: center;
+    width: 100%;
+    gap: 15px;
   }
   .starSection {
     display: flex;
@@ -26,9 +30,9 @@
     display: none;
 }
   .stars{
-    font-size: 1.5rem;
+    font-size: 2rem;
     color: color(accent, base);
-    cursor: pointer; 
+    cursor: pointer;
     transition: color 200ms;
     margin-bottom: 20px;
   }
@@ -38,6 +42,7 @@
     margin-bottom: 30px;
   }
   .button {
+    display: flex;
     padding: 15px;
     border-radius: 5px;
     box-shadow: 1px 1px 3px grey;
@@ -60,20 +65,50 @@
     box-shadow: none;
     border-color: color(accent, base);
     border-radius: 10px;
-    min-height: 50px;
-    max-width: 765px;
+    min-height: 150px;
+    width: 100%;
+    max-width: 600px;
     color: color(accent, base);
     margin: 5px;
     padding: 10px;
   }
   .submit {
-      color: lighten(color(secondary, base), 20%);
-      background-color: color(accent, base);
+      color: color(accent, base);
+      background-color: color(secondary, base);
       min-width: 220px;
       max-width: 40%;
       padding: 10px 30px;
       text-align: center;
       border-radius: 10px;
-      margin-left: auto;
-      margin-right: 0;
+
+      &:hover{
+        color: black;
+        transition: .2s;
+      }
+  }
+  .reviewWrapper{
+    width: 100%;
+  }
+  .reviewInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px grey;
+    margin: 25px 0;
+    min-height: 300px;
+  }
+  .addNote{
+    color: color(accent, base);
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    margin-top: -15px;
+    padding: 5px 10px;
+
+    &:hover{
+      text-decoration: underline;
+    }
   }

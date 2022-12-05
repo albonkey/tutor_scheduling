@@ -52,7 +52,6 @@ const ProfileReviews = ({userID}) => {
                   })
                 }
               </div>
-              <button className = {style.subheading}>Read more</button>
           </div>
         :
         <div className={style.placeholder}>

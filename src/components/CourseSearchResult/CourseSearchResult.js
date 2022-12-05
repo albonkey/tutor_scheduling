@@ -20,7 +20,6 @@ const CourseSearchResult = ({ id, firstName, lastName, subject, level, cost, tot
 				<div className={style.right}>
 					<div className={style.ratingContainer}>
 						<div className={style.costWrapper}>
-							<span>{totalSessions} lessons</span>
 							<span className={style.cost}>
 								${cost}
 							</span>
