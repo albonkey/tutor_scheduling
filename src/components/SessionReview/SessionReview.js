@@ -1,5 +1,6 @@
 import React, {useEffect, useState } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import style from './SessionReview.module.scss';
 import { reviewSave } from '../../features/reviews/reviewSaveSlice';
 import { getReview } from '../../features/reviews/reviewInfoSlice';
@@ -7,59 +8,74 @@ import ReviewCard from '../ReviewCard/ReviewCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar as faOpenStar} from '@fortawesome/free-regular-svg-icons';
-import PopUp from '../PopUpComponent/PopUp';
+import StarRating from '../StarRating/StarRating';
 
-const SessionReview = ({ id }) => {
+const SessionReview = ({session}) => {
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.user);
 
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(null);
+    const [writeNote, setWriteNote] = useState(false);
 
-    const reviews = useSelector((state) => state.getReview);
-    const reviewSaveSuccess = useSelector((state) => state.reviewSave);
+    const {review, loading} = useSelector((state) => state.reviewInfo);
+    const {success} = useSelector((state) => state.reviewSave);
     const [reviewInfo, setReviewInfo] = useState({
-        Description: "",
-        Rating: "",
+        description: "",
+        rating: "",
     });
-
-    const [buttonPopup, setButtonPopup] = useState(false);
 
     const handleChange = (event) => {
         setReviewInfo({ ...reviewInfo, [event.target.name]: event.target.value });
       };
 
-      const handleSubmit = (event) => {
+
+      const submitHandler = (event) => {
         event.preventDefault();
-        dispatch(reviewSave({...reviewInfo, user: user.id }))
+        const sessionId = session['SK (GSI-1-PK)'].substr(8);
+        const courseId = session['CourseId'].substr(7);
+        dispatch(reviewSave({
+          ...reviewInfo,
+          tutor: {
+            id: session.Tutor.id,
+            firstName: session.Tutor.firstName,
+            lastName: session.Tutor.lastName,
+          },
+          student: {
+            id: session.Student.id,
+            firstName: session.Student.firstName,
+            lastName: session.Student.lastName,
+          },
+          courseId: courseId,
+          sessionId: sessionId
+
+        }))
          };
 
       useEffect(() => {
-        dispatch(getReview(user.id))
-	}, [reviewSaveSuccess])
-
+        if(session.ReviewId){
+          const reviewId = session.ReviewId.substr(7);
+          dispatch(getReview(reviewId));
+        }
+	    }, [success])
 
     return(
         <div className = {style.wrapper}>
+          <div className= {style.heading}>Review</div>
             {
-                reviews.loading ?
+                loading ?
             <div className = {style.heading2}>Page loading</div>
         :
-        reviews.review ?
-          <div className = {style.wrapper}>
+        (session.ReviewId && review) ?
+          <div className = {style.reviewWrapper}>
           {/* LOAD REVIEW CARD */}
-              <div>
-                  <div className= {style.heading}>Reviews</div>
-              </div>
-              <div className = {style.cards}>
-                   <ReviewCard
-                        review = {reviews.review}
-                    />
-              </div>
-              <button className = {style.subheading}>Read more</button>
+            <div className={style.reviewInfo}>
+              <div className={style.reviewComment}>{review.Description}</div>
+              <StarRating rating={review.Rating} />
+            </div>
+
           </div>
                 :
-                <div className = {style.content}>
+                <form className = {style.content} onSubmit={submitHandler}>
             {/* REVIEW STAR RATING */}
                     <div className = {style.starSection}>
                         <div className = {style.stars}>
@@ -92,42 +108,25 @@ const SessionReview = ({ id }) => {
                             })}
                         </div>
                     </div>
-                    <div className = {style.text}>
-                        <button onClick = { () => setButtonPopup(true)} >
-                            Add Note
-                        </button>
-                    </div>
-                    <div className = {style.submit}>
-                        <button onClick = {handleSubmit}>
-                            Create Review
-                        </button>
-                    </div>
-                </div>
+                      {
+                        writeNote ?
+                          <textarea className = {style.formInputs}
+                              type = 'text'
+                              name = 'description'
+                              value = {reviewInfo.description}
+                              onChange = {handleChange}
+                              placeholder='What did you think about the session...'
+                          />
+                        :
+                          <button onClick = { () => setWriteNote(true)} className={style.addNote}>
+                              Add Note
+                          </button>
+                      }
+                    <button type='submit' className = {style.submit}>
+                        Post Review
+                    </button>
+                </form>
             }
-            {/* POPUP PAGE ADD REVIEW COMMENT */}
-        <div>
-                <PopUp trigger = {buttonPopup} setTrigger = {setButtonPopup}>
-                    <div className = {style.form}>
-                      <form onSubmit = {handleSubmit}>
-                        <div className = {style.formHeading}>
-                            Create Review
-                        </div>
-                        <div className = {style.title}>
-                            Comment
-                        </div>
-                        <textarea className = {style.formInputs}
-                            type = 'text'
-                            name = 'description'
-                            value = {reviewInfo.description}
-                            onChange = {handleChange}
-                        />
-                      </form>
-                      <div className = {style.submit}>
-                          <button onClick={handleSubmit}>Add comment</button>
-                      </div>
-                    </div>
-                </PopUp>
-            </div>
         </div>
     )
 }

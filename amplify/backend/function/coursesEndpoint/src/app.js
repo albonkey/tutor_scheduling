@@ -6,15 +6,13 @@ or in the "license" file accompanying this file. This file is distributed on an 
 See the License for the specific language governing permissions and limitations under the License.
 */
 
-
-
-
 const express = require('express')
 const bodyParser = require('body-parser')
 const {randomUUID} = require('crypto');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
+const Course = require('./controllers');
 
 // declare a new express app
 const app = express()
@@ -29,32 +27,19 @@ app.use(function(req, res, next) {
 });
 
 
-// Get all courses
- app.get('/courses', async(req, res) => {
-  const {search} = req.query;
+//Get all courses
+app.get('/courses', Course.getAllCourses);
 
-  const params = {
-    TableName : 'Tutorhub',
-    IndexName : 'GSI2',
-    FilterExpression: 'begins_with(#PK, :course) and begins_with(#SK, :search)',
-    ExpressionAttributeValues: { ':course': `Course`,
-                                  ':search': search },
-    ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)', '#SK': 'GSI-1-SK' }
-  }
+//Get course by id
+app.get('/courses/:id', Course.getCourseById);
 
-  try {
-    const data = await docClient.scan(params).promise();
-    const courses = data.Items
-    res.json({success: 'get call succeed!', data: courses});
-  } catch (err) {
-    res.status(500).json({err:err});
-  }
-});
+//Create a course for a user
+app.post('/courses', Course.createCourse);
 
-// Get a course by ID
-app.get('/courses/:id', async(req, res) => {
-  const {id} = req.params;
+//Update course by id
+app.put('courses/:id', Course.updateCourseById);
 
+<<<<<<< HEAD
   const params = {
     TableName : 'Tutorhub',
     IndexName : 'GSI2',
@@ -64,15 +49,11 @@ app.get('/courses/:id', async(req, res) => {
     },
     ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)' }
   }
+=======
+//Delete course by id
+app.delete('courses/:id', Course.deleteCoursebyId);
+>>>>>>> master
 
-  try {
-    const data = await docClient.query(params).promise();
-    const course = data.Items[0]
-    res.json({success: 'get call succeed!', data: course});
-  } catch (err) {
-    res.status(500).json({err:err});
-  }
-});
 
 app.listen(3000, function() {
     console.log("App started")

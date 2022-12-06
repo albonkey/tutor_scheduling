@@ -1,5 +1,6 @@
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
+const {randomUUID} = require('crypto');
 
 const getUserById = async (req, res) => {
   const {id} = req.params;
@@ -19,7 +20,7 @@ const getUserById = async (req, res) => {
   } catch (err) {
     res.status(500).json({err:err});
   }
-}
+};
 
 const getUserReviews = async (req, res) => {
   const {id} = req.params;
@@ -29,17 +30,20 @@ const getUserReviews = async (req, res) => {
     KeyConditionExpression: '#PK = :user and begins_with(#SK, :review)',
     ExpressionAttributeValues: {
       ':user': `User-${id}`,
-      ':review': 'Review'
+      ':review': 'Review',
+      ':status': 'Reviewed'
     },
-    ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK' }
+    ExpressionAttributeNames: { '#SK': 'SK (GSI-1-PK)', '#PK': 'PK', '#Attribute': 'GSI-1-SK' },
+    FilterExpression: '#Attribute = :status'
   }
   try {
     const data = await docClient.query(params).promise();
-    res.json({success: 'get call succeed!', data: data});
+
+    res.json({success: 'get call succeed!', data: data.Items});
   } catch (err) {
     res.status(500).json({err:err});
   }
-}
+};
 
 const getUserCourses = async (req, res) => {
   const {id} = req.params;
@@ -60,7 +64,7 @@ const getUserCourses = async (req, res) => {
   } catch (err) {
     res.status(500).json({err:err});
   }
-}
+};
 
 const getUserSessions = async (req, res) => {
   const {id} = req.params;
@@ -81,7 +85,7 @@ const getUserSessions = async (req, res) => {
   } catch (err) {
     res.status(500).json({err:err});
   }
-}
+};
 
 const getUserPayments = async (req, res) => {
   const {id} = req.params;
@@ -102,7 +106,7 @@ const getUserPayments = async (req, res) => {
   } catch (err) {
     res.status(500).json({err:err});
   }
-}
+};
 
 const getUserAvailability = async (req, res) => {
   const {id} = req.params;
@@ -130,7 +134,7 @@ const getUserAvailability = async (req, res) => {
   } catch (err) {
     res.status(500).json({err:err});
   }
-}
+};
 
 const updateUserAvailability = async (req, res) => {
   const {id} = req.params;
@@ -156,8 +160,9 @@ const updateUserAvailability = async (req, res) => {
     res.status(500).json({err:err});
   }
 
-}
+};
 
+//Don't need this since we are creating users throught Cognito
 const createUser = async (req, res) => {
   const {id} = req.params;
 
@@ -173,7 +178,58 @@ const createUser = async (req, res) => {
   } catch (err) {
     res.status(500).json({err:err});
   }
-}
+};
+
+// Update a user by ID
+const updateUser = async (req, res) => {
+  const {id} = req.params;
+  const { firstName, lastName, bio } = req.body;
+
+  const params = {
+    TableName : 'Tutorhub',
+    Key: {
+        "PK": `User-${id}`,
+        "SK (GSI-1-PK)": 'Details'
+    },
+    UpdateExpression: `Set #FirstName = :firstName, #LastName = :lastName, #Bio = :bio`,
+    ExpressionAttributeValues: {
+      ':firstName': firstName,
+      ':lastName': lastName,
+      ':bio': bio
+    },
+    ExpressionAttributeNames: {
+      '#FirstName' : 'FirstName',
+      '#LastName' : 'LastName',
+      '#Bio' : 'Bio'
+    }
+  }
+
+  try {
+    const data = await docClient.update(params).promise();
+    res.json({success: 'put call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+};
+
+const createUserAvailability = async (req, res) => {
+  const {id} = req.params;
+  const {availability} = req.body;
+  const params = {
+          TableName: 'Tutorhub',
+          Item: {
+            'PK': `User-${id}`,
+            'SK (GSI-1-PK)': `Availability`,
+            'Data': availability
+          }
+         }
+   try {
+    const data = await docClient.transactWriteItems(params).promise();
+    res.json({success: 'post call succeed!', data: data});
+  } catch (err) {
+    res.status(500).json({err:err});
+  }
+};
 
 module.exports = {
   getUserById,
@@ -183,5 +239,7 @@ module.exports = {
   getUserPayments,
   getUserAvailability,
   updateUserAvailability,
-  createUser
+  createUserAvailability,
+  createUser,
+  updateUser,
 }

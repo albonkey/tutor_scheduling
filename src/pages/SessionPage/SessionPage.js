@@ -9,19 +9,38 @@ import SessionReview from '../../components/SessionReview/SessionReview';
 
 const SessionPage = () => {
 	const { id } = useParams();
+	const {session, tutor, student} = useSelector((state) => state.sessionInfo);
+	const {success} = useSelector((state) => state.sessionSave);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		const sessionId = id.substr(8);
+		dispatch(getSession(sessionId));
+	}, [success])
+
 
 	 return(
 		 <div className={style.page}>
-			<div>
 				{
-					id &&
+					session &&
 					<SessionDetails
-						id = { id } />
+						subject={session['GSI-2-PK']}
+						tutor={session['Tutor']}
+						student={session['Student']}
+						level={session['Level']}
+						id={session['SK (GSI-1-PK)']}
+						rating={4}
+						date={session['Date']}
+						time={session['Time']}
+						description={session['Description']}
+						sessionNeeds={session['SessionNeeds']}
+						 />
 				}
 				{
-					<SessionReview id = { id } />
+					session &&
+						<SessionReview session={session}/>
+
 				}
-			</div>
 		 </div>
 	 )
 }

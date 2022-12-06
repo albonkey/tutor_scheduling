@@ -11,10 +11,9 @@ See the License for the specific language governing permissions and limitations 
 
 const express = require('express')
 const bodyParser = require('body-parser')
-const {randomUUID} = require('crypto');
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
-const AWS = require('aws-sdk');
-const docClient = new AWS.DynamoDB.DocumentClient();
+const Review = require('./controllers');
+
 // declare a new express app
 const app = express()
 app.use(bodyParser.json())
@@ -27,212 +26,15 @@ app.use(function(req, res, next) {
   next()
 });
 
-/**********************
- * Example get method *
- **********************/
 
-app.get('/reviews', async(req, res) => {
-  // Add your code here
-  const params = {
-    TableName : 'Tutorhub',
-    IndexName : 'GSI2',
-    FilterExpression: 'begins_with(#PK, :review)',
-    ExpressionAttributeValues: {
-      ':review': `Review`
-    },
-    ExpressionAttributeName: {'#PK': 'SK (GSI-1-PK)'}
-  }
-  try{
-    const data = await docClient.scan(params).promise();
-    const reviews = data.Items
-    res.json({success: 'get call succeed!', data: reviews});
-  }catch(err){
-    res.status(500).json({err});
-  }
+app.get('/reviews/:id', Review.getReviewById);
 
-  
-});
-//Get a review by ID
-app.get('/reviews/:id', async(req, res) => {
-  // Add your code here
-  const {id} = req.params;
-  const params = {
-    TableName : 'Tutorhub',
-    IndexName : 'GSI2',
-    KeyConditionExpression: '#PK = :review',
-    ExpressionAttributeValues: {
-      ':review': `Review-${id}`
-    },
-    ExpressionAttributeName: {'#PK': 'SK (GSI-1-PK)'}
-  }
-  try{
-    const data = await docClient.scan(params).promise();
-    const review = data.Items[0];
-    res.json({success: 'get call succeed!', data: review});
-  }catch(err){
-    res.status(500).json({err:err});
-  }
+app.post('/reviews', Review.createReview);
 
-  //res.json({success: 'get call succeed!', url: req.url});
-});
+app.put('/reviews/:id', Review.updateReviewById);
 
-/****************************
-* Example post method *
-****************************/
+app.delete('/reviews/:id', Review.deleteReviewById);
 
-
-
-
-app.post('/reviews', async(req, res) => {
-  const reviewId = randomUUID();
-  const {Description, Rating, Name, TutorId, StudentId} = req.body;
-  const CreatedOn = new Date();
-
-  const params = {
-    TransactItems: [
-      {
-        Put: {
-          TableName: 'Tutorhub',
-          Item: {
-            'PK': `Review-${reviewId}`,
-            'SK (GSI-1-PK)': `Review-${reviewId}`,
-            'GSI-1-SK': 'Details',
-            'Description': Description,
-            'Rating': Rating,
-            'CreatedOn': CreatedOn,
-            'ReviewerID': `User-${StudentId}`,
-            'ReviewedID': `User-${TutorId}`
-          }
-        }
-      },
-      {
-        Put: {
-          TableName: 'Tutorhub',
-          Item: {
-            'PK': `User-${StudentId}`,
-            'SK (GSI-1-PK)': `Review-${reviewId}`,
-            'GSI-1-SK': 'Reviewer',
-            'Description': Description,
-            'Rating': Rating,
-            'CreatedOn': CreatedOn
-          }
-        }
-      },
-      {
-        Put: {
-          TableName: 'Tutorhub',
-          Item: {
-            'PK': `User-${TutorId}`,
-            'SK (GSI-1-PK)': `Review-${reviewId}`,
-            'GSI-1-SK': 'Reviewed',
-            'Description': Description,
-            'Rating': Rating,
-            'CreatedOn': CreatedOn,
-            'ReviewerName': Name
-          }
-        }
-      }
-    ]
-  };
-
-  try {
-    const data = await docClient.transactWriteItems(params).promise();
-    res.json({success: 'post call succeed!', data: data});
-  } catch (err) {
-    res.status(500).json({err:err});
-  }
-});
-
-
-/****************************
-* Example put method *
-****************************/
-
-app.put('reviews/:id', async(req, res) => {
-  const {id} = req.params;
-  const { Description, Rating, TutorId, StudentId } = req.body;
-
-  const params = {
-    TransactItems: [
-      {
-        Update: {
-          TableName: 'Tutorhub',
-          Key: {
-            "PK": `User-${StudentId}`,
-            "SK (GSI-1-PK)": `Review-${id}`
-          },
-          UpdateExpression: 'Set #Description = :Description, #Rating = :Rating',
-          ExpressionAttributeValues: {
-            ':Description': Description,
-            ':Rating': Rating
-          },
-          ExpressionAttributeNames: {
-            '#Description' : 'Description',
-            '#Rating' : 'Rating'
-          }
-        }
-      },
-      {
-        Update: {
-          TableName: 'Tutorhub',
-          Key: {
-            "PK": `User-${TutorId}`,
-            "SK (GSI-1-PK)": `Review-${id}`
-          },
-          UpdateExpression: 'Set #Description = :Description, #Rating = :Rating',
-          ExpressionAttributeValues: {
-            ':Description': Description,
-            ':Rating': Rating
-          },
-          ExpressionAttributeNames: {
-            '#Description' : 'Description',
-            '#Rating' : 'Rating'
-          }
-        }
-      },
-      {
-        Update: {
-          TableName: 'Tutorhub',
-          Key: {
-            "PK": `Review-${id}`,
-            "SK (GSI-1-PK)": `Review-${id}`
-          },
-          UpdateExpression: 'Set #Description = :Description, #Rating = :Rating',
-          ExpressionAttributeValues: {
-            ':Description': Description,
-            ':Rating': Rating
-          },
-          ExpressionAttributeNames: {
-            '#Description' : 'Description',
-            '#Rating' : 'Rating'
-          }
-        }
-      }
-    ]
-  };
-
-  try {
-    const data = await docClient.transactWriteItems(params).promise();
-    res.json({success: 'put call succeed!', data: data});
-  } catch (err) {
-    res.status(500).json({err:err});
-  }
-});
-
-
-/****************************
-* Example delete method *
-****************************/
-
-app.delete('/reviews', function(req, res) {
-  // Add your code here
-  res.json({success: 'delete call succeed!', url: req.url});
-});
-
-app.delete('/reviews/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'delete call succeed!', url: req.url});
-});
 
 app.listen(3000, function() {
     console.log("App started")

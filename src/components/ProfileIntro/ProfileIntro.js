@@ -12,30 +12,30 @@ import { faPen as pen } from '@fortawesome/free-solid-svg-icons';
 const ProfileIntro = ({userID}) => {
     const dispatch = useDispatch();
 	  const user = useSelector((state) => state.user);
-    const {updateUserSuccess} = useSelector((state) => state.updateUser);
+    const {success} = useSelector((state) => state.userSave);
+    const [bio, setBio] = useState('');
+    const [editBio, setEditBio] = useState(false);
+    const cancelHandler = () => {
+      setEditBio(false);
+    }
 
-    const [updateInfo, setUpdateInfo] = useState({});
+    const submitHandler = (e) => {
+      e.preventDefault();
+      dispatch(updateUser({
+        firstName: user.userInfo.FirstName,
+        lastName: user.userInfo.LastName,
+        bio: bio,
+        id: user.id,
 
-    const [buttonPopup, setButtonPopup] = useState(false);
-
-    const handleChange = (event) => {
-        setUpdateInfo({...updateInfo, [event.target.name]: event.target.value });
-    };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        dispatch(updateUser({...updateInfo, user: userID }));
-        setButtonPopup(false);
+      }));
+      setEditBio(false);
     }
 
     useEffect(() => {
-        dispatch(getUserInfo(userID)).then((data) => {
-          setUpdateInfo({
-              Name: data['GSI-1-SK'],
-              Bio: data['Bio']
-          })
+        dispatch(getUserInfo(userID)).then((user) => {
+          setBio(user.Bio)
         });
-    }, [updateUserSuccess])
+    }, [success])
 
     return(
         <div className = {style.wrapper}>
@@ -45,32 +45,54 @@ const ProfileIntro = ({userID}) => {
             :
             user.userInfo ?
                 <div className = {style.wrapper}>
-                    {/*Main page - user info */}
                     <div className = {style.info}>
-                        <div className= {style.heading} >Tutor Rating</div>
-                        <div className={style.stars}>
-                            <StarRating rating={user.userInfo.Rating}/>
-                        </div>
-                        <div className = {style.smallText}>{user.userInfo.TotalSessions} Sessions of tutoring</div>
-                        <div className = {style.about}>
+                      <form className={style.about} onSubmit={submitHandler}>
+                        <div className = {style.smallText}>{user.userInfo.TotalCourses ? user.userInfo.TotalCourses : 0} courses</div>
+                        <div className = {style.smallText}>{user.userInfo.SessionsStudent ? user.userInfo.SessionsStudent : 0} sessions as a student</div>
+                        <div className = {style.smallText}>{user.userInfo.SessionsTutor ? user.userInfo.SessionsTutor : 0} sessions as a tutor</div>
+
+                          <div className={style.bioWrapper}>
                             <div className= {style.heading2}>
                                 About me
                             </div>
-                            <div className = {style.icon}>
-                                <button onClick = {() => setButtonPopup(true)} >
-                                    <FontAwesomeIcon icon = { pen } />
-                                </button>
+                            <div className = {style.icons}>
+                              {
+                                editBio ?
+                                <>
+                                  <button className={style.cancel} onClick={() => cancelHandler()}>Cancel</button>
+                                  <button type='submit'>Update</button>
+                                </>
+                              :
+                                <FontAwesomeIcon icon={ pen } onClick = {() => setEditBio(!editBio)}/>
+                            }
                             </div>
-                        </div>
-                        <div className = {style.heading2}>
-                            <p>{user.userInfo.Bio}</p>
-                        </div>
+                          </div>
+                          {
+                            editBio ?
+                              <textarea className={style.textarea} value={bio} onChange={(e) => setBio(e.target.value)} placeholder='Write something about yourself...' />
+                            :
+                              <div className={style.bio}>
+                                  <p>
+                                    {
+                                      user.userInfo.Bio ?
+                                        user.userInfo.Bio
+                                      :
+                                        'Write something about yourself so people can get to know you!'
+
+                                    }
+                                  </p>
+                              </div>
+                          }
+                        </form>
+
+                      <div className = {style.imageContainer}>
+                      {
+                          user.userInfo.Picture ? <img src={user.Picture} alt='' className={style.image}/> : <img src={placeholder} alt='' className={style.image} />
+                      }
+                      </div>
+
                     </div>
-                    <div className = {style.imageContainer}>
-                    {
-                        user.userInfo.Picture ? <img src={user.Picture} alt='' className={style.image}/> : <img src={placeholder} alt='' className={style.image} />
-                    }
-                    </div>
+
                 </div>
             :
             <div className= {style.heading2}>
@@ -78,34 +100,6 @@ const ProfileIntro = ({userID}) => {
                 <div>No information</div>
             </div>
         }
-            {/*Popup page - create a course */}
-        <div>
-                <PopUp trigger = {buttonPopup} setTrigger = {setButtonPopup}>
-                    <div className = {style.form}>
-                      <form onSubmit = {handleSubmit}>
-                        <div className = {style.formHeading}>
-                            Edit Profile
-                        </div>
-                        <input className = {style.formInputs}
-                            type = 'text'
-                            name = 'Name'
-                            value = {updateInfo.Name}
-                            onChange = {handleChange}/>
-                        <textarea
-                            className = {style.formInputs}
-                            name = 'Bio'
-                            value = {updateInfo.Bio}
-                            onChange = {handleChange}
-                            />
-                      </form>
-                      <div className = {style.submit}>
-                          <button onClick={handleSubmit}>
-                            Submit
-                          </button>
-                      </div>
-                    </div>
-                </PopUp>
-            </div>
         </div>
     )
 }

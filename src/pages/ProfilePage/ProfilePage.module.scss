@@ -5,54 +5,13 @@
   @include page;
 }
 .header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
   padding: 15px 0;
-  margin-bottom: 15px;
-  
-  font-size: 2rem;
-}
-.name_banner{
-  display: flex;
-  flex-direction: row;
-  width: 95%;
-  border-bottom: 2px solid color(accent, base);
-}
-.icon {
-  padding: 20px;
-  margin-left: auto;
-  margin-right: 10px;
-  font-size: 20px;
-  color: color(accent, base);
-}
-.form {
-  @include headingMedium;
-  color: color(accent, base);
-}
-.formHeading {
-  @include headingBig;
   border-bottom: 1px solid color(accent, base);
-  margin-bottom: 15px;
 }
-.formInputs {
-  width: 100%;
-  background-color: color(secondary, base);
-  box-shadow: none;
-  border-color: color(accent, base);
-  border-radius: 10px;
-  min-height: 50px;
-  max-width: 765px;
-  color: color(accent, base);
-  margin: 5px;
-  padding: 10px;
-}
-.submit {
-    color: lighten(color(secondary, base), 20%);
-    background-color: color(accent, base);
-    min-width: 220px;
-    max-width: 40%;
-    padding: 10px 30px;
-    text-align: center;
-    border-radius: 10px;
-    margin-left: auto;
-    margin-right: 0;
+.name{
+    font-size: 2rem;
 }

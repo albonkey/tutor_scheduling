@@ -2,13 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import {API} from 'aws-amplify';
 
 export const courseSaveSlice = createSlice({
-  name: 'course',
+  name: 'courseSave',
   initialState: {
     course: {}
   },
   reducers: {
     courseSaveRequest: (state) => {
       state.loading = true;
+      state.success = false;
     },
     courseSaveSuccess: (state, action) => {
       state.loading = false;
@@ -38,7 +39,7 @@ export const createCourse = (course) => async (dispatch) => {
         ...course
       }
     }
-    const {data} = await API.post('tutorhubAPI', `/users/${user}/courses`, info);
+    const {data} = await API.post('tutorhubAPI', `/courses`, info);
 
     dispatch(courseSaveSuccess(data.Items[0]));
   } catch(error) {

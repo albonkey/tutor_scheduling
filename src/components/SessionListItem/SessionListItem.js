@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import style from './SessionListItem.module.scss';
 
-const SessionListItem = ({key, session}) => {
+const SessionListItem = ({session}) => {
 
     const background = session['GSI-1-SK'] === 'Tutor' ? style.teach : style.learn;
 
@@ -14,8 +14,9 @@ const SessionListItem = ({key, session}) => {
                         session['GSI-1-SK'] === 'Tutor' ? 'Teaching' : 'Learning'
                     }
                 </span>
-                <span>{`${session.Subject} with ${session.StudentName ? session.StudentName : session.TutorName}`}</span>
+                <span>{`${session.Subject} with ${session.Student ? session.Student.firstName : session.Tutor.firstName}`}</span>
             </div>
+            <div>{`${session.Date} ${session.Time}`}</div>
             <div className={style.info}>
                 <Link className={style.link} to={`/session/${session['SK (GSI-1-PK)']}`}>View Session</Link>
                 <span>{session.StartOn}</span>

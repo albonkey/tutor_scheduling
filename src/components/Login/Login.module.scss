@@ -1,0 +1,64 @@
+@import "../../styles/abstracts/_mixins.scss";
+@import "../../styles/abstracts/_variables.scss";
+
+.formContainer{
+  width: 100%;
+  max-width: 45rem;
+
+  border: 1px solid color(accent, base);
+  border-radius: 10px;
+  box-shadow: 1px 1px 3px grey;
+}
+.header{
+  text-align: center;
+  background-color: color(accent, base);
+  padding: 15px;
+  font-size: 2rem;
+  border-radius: 10px 10px 0 0;
+}
+.tabs{
+  display: flex;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: color(accent, base);
+}
+.tab{
+  flex-basis: 50%;
+  text-align: center;
+  padding: 15px 0;
+
+  cursor: pointer;
+}
+
+.hidden{
+  background-color: color(secondary, base);
+}
+.main{
+  padding: 30px;
+}
+.form{
+  display: flex;
+  flex-direction: column;
+}
+.input{
+  margin: 10px 0;
+  padding: 15px 10px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  border: 1px solid color(accent, base);
+  color: color(accent, base);
+}
+
+.button{
+  margin: 10px 0;
+  padding: 15px 10px;
+  font-size: 1.2rem;
+  background-color: color(accent, base);
+  color: color(primary, base);
+  border-radius: 5px;
+}
+.link{
+  margin: 25px 0 10px 0;
+  color: color(accent, base);
+  text-align: center;
+}

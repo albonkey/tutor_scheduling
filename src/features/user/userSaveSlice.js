@@ -3,16 +3,16 @@ import {API} from 'aws-amplify';
 export const userSaveSlice = createSlice({
   name: 'userSave',
   initialState: {
-    user: {}
+    user: null
   },
   reducers: {
     saveUserRequest: (state) => {
       state.loading = true;
-      state.updateUserSuccess = true;
+      state.success = false;
     },
     saveUserSuccess: (state, action) => {
       state.loading = false;
-      state.updateUserSuccess = true;
+      state.success = true;
       state.user = action.payload;
     },
     saveUserFail: (state, action) => {

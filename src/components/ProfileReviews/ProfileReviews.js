@@ -34,16 +34,15 @@ const ProfileReviews = ({userID}) => {
 
     return(
       <div className = {style.wrapper}>
+        <div className= {style.heading2}>
+              Reviews
+        </div>
       {
         reviews.loading ?
             <div className = {style.heading2}>Page loading</div>
         :
         reviews.reviews.length > 0 ?
           <div className = {style.wrapper}>
-          {/*Main page - load courses */}
-              <div>
-                  <div className= {style.heading2}>Reviews</div>
-              </div>
               <div className = {style.cards}>
                 {
                   reviews.reviews.map(review => {
@@ -53,52 +52,12 @@ const ProfileReviews = ({userID}) => {
                   })
                 }
               </div>
-              <button className = {style.subheading}>Read more</button>
           </div>
         :
-        <div className= {style.heading2}>
-              Reviews
-                <div>No reviews</div>
-                <div>
-                  <button onClick = { () => setButtonPopup(true)} >
-                      Review session
-                  </button>
-                </div>
+        <div className={style.placeholder}>
+          No reviews for this user yet...
         </div>
       }
-      {/*Popup page - create a course */}
-      <div>
-                <PopUp trigger = {buttonPopup} setTrigger = {setButtonPopup}>
-                    <div className = {style.form}>
-                      <form onSubmit = {handleSubmit}>
-                        <div className = {style.formHeading}>
-                            Review session
-                        </div>
-                        <div className = {style.title}>
-                            Comment
-                        </div>
-                        <textarea className = {style.formInputs}
-                            name = 'Description'
-                            value = {reviewInfo.Description}
-                            onChange = {handleChange}
-                        />
-                        <div className = {style.title}>
-                            Rating
-                        </div>
-                        <input className = {style.formInputs}
-                            type = 'text'
-                            name = 'Subject'
-                            value = {reviewInfo.Subject}
-                            onChange = {handleChange}
-                        />
-                      </form>
-                      <div className = {style.submit}>
-                          <button onClick={handleSubmit}>Create Course</button>
-                      </div>
-                    </div>
-                </PopUp>
-            </div>
-
       </div>
     );
 }
