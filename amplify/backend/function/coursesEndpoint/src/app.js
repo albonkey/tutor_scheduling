@@ -39,21 +39,8 @@ app.post('/courses', Course.createCourse);
 //Update course by id
 app.put('courses/:id', Course.updateCourseById);
 
-<<<<<<< HEAD
-  const params = {
-    TableName : 'Tutorhub',
-    IndexName : 'GSI2',
-    KeyConditionExpression: '#PK = :course',
-    ExpressionAttributeValues: {
-      ':course': `${id}`
-    },
-    ExpressionAttributeNames: { '#PK': 'SK (GSI-1-PK)' }
-  }
-=======
 //Delete course by id
 app.delete('courses/:id', Course.deleteCoursebyId);
->>>>>>> master
-
 
 app.listen(3000, function() {
     console.log("App started")
