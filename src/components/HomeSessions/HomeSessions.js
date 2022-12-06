@@ -22,12 +22,12 @@ const HomeSessions = ({userID}) => {
               Today's sessions
           </div>
         {
-        sessions.sessions ?
+        sessions.sessions &&
             <div className = {style.wrapper}>
                 <div>
                 {
                     sessions.sessions.map(session => {
-                        if(session.StartOn.split('-')[0] === '11/11/22')
+                        if(session.Date === today)
                         {
                             emptyList = false;
                             return <SessionListItem
@@ -39,16 +39,11 @@ const HomeSessions = ({userID}) => {
                 }
                 </div>
             </div>
-        :
-        <div className= {style.heading2}>
-            Today's sessions
-                <div>No sessions scheduled for today.</div>
-        </div>
-        }
+          }
 
         {/* If no sessions scheduled for today */}
         {
-        emptyList ?
+        emptyList &&
             <div className = {style.empty}>
               <img src={image} className={style.image} alt='' />
               <div className={style.placeholderText}>
@@ -57,8 +52,6 @@ const HomeSessions = ({userID}) => {
 
               </div>
               </div>
-        :
-            <div>No load</div>
         }
 
 		</div>

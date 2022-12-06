@@ -154,7 +154,7 @@ const ScheduleComponent = () => {
 		dispatch(getAvailabilityInfo(userInfo.id))
 		.then(response => {
 			const obj = structuredClone(response)
-			//setSchedule(obj);
+			setSchedule(obj);
 		});
 	}, []);
 

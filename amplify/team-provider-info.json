@@ -19,19 +19,19 @@
         },
         "usersEndpoint": {
           "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
-          "s3Key": "amplify-builds/usersEndpoint-516a31634d5370613441-build.zip"
+          "s3Key": "amplify-builds/usersEndpoint-694243777a546e4d676f-build.zip"
         },
         "coursesEndpoint": {
           "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
-          "s3Key": "amplify-builds/coursesEndpoint-5a65494e3748362b6534-build.zip"
+          "s3Key": "amplify-builds/coursesEndpoint-6c447542576f4e2b3638-build.zip"
         },
         "SessionsEndpoint": {
           "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
-          "s3Key": "amplify-builds/SessionsEndpoint-566946554f4b694f6d48-build.zip"
+          "s3Key": "amplify-builds/SessionsEndpoint-6e6f6e4462505745416c-build.zip"
         },
         "reviewsEndpoint": {
           "deploymentBucketName": "amplify-tutorscheduling-dev-191001-deployment",
-          "s3Key": "amplify-builds/reviewsEndpoint-383245504c563834554c-build.zip"
+          "s3Key": "amplify-builds/reviewsEndpoint-4573514f3975494e2b33-build.zip"
         }
       },
       "api": {

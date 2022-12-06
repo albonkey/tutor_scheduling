@@ -1,104 +1,55 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 import StarRating from '../StarRating/StarRating';
 import style from './SessionDetails.module.scss';
 import placeholder from './placeholderImage.jpg';
 import { getSession } from '../../features/sessions/sessionInfoSlice';
-import { sessionTutor } from '../../features/sessions/sessionTutorSlice';
+import image from './placeholderImage.jpg';
 
-const SessionDetails = ({ id }) => {
-  const dispatch = useDispatch();
-	const sessionID = id.split('-')[1];
-	const {session} = useSelector((state) => state.getSession);
-  const {tutor} = useSelector((state) => state.sessionTutor);
+const SessionDetails = ({ subject, tutor, student, level, id, rating, date, time , description, sessionNeeds }) => {
 
-	useEffect(() => {
-		dispatch(getSession(sessionID));
-        dispatch(sessionTutor(sessionID));
-	}, [])
-
-    console.log(tutor)
 
     return(
         <div className = {style.wrapper}>
-        {/*Header section*/}
-            <div>
-                <Link className={style.link} to={`/sessions`}>Return to Sessions</Link>
+          <div className={style.header}>
+            <Link className={style.link} to={`/sessions`}>Return to Sessions</Link>
+            <div className={style.headerInfo}>
+              <span className={style.sessionHeading}>{subject}</span>
+              <span>{level}</span>
             </div>
-            <div className = {style.header}>
-                <div className = {style.heading}>Session
-                    <span className = {style.classLevel}>
-                        {session['GSI-2-PK']} | {session['Level']}
-                    </span>
-                </div>
-                <div className =  {style.id}>
-                        #{session['SK (GSI-1-PK)']}
-                </div>
+          </div>
+          <div className={style.tutorInfo}>
+            <div className={style.info}>
+              <div className={style.header2}>
+                {`Tutor ${tutor?.firstName} ${tutor?.lastName}`}
+              </div>
+              <StarRating rating={rating} />
+              <div className={style.header2}>
+                Time
+              </div>
+              <div className={style.infoAttribute}>{`${date} ${time}`}</div>
+              <div className={style.header2}>Location</div>
+              <div className={style.infoAttribute}>Online</div>
+              <div className={style.header2}>About Course</div>
+              <div className={style.infoAttribute}>{description}</div>
             </div>
-
-        {/*Tutor section: display= name, rating, startOn, Description*/}
-            <div className = {style.tutor}>
-                <div className = {style.heading}>
-                    Tutor {tutor.StartOn}
-
-{/*
-                    <div className = {style.stars1}>
-                    <StarRating rating={tutor.Rating}/>
-                    </div>
-                    <div className = {style.heading}>
-                        Time
-                    </div>
-                    <div className = {style.info}>
-                        {session.StartOn}
-                    </div>
-                    <div className = {style.heading}>Location</div>
-                    <div className = {style.info}>Online</div>
-                </div>
-                <div className = {style.imageContainer}>
-                {
-                    tutor.Picture ? <img src={tutor.Picture} alt='' className={style.image}/> : <img src={placeholder} alt='' className={style.image} />
-                }
-                </div>
+            <img src={image} className={style.image}/>
+          </div>
+          <div className={style.studentInfo}>
+            <div className={style.info}>
+              <div className={style.header2}>
+                {`Student ${student?.firstName} ${student?.lastName}`}
+              </div>
+              <StarRating rating={rating} />
+              <div className={style.header2}>
+                Goals for Session
+              </div>
+              <div className={style.infoAttribute}>{sessionNeeds}</div>
             </div>
-            <div className = {style.about}>
-                <div className = {style.heading}>About Course
-                    <div className = {style.info}>
-                        {session.Description}
-                    </div>
-*/}
-                </div>
-            </div>
-
-        {/*Student section*/}
-{/*
-            <div className = {style.student}>
-                <div className = {style.sub1}>
-                    <div className = {style.sub2}>
-                        <div className = {style.heading}>
-                            Student {session.StudentID}
-                        </div>
-                        <div className = {style.stars2}>
-                            <StarRating rating={tutor.Rating}/>
-                        </div>
-                    </div>
-                    <div className = {style.heading}>
-                        What {session.StudentName} wants from the session
-                    </div>
-                    <div className = {style.heading}>
-                        <div className = {style.info}>
-                            {session.Description}
-                        </div>
-                     </div>
-                </div>
-                <div className = {style.imageContainer}>
-                    {
-                        tutor.Picture ? <img src={tutor.Picture} alt='' className={style.image}/> : <img src={placeholder} alt='' className={style.image} />
-                    }
-                    </div>
-                </div>
-    */}
-        </div>
+            <img src={image} className={style.imageStudent}/>
+          </div>
+    </div>
     )
 }
 

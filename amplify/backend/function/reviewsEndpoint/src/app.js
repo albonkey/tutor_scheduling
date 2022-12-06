@@ -31,9 +31,9 @@ app.get('/reviews/:id', Review.getReviewById);
 
 app.post('/reviews', Review.createReview);
 
-app.put('/reviews/:id', Review.updateReview;
+app.put('/reviews/:id', Review.updateReviewById);
 
-app.delete('/reviews/:id', Review.deleteReview);
+app.delete('/reviews/:id', Review.deleteReviewById);
 
 
 app.listen(3000, function() {

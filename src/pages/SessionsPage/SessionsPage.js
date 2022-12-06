@@ -9,26 +9,11 @@ import {Link} from 'react-router-dom';
 const SessionsPage = () => {
 	const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-	const sessions = useSelector((state) => state.sessions);
+	const {sessions} = useSelector((state) => state.sessions);
   const today = new Date().toLocaleDateString();
-	const [upcomingSessions, setUpcomingSessions] = useState([]);
-	const [previousSessions, setPreviousSessions] = useState([]);
+
     useEffect(() => {
-        dispatch(listSessions(user.id)).then(sessions => {
-					const _upcomingSessions = [];
-					const _previousSessions = [];
-
-					for(const session in sessions){
-						const startDate = new Date(session.StartOn);
-						const currentDate = new Date();
-
-						if(startDate > currentDate){
-							_upcomingSessions.push(session);
-						} else {
-							_previousSessions.push(session);
-						}
-					}
-				})
+        dispatch(listSessions(user.id));
     }, [])
 
 	 return(
@@ -40,8 +25,18 @@ const SessionsPage = () => {
 					<div className={style.heading}>Upcoming</div>
 					<div className={style.sessions}>
 						{
-							upcomingSessions.length > 0 ?
+							sessions.length > 0 ?
 								<>
+									{
+										sessions.map(session => {
+											const todayDate = new Date()
+											const sessionDate = new Date(session.Date);
+
+											if(sessionDate >= todayDate){
+												return <SessionListItem session={session}/>
+											}
+										}
+									)}
 
 								</>
 							:
@@ -55,10 +50,20 @@ const SessionsPage = () => {
 					<div className={style.heading}>Previous</div>
 					<div className={style.sessions}>
 						{
-							previousSessions.length > 0 ?
-								<>
+							sessions.length > 0 ?
+							<>
+								{
+									sessions.map(session => {
+										const todayDate = new Date()
+										const sessionDate = new Date(session.Date);
 
-								</>
+										if(sessionDate <= todayDate){
+											return <SessionListItem session={session}/>
+										}
+									}
+								)}
+
+							</>
 							:
 							<div className={style.placeholder}>
 								No previous sessions

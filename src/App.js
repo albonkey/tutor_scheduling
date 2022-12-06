@@ -19,6 +19,7 @@ import DiscoveryPage from './pages/DiscoveryPage/DiscoveryPage';
 import DocumentsPage from './pages/DocumentsPage/DocumentsPage';
 import SettingsPage from './pages/SettingsPage/SettingsPage';
 import BookSession from './pages/BookSession/BookSession';
+import SessionConfirmation from './pages/SessionConfirmation/SessionConfirmation';
 import Login from './components/Login/Login';
 import Layout from './components/Layout/Layout';
 import RequireAuth from './components/RequireAuth/RequireAuth';
@@ -29,14 +30,6 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    Auth.currentAuthenticatedUser({
-      bypassCache: false
-    }).then(user => {
-      dispatch(updateUserId(user.username));
-      dispatch(getUserInfo(user.username));
-    }).catch(err => console.log(err))
-  }, []);
 
   return (
     <Authenticator.Provider>
@@ -93,7 +86,14 @@ function App() {
                       </RequireAuth>
                       }
                   />
-
+                  <Route
+                    path='/sessionConfirmation'
+                    element={
+                      <RequireAuth>
+                        <SessionConfirmation/>
+                      </RequireAuth>
+                    }
+                  />
                   <Route
                     path='/payments'
                     element={

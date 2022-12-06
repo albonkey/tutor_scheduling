@@ -4,11 +4,12 @@ import {API} from 'aws-amplify';
 export const reviewInfoSlice = createSlice({
     name: 'review',
     initialState: {
-        review: {},
+        review: null,
     },
     reducers: {
         getReviewRequest: (state) => {
             state.loading = true;
+            state.review = null;
         },
         getReviewSuccess: (state, action) => {
             state.loading = false;
@@ -32,9 +33,9 @@ export const {
         try {
             dispatch(getReviewRequest());
 
-            const {data} = await API.get('tutorhubAPI', `/users/${id}/reviews`);
+            const {data} = await API.get('tutorhubAPI', `/reviews/${id}`);
 
-            dispatch(getReviewSuccess(data.Items[0]));
+            dispatch(getReviewSuccess(data));
         }catch(error) {
             dispatch(getReviewFail(error.message));
         }

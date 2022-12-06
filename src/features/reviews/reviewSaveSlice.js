@@ -4,7 +4,7 @@ import {API} from 'aws-amplify';
 export const reviewSaveSlice = createSlice({
     name: 'reviewSave',
     initialState: {
-        review: {}
+        review: null
     },
     reducers: {
         reviewSaveRequest: (state) => {
@@ -38,7 +38,6 @@ export const reviewSave = (review) => async(dispatch) => {
             }
         }
         const {data} = await API.post('tutorhubAPI', `/reviews`, info);
-
         dispatch(reviewSaveSuccess(data.Items[0]));
     } catch(error) {
         dispatch(reviewSaveFail(error.message));
