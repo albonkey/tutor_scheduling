@@ -31,7 +31,6 @@ app.post('/sessions', Session.createSession);
 
 app.put('/sessions/:id', Session.updateSessionById);
 
-
 app.listen(3000, function() {
     console.log("App started")
 });

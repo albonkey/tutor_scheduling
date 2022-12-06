@@ -42,7 +42,6 @@ app.put('courses/:id', Course.updateCourseById);
 //Delete course by id
 app.delete('courses/:id', Course.deleteCoursebyId);
 
-
 app.listen(3000, function() {
     console.log("App started")
 });
